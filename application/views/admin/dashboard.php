@@ -16,6 +16,8 @@
         <strong><?= htmlspecialchars($name); ?></strong>
     </p>
 
+    <a href="<?=site_url('admin/articles')?>">ke article </a>
+
     <hr>
 
     <h3>Desa Terpadu</h3>
