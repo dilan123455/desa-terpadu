@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,9 +20,11 @@
 
     <form
         action="<?= site_url('admin/articles/update/' . $article->id); ?>"
-        method="POST"
+        method="post"
+        enctype="multipart/form-data"
     >
 
+        <!-- Judul -->
         <div>
             <label>Judul Artikel</label>
             <br>
@@ -36,6 +39,7 @@
 
         <br>
 
+        <!-- Kategori -->
         <div>
             <label>Kategori</label>
             <br>
@@ -50,6 +54,7 @@
 
         <br>
 
+        <!-- Isi -->
         <div>
             <label>Isi Artikel</label>
             <br>
@@ -64,8 +69,61 @@
 
         <br>
 
+        <!-- Gambar -->
         <div>
+
+            <label>Gambar Artikel</label>
+
+            <br><br>
+
+            <!-- Preview gambar -->
+            <?php if (!empty($article->image)): ?>
+
+                <img
+                    id="imagePreview"
+                    src="<?= base_url('assets/uploads/' . $article->image); ?>"
+                    alt="<?= html_escape($article->title); ?>"
+                    width="200"
+                    style="object-fit: cover;"
+                >
+
+            <?php else: ?>
+
+                <img
+                    id="imagePreview"
+                    src=""
+                    alt="Preview gambar"
+                    width="200"
+                    style="display: none; object-fit: cover;"
+                >
+
+                <p id="noImageText">Belum ada gambar.</p>
+
+            <?php endif; ?>
+
+            <br><br>
+
+            <!-- Input file -->
+            <input
+                type="file"
+                name="image"
+                id="imageInput"
+                accept="image/jpeg,image/png,image/webp"
+            >
+
+            <p>
+                Biarkan kosong jika tidak ingin mengganti gambar.
+            </p>
+
+        </div>
+
+        <br>
+
+        <!-- Status -->
+        <div>
+
             <label>Status</label>
+
             <br>
 
             <select name="status" required>
@@ -85,6 +143,7 @@
                 </option>
 
             </select>
+
         </div>
 
         <br>
@@ -95,5 +154,33 @@
 
     </form>
 
+
+    <!-- Preview gambar sebelum disimpan -->
+    <script>
+        document.getElementById('imageInput').addEventListener('change', function(event) {
+
+            const file = event.target.files[0];
+
+            if (!file) {
+                return;
+            }
+
+            const imagePreview = document.getElementById('imagePreview');
+            const noImageText = document.getElementById('noImageText');
+
+            // Membuat preview gambar yang baru dipilih
+            imagePreview.src = URL.createObjectURL(file);
+
+            // Tampilkan preview
+            imagePreview.style.display = 'block';
+
+            // Hilangkan tulisan "Belum ada gambar"
+            if (noImageText) {
+                noImageText.style.display = 'none';
+            }
+        });
+    </script>
+
 </body>
+
 </html>

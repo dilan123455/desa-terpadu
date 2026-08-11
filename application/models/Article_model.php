@@ -42,4 +42,30 @@ class Article_model extends CI_Model
             ->where('id', $id)
             ->delete($this->table);
     }
+
+    public function get_published()
+{
+    return $this->db
+        ->select('articles.*, users.name AS author_name')
+        ->from($this->table)
+        ->join('users', 'users.id = articles.author_id', 'left')
+        ->where('articles.status', 'published')
+        ->order_by('articles.published_at', 'DESC')
+        ->get()
+        ->result();
 }
+
+public function get_by_slug($slug)
+{
+    return $this->db
+        ->select('articles.*, users.name AS author_name')
+        ->from($this->table)
+        ->join('users', 'users.id = articles.author_id', 'left')
+        ->where('articles.slug', $slug)
+        ->where('articles.status', 'published')
+        ->get()
+        ->row();
+}    
+
+
+    }

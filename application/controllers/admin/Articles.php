@@ -31,33 +31,63 @@ class Articles extends CI_Controller
     }
 
     public function store()
-    {
-        $title    = $this->input->post('title', TRUE);
-        $category = $this->input->post('category', TRUE);
-        $content  = $this->input->post('content', FALSE);
-        $status   = $this->input->post('status', TRUE);
+{
+    $title    = $this->input->post('title', TRUE);
+    $category = $this->input->post('category', TRUE);
+    $content  = $this->input->post('content', FALSE);
+    $status   = $this->input->post('status', TRUE);
 
-        $slug = url_title($title, 'dash', TRUE);
+    $slug = url_title($title, 'dash', TRUE);
 
-        $data = [
-            'title'        => $title,
-            'slug'         => $slug,
-            'category'     => $category,
-            'content'      => $content,
-            'author_id'    => $this->session->userdata('user_id'),
-            'status'       => $status,
-            'published_at' => ($status === 'published') ? date('Y-m-d H:i:s') : NULL
-        ];
+    $image = NULL;
 
-        $this->Article_model->insert($data);
+    // Upload gambar jika ada
+    if (!empty($_FILES['image']['name'])) {
 
-        $this->session->set_flashdata(
-            'success',
-            'Artikel berhasil ditambahkan.'
-        );
+        $config['upload_path']   = './assets/uploads/';
+        $config['allowed_types'] = 'jpg|jpeg|png|webp';
+        $config['max_size']      = 2048;
+        $config['encrypt_name']  = TRUE;
 
-        redirect('admin/articles');
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('image')) {
+
+            $this->session->set_flashdata(
+                'error',
+                $this->upload->display_errors('', '')
+            );
+
+            redirect('admin/articles/create');
+            return;
+        }
+
+        $uploadData = $this->upload->data();
+        $image = $uploadData['file_name'];
     }
+
+    $data = [
+        'title'        => $title,
+        'slug'         => $slug,
+        'category'     => $category,
+        'content'      => $content,
+        'image'        => $image,
+        'author_id'    => $this->session->userdata('user_id'),
+        'status'       => $status,
+        'published_at' => ($status === 'published')
+            ? date('Y-m-d H:i:s')
+            : NULL
+    ];
+
+    $this->Article_model->insert($data);
+
+    $this->session->set_flashdata(
+        'success',
+        'Artikel berhasil ditambahkan.'
+    );
+
+    redirect('admin/articles');
+}
 
     public function edit($id)
 {
@@ -88,11 +118,49 @@ public function update($id)
 
     $slug = url_title($title, 'dash', TRUE);
 
+    $image = $article->image;
+
+    // Jika admin memilih gambar baru
+    if (!empty($_FILES['image']['name'])) {
+
+        $config['upload_path']   = './assets/uploads/';
+        $config['allowed_types'] = 'jpg|jpeg|png|webp';
+        $config['max_size']      = 2048;
+        $config['encrypt_name']  = TRUE;
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('image')) {
+
+            $this->session->set_flashdata(
+                'error',
+                $this->upload->display_errors('', '')
+            );
+
+            redirect('admin/articles/edit/' . $id);
+            return;
+        }
+
+        $uploadData = $this->upload->data();
+        $image = $uploadData['file_name'];
+
+        // Hapus gambar lama jika ada
+        if (!empty($article->image)) {
+
+            $oldImage = './assets/uploads/' . $article->image;
+
+            if (file_exists($oldImage)) {
+                unlink($oldImage);
+            }
+        }
+    }
+
     $data = [
         'title'        => $title,
         'slug'         => $slug,
         'category'     => $category,
         'content'      => $content,
+        'image'        => $image,
         'status'       => $status,
         'published_at' => ($status === 'published')
             ? ($article->published_at ?: date('Y-m-d H:i:s'))

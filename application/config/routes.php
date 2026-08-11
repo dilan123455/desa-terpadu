@@ -52,3 +52,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['admin/testimoni']                  = 'admin/Testimoni/index';
+$route['admin/testimoni/create']           = 'admin/Testimoni/create';
+$route['admin/testimoni/store']            = 'admin/Testimoni/store';
+$route['admin/testimoni/edit/(:num)']      = 'admin/Testimoni/edit/$1';
+$route['admin/testimoni/update/(:num)']    = 'admin/Testimoni/update/$1';
+$route['admin/testimoni/delete/(:num)']    = 'admin/Testimoni/delete/$1';
+$route['auth/login']                       = 'Auth/login';
+$route['auth/process_login']               = 'Auth/process_login';
+$route['auth/logout']                      = 'Auth/logout';

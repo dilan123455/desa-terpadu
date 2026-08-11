@@ -17,7 +17,7 @@
 
     <br><br>
 
-    <form action="<?= site_url('admin/articles/store'); ?>" method="POST">
+   <form action="<?= site_url('admin/articles/store'); ?>" method="post" enctype="multipart/form-data">
 
         <div>
             <label>Judul Artikel</label>
@@ -45,7 +45,12 @@
             >
         </div>
 
+
         <br>
+
+        <label>Gambar Artikel</label>
+<input type="file" name="image" accept="image/jpeg,image/png,image/webp">
+<br><br>
 
         <div>
             <label>Isi Artikel</label>

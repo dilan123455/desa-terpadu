@@ -37,6 +37,7 @@
                     <th>Judul</th>
                     <th>Kategori</th>
                     <th>Penulis</th>
+                    <th>Gambar</th>
                     <th>Status</th>
                     <th>Tanggal</th>
                     <th>Aksi</th>
@@ -64,6 +65,20 @@
                         <td>
                             <?= htmlspecialchars($article->author_name ?? '-'); ?>
                         </td>
+
+                        <td>
+    <?php if (!empty($article->image)): ?>
+        <img 
+            src="<?= base_url('assets/uploads/' . $article->image); ?>"
+            alt="<?= html_escape($article->title); ?>"
+            width="100"
+            height="70"
+            style="object-fit: cover;"
+        >
+    <?php else: ?>
+        Tidak ada gambar
+    <?php endif; ?>
+</td>
 
                         <td>
                             <?= htmlspecialchars($article->status); ?>
