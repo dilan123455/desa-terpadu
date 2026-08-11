@@ -44,7 +44,7 @@
                 <?php endif; ?>
 
                 <!-- Form -->
-                <form action="<?= site_url('auth/process_login'); ?>" method="POST" class="space-y-5">
+                <form action="<?= site_url('auth/process_login') ?>" method="post">
 
                     <!-- Username -->
                     <div>

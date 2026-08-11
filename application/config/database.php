@@ -94,3 +94,10 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
+$localDatabase = APPPATH . 'config/database_local.php';
+
+if (file_exists($localDatabase)) {
+    $localConfig = require $localDatabase;
+    $db['default'] = array_merge($db['default'], $localConfig);
+}

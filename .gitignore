@@ -22,3 +22,9 @@ application/logs/*
 # Uploaded files
 assets/uploads/*
 !assets/uploads/index.html
+
+# Node dependencies
+node_modules/
+
+# Local database configuration
+application/config/database_local.php
