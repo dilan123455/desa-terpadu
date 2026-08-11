@@ -3,30 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title><?= $title; ?> - Desa Terpadu</title>
+     <link rel="stylesheet" href="<?= base_url('assets/css/output.css'); ?>">
+<title><?= $title; ?> - Desa Terpadu</title>
 </head>
-
 <body>
+<title><?= $title; ?> - Desa Terpadu</title>
 
-    <h1>Dashboard Admin</h1>
+<h1 class="text-3xl font-bold text-blue-600">
+    Dashboard Admin
+</h1>
 
-    <p>
-        Selamat datang,
-        <strong><?= htmlspecialchars($name); ?></strong>
-    </p>
+<p class="mt-4">
+    Selamat datang,
+    <strong class="font-semibold">
+        <?= htmlspecialchars($name); ?>
+    </strong>
+</p>
 
-    <a href="<?=site_url('admin/articles')?>">ke article </a>
+<a 
+    href="<?= site_url('admin/articles'); ?>"
+    class="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+>
+    Ke Article  
+</a>
 
-    <hr>
+<!-- testimoni soon  -->
+<a 
+    href="<?= site_url('admin/testimoni '); ?>"
+    class="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+>
+    Ke Testimoni
+</a>
 
-    <h3>Desa Terpadu</h3>
+<hr class="my-6">
 
-    <p>Dashboard admin berhasil dibuat.</p>
+<h3 class="text-xl font-semibold">
+    Desa Terpadu
+</h3>
 
-    <a href="<?= site_url('auth/logout'); ?>">
-        Logout
-    </a>
+<p class="mt-2 text-gray-600">
+    Dashboard admin berhasil dibuat.
+</p>
+
+<a 
+    href="<?= site_url('auth/logout'); ?>"
+    class="inline-block mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+>
+    Logout
+</a>
 
 </body>
 </html>
