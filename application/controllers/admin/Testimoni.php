@@ -58,6 +58,20 @@ class Testimoni extends Admin_Controller
         $this->session->set_flashdata('success', 'Testimoni berhasil ditambahkan.');
         redirect('admin/testimoni');
     }
+
+    public function detail($id)
+{
+    $item = $this->Testimoni_model->get_by_id($id);
+
+    if (!$item) {
+        show_404();
+    }
+
+    $data['title'] = 'Detail Testimoni';
+    $data['item']  = $item;
+
+    $this->load->view('admin/testimoni/detail', $data);
+}
  
     public function edit($id)
     {
@@ -116,6 +130,7 @@ class Testimoni extends Admin_Controller
         $this->session->set_flashdata('success', 'Testimoni berhasil diperbarui.');
         redirect('admin/testimoni');
     }
+
  
     public function delete($id)
     {
@@ -149,7 +164,7 @@ class Testimoni extends Admin_Controller
  
         $config['upload_path']   = './uploads/testimoni/';
         $config['allowed_types'] = 'jpg|jpeg|png';
-        $config['max_size']      = 1024; // KB
+        $config['max_size']      = 5120; // KB
         $config['encrypt_name']  = TRUE;
  
         $this->upload->initialize($config);

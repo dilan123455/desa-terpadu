@@ -53,6 +53,16 @@ $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+
+$route['admin/articles'] = 'admin/Articles/index';
+$route['admin/articles/create'] = 'admin/Articles/create';
+$route['admin/articles/store'] = 'admin/Articles/store';
+$route['admin/articles/edit/(:num)'] = 'admin/Articles/edit/$1';
+$route['admin/articles/update/(:num)'] = 'admin/Articles/update/$1';
+$route['admin/articles/delete/(:num)'] = 'admin/Articles/delete/$1';
+
+
+
 $route['admin/testimoni']                  = 'admin/Testimoni/index';
 $route['admin/testimoni/create']           = 'admin/Testimoni/create';
 $route['admin/testimoni/store']            = 'admin/Testimoni/store';
@@ -62,3 +72,4 @@ $route['admin/testimoni/delete/(:num)']    = 'admin/Testimoni/delete/$1';
 $route['auth/login']                       = 'Auth/login';
 $route['auth/process_login']               = 'Auth/process_login';
 $route['auth/logout']                      = 'Auth/logout';
+

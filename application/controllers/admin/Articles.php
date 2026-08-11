@@ -1,18 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Articles extends CI_Controller
+class Articles extends Admin_Controller
 {
     public function __construct()
     {
         parent::__construct();
 
-        if (!$this->session->userdata('logged_in')) {
-            redirect('auth/login');
-        }
-
         $this->load->model('Article_model');
-        $this->load->helper('url');
+        $this->load->helper(['url', 'text']);
     }
 
     public function index()
@@ -24,11 +20,11 @@ class Articles extends CI_Controller
     }
 
     public function create()
-    {
-        $data['title'] = 'Tambah Artikel';
+{
+    $data['title'] = 'Tambah Artikel';
 
-        $this->load->view('admin/articles/create', $data);
-    }
+    $this->load->view('admin/articles/create', $data);
+}
 
     public function store()
 {
