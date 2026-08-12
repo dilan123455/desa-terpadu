@@ -7,6 +7,7 @@ class Home extends CI_Controller
 {
     $this->load->model('Testimoni_model');
     $this->load->model('Article_model');
+    $this->load->model('About_model');
     $this->load->model('Faq_model');
 
     // Testimoni aktif
@@ -14,6 +15,19 @@ class Home extends CI_Controller
 
     // Artikel yang sudah dipublikasikan
     $data['articles'] = $this->Article_model->get_published();
+
+     // Tentang Desa Terpadu
+
+        $this->load->model('About_model');
+
+$data['about'] =
+    $this->About_model->get_about();
+
+$data['slides'] =
+    $this->About_model->get_slides();
+
+$data['benefits'] =
+    $this->About_model->get_benefits();
 
     // FAQ aktif
     $data['faqs'] = $this->Faq_model->get_active();

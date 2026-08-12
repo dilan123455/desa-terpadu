@@ -88,3 +88,24 @@ $route['admin/contact_messages/detail/(:num)'] = 'admin/Contact_messages/detail/
 $route['admin/contact_messages/mark_read/(:num)'] = 'admin/Contact_messages/mark_read/$1';
 $route['admin/contact_messages/mark_replied/(:num)'] = 'admin/Contact_messages/mark_replied/$1';
 $route['admin/contact_messages/delete/(:num)'] = 'admin/Contact_messages/delete/$1';
+
+$route['about'] = 'about/index';
+$route['admin/about'] = 'admin/about/index';
+$route['admin/about/store'] = 'admin/about/store';
+
+$route['admin/about/edit'] = 'admin/about/edit';
+$route['admin/about/update'] = 'admin/about/update';
+
+$route['admin/features'] = 'admin/features/index';
+
+$route['admin/features/edit-platform/(:num)']
+    = 'admin/features/edit_platform/$1';
+
+$route['admin/features/update-platform/(:num)']
+    = 'admin/features/update_platform/$1';
+
+$route['admin/features/edit-item/(:num)']
+    = 'admin/features/edit_item/$1';
+
+$route['admin/features/update-item/(:num)']
+    = 'admin/features/update_item/$1';
