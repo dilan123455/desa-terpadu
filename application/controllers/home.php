@@ -4,16 +4,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Home extends CI_Controller
 {
     public function index()
-    {
-        $this->load->model('Testimoni_model');
-        $this->load->model('Article_model');
+{
+    $this->load->model('Testimoni_model');
+    $this->load->model('Article_model');
+    $this->load->model('Faq_model');
 
-        // Testimoni aktif
-        $data['testimonials'] = $this->Testimoni_model->get_active();
+    // Testimoni aktif
+    $data['testimonials'] = $this->Testimoni_model->get_active();
 
-        // Artikel yang sudah dipublikasikan
-        $data['articles'] = $this->Article_model->get_published();
+    // Artikel yang sudah dipublikasikan
+    $data['articles'] = $this->Article_model->get_published();
 
-        $this->load->view('site/home', $data);
-    }
+    // FAQ aktif
+    $data['faqs'] = $this->Faq_model->get_active();
+
+    $this->load->view('site/home', $data);
+}
 }

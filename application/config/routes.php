@@ -73,3 +73,18 @@ $route['auth/login']                       = 'Auth/login';
 $route['auth/process_login']               = 'Auth/process_login';
 $route['auth/logout']                      = 'Auth/logout';
 
+
+$route['admin/faq'] = 'admin/Faq/index';
+$route['admin/faq/create'] = 'admin/Faq/create';
+$route['admin/faq/store'] = 'admin/Faq/store';
+$route['admin/faq/detail/(:num)'] = 'admin/Faq/detail/$1';
+$route['admin/faq/edit/(:num)'] = 'admin/Faq/edit/$1';
+$route['admin/faq/update/(:num)'] = 'admin/Faq/update/$1';
+$route['admin/faq/delete/(:num)'] = 'admin/Faq/delete/$1';
+
+
+$route['admin/contact_messages'] = 'admin/Contact_messages/index';
+$route['admin/contact_messages/detail/(:num)'] = 'admin/Contact_messages/detail/$1';
+$route['admin/contact_messages/mark_read/(:num)'] = 'admin/Contact_messages/mark_read/$1';
+$route['admin/contact_messages/mark_replied/(:num)'] = 'admin/Contact_messages/mark_replied/$1';
+$route['admin/contact_messages/delete/(:num)'] = 'admin/Contact_messages/delete/$1';

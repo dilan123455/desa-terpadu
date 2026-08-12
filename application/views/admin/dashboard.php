@@ -35,6 +35,23 @@
     Ke Testimoni
 </a>
 
+<!-- FAQ  -->
+<a 
+    href="<?= site_url('admin/faq '); ?>"
+    class="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+>
+    Ke Faq
+</a>
+
+
+<!-- Contact_message  -->
+<a 
+    href="<?= site_url('admin/contact_messages '); ?>"
+    class="inline-block mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+>
+    Ke Contact Message
+</a>
+
 <hr class="my-6">
 
 <h3 class="text-xl font-semibold">
