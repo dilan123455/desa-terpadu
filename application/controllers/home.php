@@ -3,35 +3,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Home extends CI_Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->helper('url');
+        // Load model testimoni dan artikel
+        $this->load->model('Testimoni_model');
+        $this->load->model('Article_model');
+    }
+
     public function index()
-{
-    $this->load->model('Testimoni_model');
-    $this->load->model('Article_model');
-    $this->load->model('About_model');
-    $this->load->model('Faq_model');
+    {
+        // Ambil data testimoni aktif
+        $data['testi_data'] = $this->Testimoni_model->get_active();
+        
+        // Ambil 6 artikel terbaru yang sudah dipublish
+        $data['articles'] = $this->Article_model->get_published(6);
 
-    // Testimoni aktif
-    $data['testimonials'] = $this->Testimoni_model->get_active();
-
-    // Artikel yang sudah dipublikasikan
-    $data['articles'] = $this->Article_model->get_published();
-
-     // Tentang Desa Terpadu
-
-        $this->load->model('About_model');
-
-$data['about'] =
-    $this->About_model->get_about();
-
-$data['slides'] =
-    $this->About_model->get_slides();
-
-$data['benefits'] =
-    $this->About_model->get_benefits();
-
-    // FAQ aktif
-    $data['faqs'] = $this->Faq_model->get_active();
-
-    $this->load->view('site/home', $data);
-}
+        $this->load->view('site/home', $data);
+    }
 }
