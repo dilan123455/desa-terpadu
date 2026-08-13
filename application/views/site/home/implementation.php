@@ -3,7 +3,7 @@
      Semua styling dibatasi di dalam .process-section
 ====================================================== -->
 
-<section class="process-section relative overflow-hidden bg-white py-4 lg:py-6">
+<section id="implementation_section" class="process-section relative overflow-hidden bg-white py-4 lg:py-6">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
         <!-- HEADER -->

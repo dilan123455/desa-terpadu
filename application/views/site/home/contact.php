@@ -1,5 +1,5 @@
 <!-- SECTION KONTAK -->
-<section id="desa-terpadu-contact" class="w-full bg-white py-16 sm:py-24">
+<section id="contact" class="w-full bg-white py-16 sm:py-24">
     <div class="container mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         
         <!-- Header Section -->
