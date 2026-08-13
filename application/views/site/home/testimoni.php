@@ -1,206 +1,1066 @@
 <!-- =========================================================
-     TESTIMONI SECTION (Dinamis + Slider Stabil)
+     TESTIMONI SECTION
+     - Menampilkan 3 kartu sekaligus
+     - Geser 1 kartu setiap kali
+     - Auto slide
+     - Manual drag / swipe
+     - Infinite loop
+     - Pagination dots
 ========================================================= -->
-<section id="testimoni-section" class="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#f2ece7] py-20">
-    
+
+<section
+    id="testimoni-section"
+    class="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#f2ece7] py-20"
+>
+
     <!-- Background Wave -->
-    <div class="pointer-events-none absolute left-0 top-0 z-0 w-full opacity-90" aria-hidden="true">
-        <svg viewBox="0 0 1440 320" class="h-auto w-full" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,96 C300,240 500,30 800,80 C1100,130 1300,240 1440,180 L1440,0 L0,0 Z" fill="#FFFFFF" opacity="0.8"/>
-            <path d="M0,110 C300,260 500,50 800,100 C1100,150 1300,260 1440,200 L1440,0 L0,0 Z" fill="#FFFFFF" opacity="0.5"/>
+    <div
+        class="pointer-events-none absolute left-0 top-0 z-0 w-full opacity-90"
+        aria-hidden="true"
+    >
+        <svg
+            viewBox="0 0 1440 320"
+            class="h-auto w-full"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <path
+                d="M0,96 C300,240 500,30 800,80 C1100,130 1300,240 1440,180 L1440,0 L0,0 Z"
+                fill="#FFFFFF"
+                opacity="0.8"
+            />
+
+            <path
+                d="M0,110 C300,260 500,50 800,100 C1100,150 1300,260 1440,200 L1440,0 L0,0 Z"
+                fill="#FFFFFF"
+                opacity="0.5"
+            />
         </svg>
     </div>
 
-    <!-- Container -->
-    <div class="relative z-10 mx-auto w-full max-w-7xl px-4 text-center sm:px-6 lg:px-8 pt-12 md:pt-16">
-        
+
+    <!-- =====================================================
+         CONTAINER
+    ====================================================== -->
+
+    <div
+        class="relative z-10 mx-auto w-full max-w-7xl px-4 pt-12 text-center sm:px-6 md:pt-16 lg:px-8"
+    >
+
         <!-- Header -->
-        <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-[#bf5f5c]">Testimoni</p>
-        <h2 class="mb-6 text-4xl font-bold text-gray-900 md:text-5xl">Dari Desa untuk Desa</h2>
-        <p class="mx-auto mb-12 max-w-3xl px-4 text-base leading-relaxed text-gray-600">
-            Bukan sekadar janji. Desa-desa mitra kami telah merasakan perubahan besar dalam efisiensi, transparansi, dan kemudahan layanan.
+        <p class="mb-2 text-sm font-semibold uppercase tracking-wider text-[#bf5f5c]">
+            Testimoni
         </p>
 
-        <!-- Slider Wrapper -->
-        <div id="testimonial-track-wrapper" class="relative w-full overflow-hidden rounded-2xl">
-            <div id="testimonial-track" class="flex transition-transform duration-500 ease-in-out cursor-grab active:cursor-grabbing will-change-transform">
-                <?php 
-                // 1. CEK DATA
-                if (isset($testi_data) && count($testi_data) > 0): 
-                    // 2. BAGI PER SLIDE (3 KARTU)
-                    $chunks = array_chunk($testi_data, 3);
-                    foreach ($chunks as $chunk): 
-                ?>
-                <div class="flex-shrink-0 w-full flex flex-nowrap items-stretch justify-center gap-4 px-4 sm:gap-6 sm:px-6">
-                    <?php foreach ($chunk as $item): ?>
-                    <div class="w-full flex-none sm:w-1/2 lg:w-1/3 flex justify-center">
-                        <div class="w-full max-w-sm rounded-2xl bg-white p-6 md:p-8 flex flex-col items-center text-center shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] testimonial-fade-in">
-                            <div class="relative mb-6 h-16 w-16 md:h-20 md:w-20 overflow-hidden rounded-full bg-gray-200 border-2 border-white shadow-sm">
-                                <?php if (!empty($item->photo)): ?>
-                                    <img src="<?= base_url('uploads/testimoni/'.$item->photo) ?>" alt="<?= $item->name ?>" class="h-full w-full object-cover" loading="lazy" />
-                                <?php else: ?>
-                                    <div class="w-full h-full flex items-center justify-center bg-gray-300 text-gray-500 text-[10px]">No Image</div>
-                                <?php endif; ?>
+        <h2 class="mb-6 text-4xl font-bold text-gray-900 md:text-5xl">
+            Dari Desa untuk Desa
+        </h2>
+
+        <p class="mx-auto mb-12 max-w-3xl px-4 text-base leading-relaxed text-gray-600">
+            Bukan sekadar janji. Desa-desa mitra kami telah merasakan perubahan besar
+            dalam efisiensi, transparansi, dan kemudahan layanan.
+        </p>
+
+
+        <!-- =================================================
+             SLIDER
+        ================================================== -->
+
+        <div
+            id="testimonial-slider"
+            class="relative w-full overflow-hidden"
+        >
+
+            <div
+                id="testimonial-track"
+                class="flex cursor-grab select-none gap-4 active:cursor-grabbing sm:gap-6"
+            >
+
+                <?php if (!empty($testimonials)): ?>
+
+                    <?php foreach ($testimonials as $item): ?>
+
+                        <!-- =================================================
+                             1 TESTIMONI = 1 SLIDE
+                        ================================================== -->
+
+                        <div class="testimonial-slide flex-shrink-0">
+
+                            <div
+                                class="testimonial-card mx-auto flex h-full w-full max-w-sm flex-col items-center rounded-2xl bg-white p-6 text-center shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] md:p-8"
+                            >
+
+                                <!-- Foto -->
+                                <div
+                                    class="relative mb-6 h-16 w-16 overflow-hidden rounded-full border-2 border-white bg-gray-100 shadow-sm md:h-20 md:w-20"
+                                >
+
+                                    <?php if (!empty($item->photo)): ?>
+
+                                        <img
+                                            src="<?= base_url('uploads/testimoni/' . $item->photo) ?>"
+                                            alt="<?= html_escape($item->name) ?>"
+                                            class="h-full w-full object-cover"
+                                            loading="lazy"
+                                        >
+
+                                    <?php else: ?>
+
+                                        <!-- Placeholder -->
+                                        <img
+                                            src="<?= base_url('assets/img/testimoni-placeholder.png') ?>"
+                                            alt="Foto"
+                                            class="h-full w-full object-cover"
+                                        >
+
+                                    <?php endif; ?>
+
+                                </div>
+
+
+                                <!-- Isi Testimoni -->
+                                <p class="mb-6 text-sm leading-relaxed text-gray-500 md:text-base">
+
+                                    <?= html_escape(
+                                        html_entity_decode(
+                                            $item->content,
+                                            ENT_QUOTES,
+                                            'UTF-8'
+                                        )
+                                    ) ?>
+
+                                </p>
+
+
+                                <!-- Nama & Jabatan -->
+                                <div class="mt-auto">
+
+                                    <p class="text-sm font-bold italic text-gray-900">
+                                        <?= html_escape($item->name) ?>
+                                    </p>
+
+                                    <?php if (!empty($item->position)): ?>
+
+                                        <p class="text-xs font-medium text-gray-400">
+                                            <?= html_escape($item->position) ?>
+                                        </p>
+
+                                    <?php endif; ?>
+
+                                </div>
+
                             </div>
-                            <p class="mb-6 text-sm leading-relaxed text-gray-500 md:text-base"><?= $item->content ?></p>
-                            <div>
-                                <p class="text-sm font-bold italic text-gray-900"><?= $item->name ?></p>
-                                <p class="text-xs font-medium text-gray-400"><?= $item->position ?></p>
-                            </div>
+
                         </div>
-                    </div>
+
                     <?php endforeach; ?>
-                </div>
-                <?php endforeach; 
-                else: ?>
-                    <div class="w-full text-center py-20 text-gray-500">
-                        <p>Belum ada testimoni. Silakan tambahkan dari halaman Admin.</p>
+
+                <?php else: ?>
+
+                    <!-- Tidak ada data -->
+                    <div class="w-full py-20 text-center text-gray-500">
+
+                        <p>
+                            Belum ada testimoni.
+                        </p>
+
                     </div>
+
                 <?php endif; ?>
+
             </div>
+
         </div>
 
-        <!-- Pagination Dots -->
-        <div id="pagination-dots" class="mt-10 flex items-center justify-center gap-3"></div>
+
+        <!-- =================================================
+             PAGINATION DOTS
+        ================================================== -->
+
+        <?php if (!empty($testimonials) && count($testimonials) > 1): ?>
+
+            <div
+                id="testimonial-pagination"
+                class="mt-8 flex items-center justify-center gap-2"
+            ></div>
+
+        <?php endif; ?>
+
     </div>
+
 </section>
 
+
 <!-- =========================================================
-     CTA SECTION (Statis)
+     CTA SECTION
 ========================================================= -->
-<section class="relative bg-[#cc5050] py-20 md:py-24 flex items-center justify-center overflow-hidden">
-    <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 relative z-10">
-        <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white whitespace-normal md:whitespace-nowrap leading-tight mb-4 md:mb-6">Mulai Transformasi Desa Anda Hari Ini</h2>
-        <p class="text-base md:text-lg text-white/90 max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed">Ubah cara desa Anda bekerja. Mulai sekarang, pelayanan publik jadi lebih cepat, efisien, dan ramah warga.</p>
-        <a href="#" class="group relative inline-block bg-[#f2d88d] text-gray-900 font-semibold px-8 py-3.5 md:px-10 md:py-4 rounded-lg shadow-md hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] transition-all duration-300 ease-in-out hover:scale-105 active:scale-95 overflow-hidden cta-fade-in-up">
-            <span class="relative z-10">Hubungi Kami Sekarang</span>
-            <span class="absolute inset-0 bg-gradient-to-r from-[#e6d082] to-[#f2d88d] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+
+<section
+    class="relative flex items-center justify-center overflow-hidden bg-[#cc5050] py-20 md:py-24"
+>
+
+    <div
+        class="relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8"
+    >
+
+        <h2
+            class="mb-4 text-3xl font-bold leading-tight text-white md:mb-6 md:text-4xl lg:text-5xl"
+        >
+            Mulai Transformasi Desa Anda Hari Ini
+        </h2>
+
+        <p
+            class="mx-auto mb-8 max-w-2xl text-base leading-relaxed text-white/90 md:mb-10 md:text-lg"
+        >
+            Ubah cara desa Anda bekerja. Mulai sekarang, pelayanan publik jadi lebih
+            cepat, efisien, dan ramah warga.
+        </p>
+
+        <a
+            href="#"
+            class="cta-fade-in-up group relative inline-block overflow-hidden rounded-lg bg-[#f2d88d] px-8 py-3.5 font-semibold text-gray-900 shadow-md transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.3)] active:scale-95 md:px-10 md:py-4"
+        >
+
+            <span class="relative z-10">
+                Hubungi Kami Sekarang
+            </span>
+
+            <span
+                class="absolute inset-0 bg-gradient-to-r from-[#e6d082] to-[#f2d88d] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            ></span>
+
         </a>
+
     </div>
+
 </section>
 
+
 <!-- =========================================================
-     JAVASCRIPT SLIDER (Dengan Clone, Drag, Swipe, Autoplay)
+     JAVASCRIPT TESTIMONI SLIDER
 ========================================================= -->
+
 <script>
+
 document.addEventListener('DOMContentLoaded', function () {
-    
-    // 1. Ambil Elemen
+
+    const slider = document.getElementById('testimonial-slider');
     const track = document.getElementById('testimonial-track');
-    const dots = document.getElementById('pagination-dots');
-    
-    if (!track) return;
+    const pagination = document.getElementById('testimonial-pagination');
 
-    // 2. Hitung Slide & Cek Validasi
-    // Hanya ambil elemen yang merupakan slide (div pembungkus)
-    let slideElements = track.querySelectorAll('div.flex-shrink-0');
-    const slideCount = slideElements.length;
-
-    // Jika tidak ada slide atau hanya 1 slide, kita tampilkan statis saja (tidak perlu slider)
-    if (slideCount <= 1) {
-        dots.innerHTML = ''; // Hilangkan dots
+    if (!slider || !track) {
         return;
     }
 
-    // 3. Konfigurasi Slider (Sama seperti kode asli Anda)
-    const wrapWidth = () => track.parentElement.offsetWidth;
-    const CLONE = slideCount;
-    let curr = 0, busy = false, timer = null;
-    let isDrag = false, startX = 0, startIdx = 0;
 
-    // 4. Clone Slide Pertama ke Akhir (Untuk Infinite Loop)
-    const firstSlide = slideElements[0].cloneNode(true);
-    track.appendChild(firstSlide);
+    /* =====================================================
+       DATA SLIDE
+    ====================================================== */
 
-    // 5. Render Pagination Dots
-    dots.innerHTML = Array.from({ length: slideCount }, (_, i) => 
-        `<button type="button" class="h-2.5 rounded-full transition-all duration-300 ${i === 0 ? 'w-6 bg-gray-900' : 'w-2.5 bg-gray-300'}"></button>`
-    ).join('');
+    let originalSlides = Array.from(
+        track.querySelectorAll('.testimonial-slide')
+    );
 
-    dots.querySelectorAll('button').forEach((btn, i) => {
-        btn.onclick = () => { if(!busy){ stopAuto(); goTo(i); startAuto(); } };
-    });
+    const totalSlides = originalSlides.length;
 
-    // 6. Navigasi
-    function goTo(idx) {
-        if (busy) return;
-        busy = true;
-        curr = idx;
-        track.style.transition = 'transform 0.5s ease-in-out';
-        track.style.transform = `translateX(-${idx * 100}%)`;
 
-        const dotIdx = curr === CLONE ? 0 : curr;
-        dots.querySelectorAll('button').forEach((btn, i) => {
-            btn.className = `h-2.5 rounded-full transition-all duration-300 ${i === dotIdx ? 'w-6 bg-gray-900' : 'w-2.5 bg-gray-300'}`;
+    if (totalSlides <= 1) {
+        if (pagination) {
+            pagination.innerHTML = '';
+        }
+
+        return;
+    }
+
+
+    /* =====================================================
+       KONFIGURASI
+    ====================================================== */
+
+    let currentIndex = 0;
+    let timer = null;
+
+    let isDragging = false;
+    let startX = 0;
+    let currentTranslate = 0;
+
+    let slideWidth = 0;
+    let gap = 0;
+
+
+    /* =====================================================
+       JUMLAH SLIDE YANG TERLIHAT
+    ====================================================== */
+
+    function getVisibleSlides() {
+
+        if (window.innerWidth <= 600) {
+            return 1;
+        }
+
+        if (window.innerWidth <= 900) {
+            return 2;
+        }
+
+        return 3;
+    }
+
+
+    /* =====================================================
+       BUAT CLONE
+       
+       Clone diperlukan supaya slider bisa infinite.
+    ====================================================== */
+
+    function createClones() {
+
+        track.querySelectorAll('.testimonial-clone').forEach(function (clone) {
+            clone.remove();
         });
 
-        setTimeout(() => {
-            if (curr === CLONE) {
-                track.style.transition = 'none';
-                track.style.transform = 'translateX(0%)';
-                curr = 0;
-            }
-            busy = false;
-        }, 550);
-    }
 
-    function nextSlide() { if (!busy) goTo(curr + 1); }
+        const visible = getVisibleSlides();
 
-    // 7. Auto Play
-    function startAuto() { stopAuto(); timer = setInterval(nextSlide, 4000); }
-    function stopAuto() { if (timer) { clearInterval(timer); timer = null; } }
 
-    // 8. Drag / Swipe
-    function getPos(e) { return e.clientX || (e.touches && e.touches[0].clientX); }
-    function onStart(e) {
-        if (busy) return;
-        stopAuto();
-        isDrag = true;
-        startX = getPos(e);
-        startIdx = curr;
-        track.style.transition = 'none';
-    }
-    function onMove(e) {
-        if (!isDrag) return;
-        const diff = ((getPos(e) - startX) / wrapWidth()) * 100;
-        track.style.transform = `translateX(${(-startIdx * 100) + diff}%)`;
-    }
-    function onEnd(e) {
-        if (!isDrag) return;
-        isDrag = false;
-        const diff = (e.changedTouches ? e.changedTouches[0].clientX : e.clientX) - startX;
-        const th = 50;
+        /*
+         * Clone beberapa slide pertama
+         */
+        for (let i = 0; i < visible; i++) {
 
-        if (diff < -th) goTo(startIdx + 1);
-        else if (diff > th && startIdx > 0) goTo(startIdx - 1);
-        else {
-            track.style.transition = 'transform 0.5s ease-in-out';
-            track.style.transform = `translateX(-${startIdx * 100}%)`;
-            setTimeout(() => { busy = false; }, 500);
+            const clone = originalSlides[i % totalSlides].cloneNode(true);
+
+            clone.classList.add('testimonial-clone');
+
+            track.appendChild(clone);
         }
-        startAuto();
+
+
+        /*
+         * Clone beberapa slide terakhir
+         */
+        for (let i = visible - 1; i >= 0; i--) {
+
+            const clone = originalSlides[
+                (totalSlides - 1 - i + totalSlides) % totalSlides
+            ].cloneNode(true);
+
+            clone.classList.add('testimonial-clone');
+
+            track.insertBefore(clone, track.firstChild);
+        }
+
     }
 
-    // 9. Event Listener
-    track.addEventListener('mousedown', onStart);
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('mouseup', onEnd);
 
-    track.addEventListener('touchstart', onStart, { passive: true });
-    window.addEventListener('touchmove', onMove, { passive: false });
-    window.addEventListener('touchend', onEnd);
+    /* =====================================================
+       HITUNG UKURAN KARTU
+    ====================================================== */
 
-    // 10. Inisialisasi
-    track.style.transform = 'translateX(0%)';
-    setTimeout(() => { track.style.transition = 'transform 0.5s ease-in-out'; startAuto(); }, 50);
+    function calculateSize() {
+
+        const visible = getVisibleSlides();
+
+        gap = window.innerWidth <= 600 ? 16 : 24;
+
+        const containerWidth = slider.offsetWidth;
+
+        slideWidth =
+            (containerWidth - (gap * (visible - 1))) / visible;
+
+
+        const allSlides = track.querySelectorAll('.testimonial-slide');
+
+        allSlides.forEach(function (slide) {
+
+            slide.style.width = slideWidth + 'px';
+
+        });
+
+
+        /*
+         * Posisi awal karena ada clone di depan
+         */
+        const cloneBefore = visible;
+
+        currentTranslate =
+            -((currentIndex + cloneBefore) * (slideWidth + gap));
+
+        track.style.transition = 'none';
+
+        track.style.transform =
+            `translateX(${currentTranslate}px)`;
+
+    }
+
+
+    /* =====================================================
+       PAGINATION DOTS
+    ====================================================== */
+
+    function createPagination() {
+
+        if (!pagination) {
+            return;
+        }
+
+
+        pagination.innerHTML = '';
+
+
+        for (let i = 0; i < totalSlides; i++) {
+
+            const dot = document.createElement('button');
+
+            dot.type = 'button';
+
+            dot.className =
+                'testimonial-dot';
+
+
+            if (i === currentIndex) {
+                dot.classList.add('active');
+            }
+
+
+            dot.addEventListener('click', function () {
+
+                goTo(i);
+
+            });
+
+
+            pagination.appendChild(dot);
+
+        }
+
+    }
+
+
+    /* =====================================================
+       UPDATE DOT
+    ====================================================== */
+
+    function updatePagination() {
+
+        if (!pagination) {
+            return;
+        }
+
+
+        const dots =
+            pagination.querySelectorAll('.testimonial-dot');
+
+
+        dots.forEach(function (dot, index) {
+
+            if (index === currentIndex) {
+
+                dot.classList.add('active');
+
+            } else {
+
+                dot.classList.remove('active');
+
+            }
+
+        });
+
+    }
+
+
+    /* =====================================================
+       PINDAH 1 KARTU
+    ====================================================== */
+
+    function goTo(index, animate = true) {
+
+        const visible = getVisibleSlides();
+
+        const cloneBefore = visible;
+
+
+        currentIndex = index;
+
+
+        const targetIndex =
+            currentIndex + cloneBefore;
+
+
+        currentTranslate =
+            -(targetIndex * (slideWidth + gap));
+
+
+        track.style.transition =
+            animate
+                ? 'transform 0.5s ease-in-out'
+                : 'none';
+
+
+        track.style.transform =
+            `translateX(${currentTranslate}px)`;
+
+
+        updatePagination();
+
+    }
+
+
+    /* =====================================================
+       NEXT
+       
+       INI YANG MEMBUATNYA BERGESER 1-1
+    ====================================================== */
+
+    function nextSlide() {
+
+        currentIndex++;
+
+        const visible = getVisibleSlides();
+
+        const cloneBefore = visible;
+
+
+        currentTranslate =
+            -(
+                (currentIndex + cloneBefore)
+                *
+                (slideWidth + gap)
+            );
+
+
+        track.style.transition =
+            'transform 0.5s ease-in-out';
+
+
+        track.style.transform =
+            `translateX(${currentTranslate}px)`;
+
+
+        /*
+         * Update dot
+         */
+        updatePagination();
+
+
+        /*
+         * Kalau sudah melewati slide asli,
+         * kembalikan ke awal tanpa terlihat.
+         */
+
+        if (currentIndex >= totalSlides) {
+
+            setTimeout(function () {
+
+                currentIndex = 0;
+
+                currentTranslate =
+                    -(
+                        cloneBefore
+                        *
+                        (slideWidth + gap)
+                    );
+
+
+                track.style.transition = 'none';
+
+                track.style.transform =
+                    `translateX(${currentTranslate}px)`;
+
+
+                updatePagination();
+
+            }, 500);
+
+        }
+
+    }
+
+
+    /* =====================================================
+       PREVIOUS
+    ====================================================== */
+
+    function previousSlide() {
+
+        if (currentIndex <= 0) {
+
+            const visible = getVisibleSlides();
+
+            /*
+             * Pindah ke clone terakhir terlebih dahulu
+             */
+            currentIndex = totalSlides;
+
+            const cloneBefore = visible;
+
+            currentTranslate =
+                -(
+                    (currentIndex + cloneBefore)
+                    *
+                    (slideWidth + gap)
+                );
+
+
+            track.style.transition = 'none';
+
+            track.style.transform =
+                `translateX(${currentTranslate}px)`;
+
+
+            /*
+             * Kemudian geser ke posisi sebelumnya
+             */
+            setTimeout(function () {
+
+                currentIndex = totalSlides - 1;
+
+                currentTranslate =
+                    -(
+                        (currentIndex + cloneBefore)
+                        *
+                        (slideWidth + gap)
+                    );
+
+
+                track.style.transition =
+                    'transform 0.5s ease-in-out';
+
+
+                track.style.transform =
+                    `translateX(${currentTranslate}px)`;
+
+
+                updatePagination();
+
+            }, 30);
+
+            return;
+
+        }
+
+
+        currentIndex--;
+
+
+        const cloneBefore = getVisibleSlides();
+
+
+        currentTranslate =
+            -(
+                (currentIndex + cloneBefore)
+                *
+                (slideWidth + gap)
+            );
+
+
+        track.style.transition =
+            'transform 0.5s ease-in-out';
+
+
+        track.style.transform =
+            `translateX(${currentTranslate}px)`;
+
+
+        updatePagination();
+
+    }
+
+
+    /* =====================================================
+       AUTOPLAY
+    ====================================================== */
+
+    function startAuto() {
+
+        stopAuto();
+
+
+        timer = setInterval(function () {
+
+            nextSlide();
+
+        }, 4000);
+
+    }
+
+
+    function stopAuto() {
+
+        if (timer) {
+
+            clearInterval(timer);
+
+            timer = null;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       DRAG / MOUSE
+    ====================================================== */
+
+    function getPointerX(event) {
+
+        if (event.touches && event.touches.length) {
+
+            return event.touches[0].clientX;
+
+        }
+
+        return event.clientX;
+
+    }
+
+
+    function onDragStart(event) {
+
+        stopAuto();
+
+        isDragging = true;
+
+        startX = getPointerX(event);
+
+        track.style.transition = 'none';
+
+    }
+
+
+    function onDragMove(event) {
+
+        if (!isDragging) {
+            return;
+        }
+
+
+        const currentX =
+            getPointerX(event);
+
+
+        const diff =
+            currentX - startX;
+
+
+        track.style.transform =
+            `translateX(${currentTranslate + diff}px)`;
+
+    }
+
+
+    function onDragEnd(event) {
+
+        if (!isDragging) {
+            return;
+        }
+
+
+        isDragging = false;
+
+
+        const endX =
+            getPointerX(event);
+
+
+        const diff =
+            endX - startX;
+
+
+        const threshold = 60;
+
+
+        if (diff < -threshold) {
+
+            nextSlide();
+
+        } else if (diff > threshold) {
+
+            previousSlide();
+
+        } else {
+
+            track.style.transition =
+                'transform 0.3s ease';
+
+
+            track.style.transform =
+                `translateX(${currentTranslate}px)`;
+
+        }
+
+
+        startAuto();
+
+    }
+
+
+    /* =====================================================
+       EVENT LISTENER
+    ====================================================== */
+
+    track.addEventListener(
+        'mousedown',
+        onDragStart
+    );
+
+    window.addEventListener(
+        'mousemove',
+        onDragMove
+    );
+
+    window.addEventListener(
+        'mouseup',
+        onDragEnd
+    );
+
+
+    track.addEventListener(
+        'touchstart',
+        onDragStart,
+        { passive: true }
+    );
+
+    window.addEventListener(
+        'touchmove',
+        onDragMove,
+        { passive: true }
+    );
+
+    window.addEventListener(
+        'touchend',
+        onDragEnd
+    );
+
+
+    /* =====================================================
+       RESPONSIVE
+    ====================================================== */
+
+    window.addEventListener(
+        'resize',
+        function () {
+
+            createClones();
+
+            calculateSize();
+
+        }
+    );
+
+
+    /* =====================================================
+       INIT
+    ====================================================== */
+
+    createClones();
+
+    calculateSize();
+
+    createPagination();
+
+    startAuto();
+
 });
+
 </script>
 
-<!-- Custom CSS -->
+
+<!-- =========================================================
+     CUSTOM CSS
+========================================================= -->
+
 <style>
-#testimoni-section .testimonial-fade-in { animation: testimonialFadeIn 0.6s ease-in-out forwards; }
-@keyframes testimonialFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-#testimoni-section #testimonial-track { user-select: none; -webkit-user-select: none; }
-.cta-fade-in-up { animation: ctaFadeInUp 0.8s ease-out forwards; }
-@keyframes ctaFadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* =========================================================
+   TESTIMONI SLIDE
+========================================================= */
+
+#testimoni-section {
+    position: relative;
+}
+
+
+/*
+ * Setiap testimonial adalah satu slide.
+ */
+#testimoni-section .testimonial-slide {
+    flex: 0 0 auto;
+}
+
+
+/*
+ * Kartu testimonial
+ */
+#testimoni-section .testimonial-card {
+    min-height: 245px;
+}
+
+
+/* =========================================================
+   PAGINATION DOTS
+========================================================= */
+
+#testimonial-pagination {
+    min-height: 12px;
+}
+
+
+.testimonial-dot {
+
+    width: 7px;
+    height: 7px;
+
+    padding: 0;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #d8c2bd;
+
+    cursor: pointer;
+
+    transition:
+        width 0.3s ease,
+        background 0.3s ease,
+        transform 0.3s ease;
+
+}
+
+
+.testimonial-dot:hover {
+
+    transform: scale(1.15);
+
+}
+
+
+.testimonial-dot.active {
+
+    width: 24px;
+
+    border-radius: 10px;
+
+    background: #bf5f5c;
+
+}
+
+
+/* =========================================================
+   DRAG
+========================================================= */
+
+#testimoni-section #testimonial-track {
+
+    user-select: none;
+
+    -webkit-user-select: none;
+
+    touch-action: pan-y;
+
+}
+
+
+/* =========================================================
+   ANIMATION TESTIMONI
+========================================================= */
+
+#testimoni-section .testimonial-card {
+
+    animation:
+        testimonialFadeIn
+        0.5s
+        ease-in-out;
+
+}
+
+
+@keyframes testimonialFadeIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(10px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.cta-fade-in-up {
+
+    animation:
+        ctaFadeInUp
+        0.8s
+        ease-out
+        forwards;
+
+}
+
+
+@keyframes ctaFadeInUp {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(20px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+    #testimoni-section .testimonial-card {
+
+        min-height: 240px;
+
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    #testimoni-section .testimonial-card {
+
+        min-height: 250px;
+
+        padding: 24px;
+
+    }
+
+}
+
 </style>

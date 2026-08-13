@@ -19,6 +19,20 @@ class Articles extends Admin_Controller
         $this->load->view('admin/articles/index', $data);
     }
 
+    public function detail($id)
+{
+    $article = $this->Article_model->get_by_id($id);
+
+    if (!$article) {
+        show_404();
+    }
+
+    $data['title']   = 'Detail Artikel';
+    $data['article'] = $article;
+
+    $this->load->view('admin/articles/detail', $data);
+}
+
     public function create()
     {
         $data['title'] = 'Tambah Artikel';

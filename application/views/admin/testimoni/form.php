@@ -44,7 +44,7 @@
         border: 1px solid #e5e5e5;
         border-radius: 10px;
         padding: 30px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     }
 
     .testimoni-card-title {
@@ -107,8 +107,19 @@
         background: #fafafa;
     }
 
+    /* =========================
+       PHOTO
+    ========================= */
+
     .photo-preview {
         margin-top: 15px;
+    }
+
+    .photo-preview-label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 12px;
+        color: #888;
     }
 
     .photo-preview img {
@@ -117,7 +128,43 @@
         object-fit: cover;
         border-radius: 8px;
         border: 1px solid #ddd;
+        display: block;
     }
+
+    .remove-photo-box {
+        margin-top: 12px;
+        padding: 10px 12px;
+        background: #fff5f5;
+        border: 1px solid #f5c2c7;
+        border-radius: 6px;
+    }
+
+    .remove-photo-label {
+        display: flex !important;
+        align-items: center;
+        gap: 8px;
+        margin: 0 !important;
+        color: #dc3545 !important;
+        font-weight: 600 !important;
+        cursor: pointer;
+    }
+
+    .remove-photo-label input {
+        width: 16px;
+        height: 16px;
+        margin: 0;
+        cursor: pointer;
+    }
+
+    .remove-photo-help {
+        margin: 5px 0 0 24px;
+        font-size: 12px;
+        color: #888;
+    }
+
+    /* =========================
+       STATUS
+    ========================= */
 
     .status-box {
         padding: 15px;
@@ -138,6 +185,10 @@
         width: 16px;
         height: 16px;
     }
+
+    /* =========================
+       BUTTON
+    ========================= */
 
     .form-actions {
         display: flex;
@@ -171,6 +222,10 @@
         background: #0b5ed7;
     }
 
+    /* =========================
+       ERROR
+    ========================= */
+
     .alert-error {
         background: #f8d7da;
         color: #842029;
@@ -180,7 +235,12 @@
         margin-bottom: 20px;
     }
 
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
     @media (max-width: 700px) {
+
         .testimoni-page {
             padding: 15px;
         }
@@ -196,17 +256,29 @@
         .testimoni-card {
             padding: 20px;
         }
+
+        .form-actions {
+            justify-content: stretch;
+        }
+
+        .form-actions .btn {
+            flex: 1;
+            text-align: center;
+        }
     }
 </style>
 
 
 <div class="testimoni-page">
 
-    <!-- Header -->
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
     <div class="testimoni-header">
 
         <div>
-            <h2><?= $title ?></h2>
+            <h2><?= html_escape($title) ?></h2>
 
             <p>
                 <?= $action === 'edit'
@@ -226,7 +298,10 @@
     </div>
 
 
-    <!-- Error -->
+    <!-- =====================================================
+         ERROR VALIDATION
+    ====================================================== -->
+
     <?php if (validation_errors()): ?>
 
         <div class="alert-error">
@@ -237,14 +312,10 @@
     <?php endif; ?>
 
 
-    <?php
-    $form_url = ($action === 'edit')
-        ? base_url('admin/testimoni/update/' . $item->id)
-        : base_url('admin/testimoni/store');
-    ?>
+    <!-- =====================================================
+         FORM
+    ====================================================== -->
 
-
-    <!-- Card -->
     <div class="testimoni-card">
 
         <div class="testimoni-card-title">
@@ -253,12 +324,17 @@
 
 
         <form
-            action="<?= $form_url ?>"
+            action="<?= $action === 'edit'
+                ? site_url('admin/testimoni/update/' . $item->id)
+                : site_url('admin/testimoni/store'); ?>"
             method="post"
             enctype="multipart/form-data"
         >
 
-            <!-- Nama -->
+            <!-- =================================================
+                 NAMA
+            ================================================== -->
+
             <div class="form-group">
 
                 <label for="name">
@@ -270,7 +346,7 @@
                     id="name"
                     name="name"
                     class="form-control"
-                    value="<?= set_value('name', $item->name ?? '') ?>"
+                    value="<?= set_value('name', isset($item->name) ? $item->name : '') ?>"
                     placeholder="Contoh: I Made Arya"
                     required
                 >
@@ -282,7 +358,10 @@
             </div>
 
 
-            <!-- Jabatan -->
+            <!-- =================================================
+                 JABATAN
+            ================================================== -->
+
             <div class="form-group">
 
                 <label for="position">
@@ -294,14 +373,17 @@
                     id="position"
                     name="position"
                     class="form-control"
-                    value="<?= set_value('position', $item->position ?? '') ?>"
+                    value="<?= set_value('position', isset($item->position) ? $item->position : '') ?>"
                     placeholder="Contoh: Kepala Desa"
                 >
 
             </div>
 
 
-            <!-- Isi -->
+            <!-- =================================================
+                 ISI TESTIMONI
+            ================================================== -->
+
             <div class="form-group">
 
                 <label for="content">
@@ -314,7 +396,7 @@
                     class="form-control"
                     placeholder="Tuliskan isi testimoni..."
                     required
-                ><?= set_value('content', $item->content ?? '') ?></textarea>
+                ><?= set_value('content', isset($item->content) ? $item->content : '') ?></textarea>
 
                 <small class="form-help">
                     Tuliskan pengalaman atau pendapat dari pemberi testimoni.
@@ -323,38 +405,58 @@
             </div>
 
 
-            <!-- Foto -->
+            <!-- =================================================
+                 FOTO
+            ================================================== -->
+
             <div class="form-group">
 
                 <label for="photo">
                     Foto
                 </label>
 
+
                 <?php if ($action === 'edit'): ?>
 
                     <small class="form-help">
-                        Kosongkan jika tidak ingin mengganti foto.
+                        Pilih foto baru jika ingin mengganti foto.
+                    </small>
+
+                <?php else: ?>
+
+                    <small class="form-help">
+                        Pilih foto untuk testimoni.
                     </small>
 
                 <?php endif; ?>
 
+
+                <!-- INPUT FOTO -->
 
                 <input
                     type="file"
                     id="photo"
                     name="photo"
                     class="file-input"
-                    accept="image/jpeg,image/png"
+                    accept="image/jpeg,image/png,image/jpg"
                 >
 
 
-                <div class="photo-preview">
+                <!-- PREVIEW FOTO -->
 
-                    <?php if ($action === 'edit' && !empty($item->photo)): ?>
+                <div
+                    class="photo-preview"
+                    id="photoPreviewContainer"
+                >
 
-                        <p class="form-help">
+                    <?php if (
+                        $action === 'edit' &&
+                        !empty($item->photo)
+                    ): ?>
+
+                        <span class="photo-preview-label">
                             Foto saat ini:
-                        </p>
+                        </span>
 
                         <img
                             id="imagePreview"
@@ -368,17 +470,59 @@
                             id="imagePreview"
                             src=""
                             alt="Preview"
-                            style="display:none;"
+                            style="display: none;"
                         >
 
                     <?php endif; ?>
 
                 </div>
 
+
+                <!-- HAPUS FOTO -->
+
+                <?php if (
+                    $action === 'edit' &&
+                    !empty($item->photo)
+                ): ?>
+
+                    <div class="remove-photo-box">
+
+                        <label
+                            for="remove_photo"
+                            class="remove-photo-label"
+                        >
+
+                            <input
+                                type="checkbox"
+                                name="remove_photo"
+                                id="remove_photo"
+                                value="1"
+                            >
+
+                            Hapus foto
+
+                        </label>
+
+                        <div class="remove-photo-help">
+                            Centang jika ingin menghapus foto saat ini.
+                        </div>
+
+                    </div>
+
+                <?php endif; ?>
+
+
+                <small class="form-help">
+                    Format JPG, JPEG, atau PNG. Maksimal 5 MB.
+                </small>
+
             </div>
 
 
-            <!-- Status -->
+            <!-- =================================================
+                 STATUS
+            ================================================== -->
+
             <div class="form-group">
 
                 <label>
@@ -395,9 +539,9 @@
                             name="is_active"
                             value="1"
                             <?= (
-                                !isset($item)
-                                || !$item
-                                || $item->status === 'active'
+                                !isset($item) ||
+                                !$item ||
+                                $item->status === 'active'
                             ) ? 'checked' : '' ?>
                         >
 
@@ -414,7 +558,10 @@
             </div>
 
 
-            <!-- Tombol -->
+            <!-- =================================================
+                 BUTTON
+            ================================================== -->
+
             <div class="form-actions">
 
                 <a
@@ -440,21 +587,115 @@
 </div>
 
 
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
 <script>
+document.addEventListener('DOMContentLoaded', function () {
 
-document.getElementById('photo').addEventListener('change', function(event) {
+    const photoInput = document.getElementById('photo');
+    const imagePreview = document.getElementById('imagePreview');
+    const removePhoto = document.getElementById('remove_photo');
 
-    const file = event.target.files[0];
+    /*
+    |--------------------------------------------------------------------------
+    | PILIH FOTO BARU
+    |--------------------------------------------------------------------------
+    */
 
-    if (!file) {
-        return;
+    if (photoInput) {
+
+        photoInput.addEventListener('change', function (event) {
+
+            const file = event.target.files[0];
+
+            if (!file) {
+                return;
+            }
+
+            /*
+             * Kalau user memilih foto baru,
+             * otomatis batalkan checkbox hapus.
+             */
+            if (removePhoto) {
+                removePhoto.checked = false;
+            }
+
+            /*
+             * Tampilkan preview foto baru.
+             */
+            if (imagePreview) {
+
+                imagePreview.src = URL.createObjectURL(file);
+                imagePreview.style.display = 'block';
+
+                const label = document.querySelector(
+                    '.photo-preview-label'
+                );
+
+                if (label) {
+                    label.textContent = 'Preview foto baru:';
+                }
+            }
+
+        });
+
     }
 
-    const preview = document.getElementById('imagePreview');
 
-    preview.src = URL.createObjectURL(file);
-    preview.style.display = 'block';
+    /*
+    |--------------------------------------------------------------------------
+    | CHECKBOX HAPUS FOTO
+    |--------------------------------------------------------------------------
+    */
+
+    if (removePhoto) {
+
+        removePhoto.addEventListener('change', function () {
+
+            if (this.checked) {
+
+                /*
+                 * Sembunyikan preview saat checkbox hapus dicentang.
+                 */
+                if (imagePreview) {
+                    imagePreview.style.display = 'none';
+                }
+
+            } else {
+
+                /*
+                 * Jika dibatalkan, tampilkan kembali
+                 * foto lama jika memang ada.
+                 */
+                if (imagePreview) {
+
+                    <?php if (
+                        $action === 'edit' &&
+                        !empty($item->photo)
+                    ): ?>
+
+                        /*
+                         * Jika tidak ada foto baru yang dipilih,
+                         * kembalikan foto lama.
+                         */
+                        if (!photoInput.files.length) {
+                            imagePreview.src =
+                                "<?= base_url('uploads/testimoni/' . $item->photo) ?>";
+
+                            imagePreview.style.display = 'block';
+                        }
+
+                    <?php endif; ?>
+
+                }
+
+            }
+
+        });
+
+    }
 
 });
-
 </script>

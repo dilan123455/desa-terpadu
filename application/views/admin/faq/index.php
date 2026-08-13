@@ -15,101 +15,302 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #f5f7fa;
+            background: #f3f4f6;
             color: #1f2937;
         }
 
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 40px auto;
+        /* ================= SIDEBAR ================= */
+
+        .sidebar {
+            width: 230px;
+            background: #ffffff;
+            border-right: 1px solid #e5e7eb;
+            min-height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-area {
+            height: 72px;
+            padding: 15px 18px;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo {
+            width: 40px;
+            height: 40px;
+            background: #CC4B4B;
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .logo-text h2 {
+            margin: 0;
+            font-size: 14px;
+            color: #172554;
+        }
+
+        .logo-text p {
+            margin: 3px 0 0;
+            font-size: 10px;
+            color: #64748b;
+        }
+
+        .menu {
+            padding: 22px 12px;
+            flex: 1;
+        }
+
+        .menu-title {
+            font-size: 10px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            margin: 0 10px 10px;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 11px 13px;
+            margin-bottom: 4px;
+            border-radius: 9px;
+            text-decoration: none;
+            color: #475569;
+            font-size: 13px;
+            transition: .2s;
+        }
+
+        .menu a:hover {
+            background: #fbe8e8;
+            color: #CC4B4B;
+        }
+
+        .menu a.active {
+            background: #fbe8e8;
+            color: #CC4B4B;
+            font-weight: 600;
+        }
+
+        .menu-icon {
+            width: 20px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        /* ================= LOGOUT ================= */
+
+        .logout {
+            padding: 15px 12px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .logout a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 13px;
+            border-radius: 9px;
+            color: #dc2626;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .logout a:hover {
+            background: #fef2f2;
+        }
+
+        /* ================= MAIN ================= */
+
+        .main {
+            margin-left: 230px;
+            min-height: 100vh;
+        }
+
+        /* ================= TOPBAR ================= */
+
+        .topbar {
+            height: 72px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 0 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topbar-title h1 {
+            margin: 0;
+            font-size: 22px;
+            color: #172033;
+        }
+
+        .topbar-title p {
+            margin: 4px 0 0;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .admin-info {
+            text-align: right;
+        }
+
+        .admin-info strong {
+            display: block;
+            font-size: 12px;
+            color: #1e293b;
+        }
+
+        .admin-info span {
+            font-size: 10px;
+            color: #64748b;
+        }
+
+        .avatar {
+            width: 34px;
+            height: 34px;
+            background: #CC4B4B;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* ================= CONTENT ================= */
+
+        .content {
+            padding: 30px;
         }
 
         .page-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 20px;
             margin-bottom: 25px;
         }
 
-        .page-header h1 {
-            margin: 0 0 8px;
-            font-size: 30px;
+        .page-header h2 {
+            margin: 0;
+            font-size: 25px;
+            color: #172033;
         }
 
         .page-header p {
-            margin: 0;
-            color: #6b7280;
-            font-size: 14px;
+            margin: 7px 0 0;
+            color: #64748b;
+            font-size: 13px;
         }
 
-        .header-actions {
-            display: flex;
-            gap: 10px;
-        }
+        /* ================= BUTTON ================= */
 
-        .btn {
-            display: inline-block;
+        .btn-add {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             padding: 10px 16px;
-            border-radius: 7px;
+            background: #CC4B4B;
+            color: white;
             text-decoration: none;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
+            border-radius: 9px;
+            font-size: 12px;
             font-weight: 600;
+            box-shadow: 0 3px 8px rgba(204, 75, 75, .2);
+            transition: .2s;
+            white-space: nowrap;
         }
 
-        .btn-primary {
-            background: #2563eb;
-            color: white;
+        .btn-add:hover {
+            background: #b83f3f;
+            transform: translateY(-1px);
         }
 
-        .btn-secondary {
-            background: #e5e7eb;
-            color: #1f2937;
-        }
-
-        .btn-info {
-            background: #0ea5e9;
-            color: white;
-        }
-
-        .btn-warning {
-            background: #f59e0b;
-            color: white;
-        }
-
-        .btn-danger {
-            background: #dc2626;
-            color: white;
-        }
-
-        .btn:hover {
-            opacity: 0.9;
-        }
+        /* ================= ALERT ================= */
 
         .alert {
-            padding: 12px 16px;
-            border-radius: 8px;
+            padding: 13px 16px;
             margin-bottom: 20px;
+            border-radius: 10px;
+            font-size: 13px;
         }
 
         .alert-success {
-            background: #dcfce7;
+            background: #ecfdf3;
             color: #166534;
+            border: 1px solid #bbf7d0;
         }
 
         .alert-error {
-            background: #fee2e2;
+            background: #fef2f2;
             color: #991b1b;
+            border: 1px solid #fecaca;
         }
+
+        /* ================= CARD ================= */
 
         .card {
             background: white;
-            border-radius: 14px;
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
+            border: 1px solid #e5e7eb;
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, .04);
             overflow: hidden;
         }
+
+        .card-header {
+            padding: 20px 23px;
+            border-bottom: 1px solid #edf0f2;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: #fbe8e8;
+            color: #CC4B4B;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .card-header h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #1e293b;
+        }
+
+        .card-header p {
+            margin: 4px 0 0;
+            font-size: 11px;
+            color: #94a3b8;
+        }
+
+        /* ================= TABLE ================= */
 
         .table-wrapper {
             overflow-x: auto;
@@ -122,266 +323,814 @@
 
         th,
         td {
-            padding: 15px;
-            border-bottom: 1px solid #e5e7eb;
-            text-align: left;
+            padding: 14px 15px;
+            border-bottom: 1px solid #f1f5f9;
             vertical-align: middle;
         }
 
         th {
-            background: #f8fafc;
+            background: #fafafa;
+            color: #64748b;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .3px;
+            white-space: nowrap;
+            text-align: left;
+        }
+
+        td {
             font-size: 13px;
             color: #475569;
         }
 
-        td {
-            font-size: 14px;
+        tbody tr {
+            transition: .15s;
         }
+
+        tbody tr:hover {
+            background: #fffafa;
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* ================= QUESTION ================= */
 
         .question {
+            max-width: 280px;
             font-weight: 600;
             color: #1e293b;
-            max-width: 300px;
+            line-height: 1.5;
         }
 
-        .answer {
-    max-width: 420px;
-    color: #64748b;
-    line-height: 1.6;
-    white-space: normal;
-    word-break: break-word;
-}
+        /* ================= ANSWER ================= */
 
-        .badge {
-            display: inline-block;
-            padding: 5px 10px;
-            border-radius: 20px;
+        .answer {
+            max-width: 430px;
+            color: #64748b;
+            line-height: 1.6;
+            white-space: normal;
+            word-break: break-word;
+        }
+
+        /* ================= ORDER ================= */
+
+        .sort-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 7px;
+            color: #64748b;
             font-size: 12px;
             font-weight: 600;
+        }
+
+        /* ================= BADGE ================= */
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
         }
 
         .badge-active {
-            background: #dcfce7;
-            color: #166534;
+            background: #ecfdf3;
+            color: #15803d;
         }
 
         .badge-inactive {
-            background: #e5e7eb;
-            color: #475569;
-        }
-
-        .actions {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-
-        .actions .btn {
-            padding: 7px 10px;
-            font-size: 12px;
-        }
-
-        .empty {
-            text-align: center;
-            padding: 50px 20px;
+            background: #f1f5f9;
             color: #64748b;
         }
 
-        @media (max-width: 700px) {
+        /* ================= ACTIONS ================= */
+
+        .actions {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 7px 10px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 600;
+            transition: .15s;
+            white-space: nowrap;
+        }
+
+        .btn-detail {
+            background: #e8f7fa;
+            color: #087990;
+        }
+
+        .btn-detail:hover {
+            background: #cff4fc;
+        }
+
+        .btn-edit {
+            background: #fff8df;
+            color: #a16207;
+        }
+
+        .btn-edit:hover {
+            background: #fef3c7;
+        }
+
+        .btn-delete {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .btn-delete:hover {
+            background: #fee2e2;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            padding: 55px 20px;
+            text-align: center;
+        }
+
+        .empty-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+            border-radius: 50%;
+            background: #fbe8e8;
+            color: #CC4B4B;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+        }
+
+        .empty strong {
+            display: block;
+            color: #334155;
+            font-size: 14px;
+        }
+
+        .empty p {
+            margin: 7px 0 18px;
+            color: #94a3b8;
+            font-size: 12px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            margin-top: 30px;
+            padding: 18px 0;
+            border-top: 1px solid #e5e7eb;
+            color: #94a3b8;
+            font-size: 11px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+                width: 70px;
+            }
+
+            .logo-text,
+            .menu-title,
+            .menu a span:not(.menu-icon),
+            .logout a span:not(.menu-icon) {
+                display: none;
+            }
+
+            .logo-area {
+                justify-content: center;
+                padding: 15px 5px;
+            }
+
+            .menu a {
+                justify-content: center;
+                padding: 12px;
+            }
+
+            .logout a {
+                justify-content: center;
+            }
+
+            .main {
+                margin-left: 70px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 650px) {
+
             .page-header {
                 flex-direction: column;
                 align-items: flex-start;
-                gap: 15px;
             }
 
-            .header-actions {
-                width: 100%;
+            .admin-info {
+                display: none;
             }
 
-            .header-actions .btn {
-                flex: 1;
-                text-align: center;
+            .topbar {
+                padding: 0 18px;
+            }
+
+            .content {
+                padding: 15px;
             }
         }
     </style>
+
 </head>
 
 <body>
 
-<div class="container">
 
-    <div class="page-header">
+    <!-- ================= SIDEBAR ================= -->
 
-        <div>
-            <h1>Kelola FAQ</h1>
+    <aside class="sidebar">
 
-            <p>
-                Kelola pertanyaan dan jawaban yang ditampilkan pada website Desa Terpadu.
+        <!-- Logo -->
+        <div class="logo-area">
+
+            <div class="logo">
+                D
+            </div>
+
+            <div class="logo-text">
+
+                <h2>
+                    Desa Terpadu
+                </h2>
+
+                <p>
+                    Admin Panel
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- Menu -->
+        <nav class="menu">
+
+            <p class="menu-title">
+                Menu Utama
             </p>
-        </div>
 
-        <div class="header-actions">
 
-            <a
-                href="<?= site_url('admin/dashboard'); ?>"
-                class="btn btn-secondary"
-            >
-                ← Dashboard
+            <!-- Dashboard -->
+            <a href="<?= site_url('admin/dashboard'); ?>">
+
+                <span class="menu-icon">⌂</span>
+
+                <span>
+                    Dashboard
+                </span>
+
             </a>
 
+
+            <!-- Artikel -->
+            <a href="<?= site_url('admin/articles'); ?>">
+
+                <span class="menu-icon">📰</span>
+
+                <span>
+                    Artikel
+                </span>
+
+            </a>
+
+
+            <!-- Testimoni -->
+            <a href="<?= site_url('admin/testimoni'); ?>">
+
+                <span class="menu-icon">💬</span>
+
+                <span>
+                    Testimoni
+                </span>
+
+            </a>
+
+
+            <!-- FAQ -->
             <a
-                href="<?= site_url('admin/faq/create'); ?>"
-                class="btn btn-primary"
+                href="<?= site_url('admin/faq'); ?>"
+                class="active"
             >
-                + Tambah FAQ
+
+                <span class="menu-icon">❓</span>
+
+                <span>
+                    FAQ
+                </span>
+
+            </a>
+
+
+            <!-- Contact -->
+            <a href="<?= site_url('admin/contact_messages'); ?>">
+
+                <span class="menu-icon">✉️</span>
+
+                <span>
+                    Pesan Masuk
+                </span>
+
+            </a>
+
+
+            <p
+                class="menu-title"
+                style="margin-top: 25px;"
+            >
+                Konten Website
+            </p>
+
+
+            <!-- About -->
+            <a href="<?= site_url('admin/about'); ?>">
+
+                <span class="menu-icon">ℹ️</span>
+
+                <span>
+                    About
+                </span>
+
+            </a>
+
+
+            <!-- Features -->
+            <a href="<?= site_url('admin/features'); ?>">
+
+                <span class="menu-icon">⭐</span>
+
+                <span>
+                    Features
+                </span>
+
+            </a>
+
+
+            <!-- Implementation -->
+            <a href="<?= site_url('admin/implementation'); ?>">
+
+                <span class="menu-icon">⚙️</span>
+
+                <span>
+                    Implementation
+                </span>
+
+            </a>
+
+        </nav>
+
+
+        <!-- Logout -->
+        <div class="logout">
+
+            <a href="<?= site_url('auth/logout'); ?>">
+
+                <span class="menu-icon">↪</span>
+
+                <span>
+                    Logout
+                </span>
+
             </a>
 
         </div>
 
-    </div>
+    </aside>
 
 
-    <?php if ($this->session->flashdata('success')): ?>
 
-        <div class="alert alert-success">
-            <?= html_escape($this->session->flashdata('success')); ?>
-        </div>
+    <!-- ================= MAIN ================= -->
 
-    <?php endif; ?>
+    <main class="main">
 
 
-    <?php if ($this->session->flashdata('error')): ?>
+        <!-- Topbar -->
+        <header class="topbar">
 
-        <div class="alert alert-error">
-            <?= html_escape($this->session->flashdata('error')); ?>
-        </div>
+            <div class="topbar-title">
 
-    <?php endif; ?>
+                <h1>
+                    FAQ
+                </h1>
+
+                <p>
+                    Kelola pertanyaan dan jawaban Desa Terpadu
+                </p>
+
+            </div>
 
 
-    <div class="card">
+            <div class="admin-profile">
 
-        <?php if (empty($faqs)): ?>
+                <div class="admin-info">
 
-            <div class="empty">
+                    <strong>
+                        Administrator
+                    </strong>
 
-                <p>Belum ada FAQ.</p>
+                    <span>
+                        Admin Panel
+                    </span>
+
+                </div>
+
+                <div class="avatar">
+                    A
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- ================= CONTENT ================= -->
+
+        <section class="content">
+
+
+            <!-- Page Header -->
+            <div class="page-header">
+
+                <div>
+
+                    <h2>
+                        Kelola FAQ
+                    </h2>
+
+                    <p>
+                        Kelola pertanyaan dan jawaban yang ditampilkan
+                        pada website Desa Terpadu.
+                    </p>
+
+                </div>
+
 
                 <a
                     href="<?= site_url('admin/faq/create'); ?>"
-                    class="btn btn-primary"
+                    class="btn-add"
                 >
-                    + Tambah FAQ
+                    <span>+</span>
+                    Tambah FAQ
                 </a>
 
             </div>
 
-        <?php else: ?>
 
-            <div class="table-wrapper">
 
-                <table>
+            <!-- ================= ALERT SUCCESS ================= -->
 
-                    <thead>
+            <?php if ($this->session->flashdata('success')): ?>
 
-                        <tr>
-                            <th>No</th>
-                            <th>Pertanyaan</th>
-                            <th>Jawaban</th>
-                            <th>Urutan</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
-                        </tr>
+                <div class="alert alert-success">
 
-                    </thead>
+                    ✓
+                    <?= html_escape($this->session->flashdata('success')); ?>
 
-                    <tbody>
+                </div>
 
-                        <?php $no = 1; ?>
+            <?php endif; ?>
 
-                        <?php foreach ($faqs as $faq): ?>
 
-                            <tr>
 
-                                <td>
-                                    <?= $no++; ?>
-                                </td>
+            <!-- ================= ALERT ERROR ================= -->
 
-                                <td class="question">
-                                    <?= html_escape($faq->question); ?>
-                                </td>
+            <?php if ($this->session->flashdata('error')): ?>
 
-                                <td class="answer">
-                                 <?= html_escape(strip_tags($faq->answer)); ?>
-                                </td>
+                <div class="alert alert-error">
 
-                                <td>
-                                    <?= (int) $faq->sort_order; ?>
-                                </td>
+                    ⚠
+                    <?= html_escape($this->session->flashdata('error')); ?>
 
-                                <td>
+                </div>
 
-                                    <?php if ($faq->status === 'active'): ?>
+            <?php endif; ?>
 
-                                        <span class="badge badge-active">
-                                            Aktif
-                                        </span>
 
-                                    <?php else: ?>
 
-                                        <span class="badge badge-inactive">
-                                            Nonaktif
-                                        </span>
+            <!-- ================= FAQ CARD ================= -->
 
-                                    <?php endif; ?>
+            <div class="card">
 
-                                </td>
 
-                                <td>
+                <?php if (empty($faqs)): ?>
 
-                                    <div class="actions">
 
-                                        <a
-                                            href="<?= site_url('admin/faq/detail/' . $faq->id); ?>"
-                                            class="btn btn-info"
-                                        >
-                                            Detail
-                                        </a>
+                    <!-- Empty State -->
 
-                                        <a
-                                            href="<?= site_url('admin/faq/edit/' . $faq->id); ?>"
-                                            class="btn btn-warning"
-                                        >
-                                            Edit
-                                        </a>
+                    <div class="empty">
 
-                                        <a
-                                            href="<?= site_url('admin/faq/delete/' . $faq->id); ?>"
-                                            class="btn btn-danger"
-                                            onclick="return confirm('Yakin ingin menghapus FAQ ini?');"
-                                        >
-                                            Hapus
-                                        </a>
+                        <div class="empty-icon">
+                            ❓
+                        </div>
 
-                                    </div>
+                        <strong>
+                            Belum Ada FAQ
+                        </strong>
 
-                                </td>
+                        <p>
+                            Belum terdapat pertanyaan dan jawaban
+                            yang tersimpan di sistem.
+                        </p>
 
-                            </tr>
+                        <a
+                            href="<?= site_url('admin/faq/create'); ?>"
+                            class="btn-add"
+                        >
+                            <span>+</span>
+                            Tambah FAQ
+                        </a>
 
-                        <?php endforeach; ?>
+                    </div>
 
-                    </tbody>
 
-                </table>
+                <?php else: ?>
+
+
+                    <!-- Card Header -->
+
+                    <div class="card-header">
+
+                        <div class="card-icon">
+                            ❓
+                        </div>
+
+                        <div>
+
+                            <h3>
+                                Daftar FAQ
+                            </h3>
+
+                            <p>
+                                Pertanyaan dan jawaban yang tersimpan
+                                di sistem
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- Table -->
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        No
+                                    </th>
+
+                                    <th>
+                                        Pertanyaan
+                                    </th>
+
+                                    <th>
+                                        Jawaban
+                                    </th>
+
+                                    <th>
+                                        Urutan
+                                    </th>
+
+                                    <th>
+                                        Status
+                                    </th>
+
+                                    <th>
+                                        Aksi
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+
+                            <tbody>
+
+                                <?php $no = 1; ?>
+
+
+                                <?php foreach ($faqs as $faq): ?>
+
+
+                                    <tr>
+
+
+                                        <!-- Nomor -->
+
+                                        <td>
+
+                                            <?= $no++; ?>
+
+                                        </td>
+
+
+
+                                        <!-- Pertanyaan -->
+
+                                        <td>
+
+                                            <div class="question">
+
+                                                <?= html_escape(
+                                                    $faq->question
+                                                ); ?>
+
+                                            </div>
+
+                                        </td>
+
+
+
+                                        <!-- Jawaban -->
+
+                                        <td>
+
+                                            <div class="answer">
+
+                                                <?= html_escape(
+                                                    strip_tags($faq->answer)
+                                                ); ?>
+
+                                            </div>
+
+                                        </td>
+
+
+
+                                        <!-- Urutan -->
+
+                                        <td>
+
+                                            <span class="sort-number">
+
+                                                <?= (int) $faq->sort_order; ?>
+
+                                            </span>
+
+                                        </td>
+
+
+
+                                        <!-- Status -->
+
+                                        <td>
+
+                                            <?php if ($faq->status === 'active'): ?>
+
+                                                <span class="badge badge-active">
+
+                                                    <span class="badge-dot"></span>
+
+                                                    Aktif
+
+                                                </span>
+
+                                            <?php else: ?>
+
+                                                <span class="badge badge-inactive">
+
+                                                    <span class="badge-dot"></span>
+
+                                                    Nonaktif
+
+                                                </span>
+
+                                            <?php endif; ?>
+
+                                        </td>
+
+
+
+                                        <!-- Aksi -->
+
+                                        <td>
+
+                                            <div class="actions">
+
+
+                                                <!-- Detail -->
+
+                                                <a
+                                                    href="<?= site_url('admin/faq/detail/' . $faq->id); ?>"
+                                                    class="action-btn btn-detail"
+                                                >
+                                                    Detail
+                                                </a>
+
+
+
+                                                <!-- Edit -->
+
+                                                <a
+                                                    href="<?= site_url('admin/faq/edit/' . $faq->id); ?>"
+                                                    class="action-btn btn-edit"
+                                                >
+                                                    Edit
+                                                </a>
+
+
+
+                                                <!-- Hapus -->
+
+                                                <a
+                                                    href="<?= site_url('admin/faq/delete/' . $faq->id); ?>"
+                                                    class="action-btn btn-delete"
+                                                    onclick="return confirm('Yakin ingin menghapus FAQ ini?');"
+                                                >
+                                                    Hapus
+                                                </a>
+
+
+                                            </div>
+
+                                        </td>
+
+
+                                    </tr>
+
+
+                                <?php endforeach; ?>
+
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                <?php endif; ?>
+
 
             </div>
 
-        <?php endif; ?>
 
-    </div>
 
-</div>
+            <!-- Footer -->
+
+            <div class="footer">
+
+                <span>
+                    © <?= date('Y'); ?> Desa Terpadu
+                </span>
+
+                <span>
+                    Admin Panel
+                </span>
+
+            </div>
+
+
+        </section>
+
+    </main>
 
 </body>
+
 </html>

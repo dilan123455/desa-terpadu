@@ -88,49 +88,100 @@ class Testimoni extends Admin_Controller
         $this->load->view('admin/testimoni/form', $data);
     }
  
-    public function update($id)
-    {
-        $item = $this->Testimoni_model->get_by_id($id);
- 
-        if (!$item) {
-            show_404();
-        }
- 
-        $this->_validate();
- 
-        if ($this->form_validation->run() == FALSE) {
-            $data['title']  = 'Edit Testimoni';
-            $data['action'] = 'edit';
-            $data['item']   = $item;
- 
-            $this->load->view('admin/testimoni/form', $data);
-            return;
-        }
- 
-        $data = [
-            'name'       => $this->input->post('name', TRUE),
-            'position'   => $this->input->post('position', TRUE),
-            'content'    => $this->input->post('content', TRUE),
-            'status'     => $this->input->post('is_active') ? 'active' : 'inactive',
-            'updated_at' => date('Y-m-d H:i:s'),
-        ];
- 
-        // Foto baru? replace. Kalau nggak, biarin foto lama.
-        $photo = $this->_upload_photo();
-        if ($photo) {
-            $data['photo'] = $photo;
- 
-            if (!empty($item->photo) && file_exists('./uploads/testimoni/' . $item->photo)) {
-                unlink('./uploads/testimoni/' . $item->photo);
-            }
-        }
- 
-        $this->Testimoni_model->update($id, $data);
- 
-        $this->session->set_flashdata('success', 'Testimoni berhasil diperbarui.');
-        redirect('admin/testimoni');
+ public function update($id)
+{
+    $item = $this->Testimoni_model->get_by_id($id);
+
+    if (!$item) {
+        show_404();
     }
 
+    $this->_validate();
+
+    if ($this->form_validation->run() == FALSE) {
+        $data['title']  = 'Edit Testimoni';
+        $data['action'] = 'edit';
+        $data['item']   = $item;
+
+        $this->load->view('admin/testimoni/form', $data);
+        return;
+    }
+
+    $data = [
+        'name'       => $this->input->post('name', TRUE),
+        'position'   => $this->input->post('position', TRUE),
+        'content'    => $this->input->post('content', TRUE),
+        'status'     => $this->input->post('is_active') ? 'active' : 'inactive',
+        'updated_at' => date('Y-m-d H:i:s'),
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | FOTO
+    |--------------------------------------------------------------------------
+    */
+
+    // Apakah user mencentang "Hapus Foto"?
+    $remove_photo = $this->input->post('remove_photo');
+
+    // Cek apakah user memilih foto baru
+    $photo = $this->_upload_photo();
+
+    /*
+    |--------------------------------------------------------------------------
+    | 1. Jika memilih foto baru
+    |--------------------------------------------------------------------------
+    */
+    if ($photo) {
+
+        // Hapus foto lama dari folder
+        if (
+            !empty($item->photo) &&
+            file_exists('./uploads/testimoni/' . $item->photo)
+        ) {
+            unlink('./uploads/testimoni/' . $item->photo);
+        }
+
+        // Simpan nama foto baru
+        $data['photo'] = $photo;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | 2. Jika tidak upload foto baru tetapi mencentang Hapus Foto
+    |--------------------------------------------------------------------------
+    */
+    elseif ($remove_photo) {
+
+        // Hapus foto lama dari folder
+        if (
+            !empty($item->photo) &&
+            file_exists('./uploads/testimoni/' . $item->photo)
+        ) {
+            unlink('./uploads/testimoni/' . $item->photo);
+        }
+
+        // Kosongkan foto di database
+        $data['photo'] = NULL;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | 3. Jika tidak upload foto baru dan tidak centang hapus
+    |--------------------------------------------------------------------------
+    | Foto lama tetap dipertahankan.
+    |--------------------------------------------------------------------------
+    */
+
+    $this->Testimoni_model->update($id, $data);
+
+    $this->session->set_flashdata(
+        'success',
+        'Testimoni berhasil diperbarui.'
+    );
+
+    redirect('admin/testimoni');
+}
  
     public function delete($id)
     {
