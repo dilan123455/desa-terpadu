@@ -124,7 +124,5 @@
 
         </main>
     </div>
-
-    <?php $this->load->view('site/layout/footer'); ?>
 </body>
 </html>
