@@ -5,185 +5,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title><?= html_escape($title); ?> - Admin</title>
+    <link rel="stylesheet" href="<?= base_url('assets/css/output.css'); ?>">
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f5f7fa;
-            color: #1f2937;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 800px;
-            margin: 40px auto;
-        }
-
-        .header {
-            margin-bottom: 25px;
-        }
-
-        .header h1 {
-            margin: 0 0 8px;
-        }
-
-        .header p {
-            margin: 0;
-            color: #64748b;
-        }
-
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 14px;
-            box-shadow: 0 4px 18px rgba(0, 0, 0, .07);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        input,
-        textarea {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-        }
-
-        input:focus,
-        textarea:focus {
-            outline: none;
-            border-color: #2563eb;
-        }
-
-        textarea {
-            min-height: 160px;
-            resize: vertical;
-        }
-
-        .actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 25px;
-        }
-
-        .btn {
-            padding: 11px 18px;
-            border-radius: 8px;
-            border: none;
-            text-decoration: none;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: #2563eb;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #1d4ed8;
-        }
-
-        .btn-secondary {
-            background: #e5e7eb;
-            color: #1f2937;
-        }
-    </style>
+    <title><?= html_escape($title); ?> - Desa Terpadu</title>
 </head>
 
-<body>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex items-center justify-center p-4">
 
-<div class="container">
+    <div class="w-full max-w-2xl">
 
-    <div class="header">
+        <!-- Header -->
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">Edit Tentang Desa Terpadu</h1>
+            <p class="text-sm text-gray-500 mt-1">Perbarui informasi yang ditampilkan pada halaman About.</p>
+        </div>
 
-        <h1>Edit Tentang Desa Terpadu</h1>
+        <!-- Card Form -->
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 sm:p-8">
 
-        <p>
-            Perbarui informasi yang ditampilkan pada halaman About.
-        </p>
+            <!-- Flash Error -->
+            <?php if ($this->session->flashdata('error')): ?>
+                <div class="flex items-center gap-2 px-4 py-3 mb-5 rounded-lg bg-red-50 text-red-700 border border-red-200 text-sm">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <?= html_escape($this->session->flashdata('error')); ?>
+                </div>
+            <?php endif; ?>
 
-    </div>
+            <!-- Flash Success -->
+            <?php if ($this->session->flashdata('success')): ?>
+                <div class="flex items-center gap-2 px-4 py-3 mb-5 rounded-lg bg-green-50 text-green-700 border border-green-200 text-sm">
+                    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <?= html_escape($this->session->flashdata('success')); ?>
+                </div>
+            <?php endif; ?>
 
+            <form action="<?= site_url('admin/about/update'); ?>" method="post">
 
-    <div class="card">
+                <!-- Judul -->
+                <div class="mb-5">
+                    <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">Judul</label>
+                    <input type="text" id="title" name="title"
+                        value="<?= html_escape($about->title); ?>"
+                        required
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 text-sm">
+                </div>
 
-        <form
-            action="<?= site_url('admin/about/update'); ?>"
-            method="post"
-        >
+                <!-- Deskripsi -->
+                <div class="mb-6">
+                    <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">Deskripsi</label>
+                    <textarea id="description" name="description"
+                        required
+                        rows="6"
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 text-sm resize-y"><?= html_escape($about->description); ?></textarea>
+                </div>
 
-            <div class="form-group">
+                <!-- Actions -->
+                <div class="flex items-center gap-3">
+                    <a href="<?= site_url('admin/about'); ?>"
+                        class="inline-flex items-center justify-center px-5 py-2.5 bg-gray-200 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-300 transition">
+                        Batal
+                    </a>
+                    <button type="submit"
+                        class="inline-flex items-center justify-center px-5 py-2.5 bg-red-500 text-white rounded-lg text-sm font-semibold shadow-md hover:bg-red-600 transition">
+                        Simpan Perubahan
+                    </button>
+                </div>
 
-                <label for="title">
-                    Judul
-                </label>
+            </form>
 
-                <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    value="<?= html_escape($about->title); ?>"
-                    required
-                >
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label for="description">
-                    Deskripsi
-                </label>
-
-                <textarea
-                    id="description"
-                    name="description"
-                    required
-                ><?= html_escape($about->description); ?></textarea>
-
-            </div>
-
-
-            <div class="actions">
-
-                <a
-                    href="<?= site_url('admin/about'); ?>"
-                    class="btn btn-secondary"
-                >
-                    Batal
-                </a>
-
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    Simpan Perubahan
-                </button>
-
-            </div>
-
-        </form>
+        </div>
 
     </div>
-
-</div>
 
 </body>
 

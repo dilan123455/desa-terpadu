@@ -13,29 +13,32 @@ class Articles extends Admin_Controller
 
     public function index()
     {
-        $data['title'] = 'Artikel';
+        $data['title']    = 'Artikel';
+        $data['name']     = $this->session->userdata('name');
         $data['articles'] = $this->Article_model->get_all();
 
         $this->load->view('admin/articles/index', $data);
     }
 
     public function detail($id)
-{
-    $article = $this->Article_model->get_by_id($id);
+    {
+        $article = $this->Article_model->get_by_id($id);
 
-    if (!$article) {
-        show_404();
+        if (!$article) {
+            show_404();
+        }
+
+        $data['title']   = 'Detail Artikel';
+        $data['name']    = $this->session->userdata('name');
+        $data['article'] = $article;
+
+        $this->load->view('admin/articles/detail', $data);
     }
-
-    $data['title']   = 'Detail Artikel';
-    $data['article'] = $article;
-
-    $this->load->view('admin/articles/detail', $data);
-}
 
     public function create()
     {
         $data['title'] = 'Tambah Artikel';
+        $data['name']  = $this->session->userdata('name');
 
         $this->load->view('admin/articles/create', $data);
     }
@@ -54,10 +57,9 @@ class Articles extends Admin_Controller
         // Upload gambar jika ada
         if (!empty($_FILES['image']['name'])) {
 
-            // --- PERBAIKAN PATH DI SINI ---
-            $config['upload_path']   = FCPATH . 'assets/uploads/'; 
+            $config['upload_path']   = FCPATH . 'assets/uploads/';
             $config['allowed_types'] = 'jpg|jpeg|png|webp';
-            $config['max_size']      = 2048;
+            $config['max_size']      = 5120;
             $config['encrypt_name']  = TRUE;
 
             $this->load->library('upload', $config);
@@ -108,7 +110,8 @@ class Articles extends Admin_Controller
             show_404();
         }
 
-        $data['title'] = 'Edit Artikel';
+        $data['title']   = 'Edit Artikel';
+        $data['name']    = $this->session->userdata('name');
         $data['article'] = $article;
 
         $this->load->view('admin/articles/edit', $data);
@@ -134,10 +137,9 @@ class Articles extends Admin_Controller
         // Jika admin memilih gambar baru
         if (!empty($_FILES['image']['name'])) {
 
-            // --- PERBAIKAN PATH DI SINI ---
             $config['upload_path']   = FCPATH . 'assets/uploads/';
             $config['allowed_types'] = 'jpg|jpeg|png|webp';
-            $config['max_size']      = 2048;
+            $config['max_size']      = 5120;
             $config['encrypt_name']  = TRUE;
 
             $this->load->library('upload', $config);
@@ -197,6 +199,15 @@ class Articles extends Admin_Controller
             show_404();
         }
 
+        // Hapus file gambar jika ada
+        if (!empty($article->image)) {
+            $imagePath = FCPATH . 'assets/uploads/' . $article->image;
+
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+
         $this->Article_model->delete($id);
 
         $this->session->set_flashdata(
@@ -206,5 +217,4 @@ class Articles extends Admin_Controller
 
         redirect('admin/articles');
     }
-    
 }

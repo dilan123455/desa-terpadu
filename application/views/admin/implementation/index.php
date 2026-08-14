@@ -2,1678 +2,182 @@
 <html lang="id">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <link rel="stylesheet" href="<?= base_url('assets/css/output.css'); ?>">
 
-    <title>
-        Implementation - Desa Terpadu
-    </title>
-
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-
-        body {
-
-            margin: 0;
-
-            font-family: Arial, sans-serif;
-
-            background: #f3f4f6;
-
-            color: #1f2937;
-
-        }
-
-
-        /* =====================================================
-           SIDEBAR
-        ===================================================== */
-
-        .sidebar {
-
-            width: 230px;
-
-            background: #ffffff;
-
-            border-right: 1px solid #e5e7eb;
-
-            min-height: 100vh;
-
-            position: fixed;
-
-            left: 0;
-
-            top: 0;
-
-            display: flex;
-
-            flex-direction: column;
-
-        }
-
-
-        .logo-area {
-
-            height: 72px;
-
-            padding: 15px 18px;
-
-            border-bottom: 1px solid #e5e7eb;
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-
-        }
-
-
-        .logo {
-
-            width: 40px;
-
-            height: 40px;
-
-            background: #CC4B4B;
-
-            color: white;
-
-            border-radius: 10px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            font-size: 20px;
-
-            font-weight: bold;
-
-        }
-
-
-        .logo-text h2 {
-
-            margin: 0;
-
-            font-size: 14px;
-
-            color: #172554;
-
-        }
-
-
-        .logo-text p {
-
-            margin: 3px 0 0;
-
-            font-size: 10px;
-
-            color: #64748b;
-
-        }
-
-
-        /* =====================================================
-           MENU
-        ===================================================== */
-
-        .menu {
-
-            padding: 22px 12px;
-
-            flex: 1;
-
-        }
-
-
-        .menu-title {
-
-            font-size: 10px;
-
-            color: #94a3b8;
-
-            text-transform: uppercase;
-
-            letter-spacing: .5px;
-
-            margin: 0 10px 10px;
-
-        }
-
-
-        .menu a {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 11px;
-
-            padding: 11px 13px;
-
-            margin-bottom: 4px;
-
-            border-radius: 9px;
-
-            text-decoration: none;
-
-            color: #475569;
-
-            font-size: 13px;
-
-            transition: .2s;
-
-        }
-
-
-        .menu a:hover {
-
-            background: #fbe8e8;
-
-            color: #CC4B4B;
-
-        }
-
-
-        .menu a.active {
-
-            background: #fbe8e8;
-
-            color: #CC4B4B;
-
-            font-weight: 600;
-
-        }
-
-
-        .menu-icon {
-
-            width: 20px;
-
-            text-align: center;
-
-            font-size: 15px;
-
-        }
-
-
-        /* =====================================================
-           LOGOUT
-        ===================================================== */
-
-        .logout {
-
-            padding: 15px 12px;
-
-            border-top: 1px solid #e5e7eb;
-
-        }
-
-
-        .logout a {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-
-            padding: 11px 13px;
-
-            border-radius: 9px;
-
-            color: #dc2626;
-
-            text-decoration: none;
-
-            font-size: 13px;
-
-            font-weight: 500;
-
-        }
-
-
-        .logout a:hover {
-
-            background: #fef2f2;
-
-        }
-
-
-        /* =====================================================
-           MAIN
-        ===================================================== */
-
-        .main {
-
-            margin-left: 230px;
-
-            min-height: 100vh;
-
-        }
-
-
-        /* =====================================================
-           TOPBAR
-        ===================================================== */
-
-        .topbar {
-
-            height: 72px;
-
-            background: white;
-
-            border-bottom: 1px solid #e5e7eb;
-
-            padding: 0 30px;
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-        }
-
-
-        .topbar-title h1 {
-
-            margin: 0;
-
-            font-size: 22px;
-
-            color: #172033;
-
-        }
-
-
-        .topbar-title p {
-
-            margin: 4px 0 0;
-
-            color: #64748b;
-
-            font-size: 12px;
-
-        }
-
-
-        .admin-profile {
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 10px;
-
-        }
-
-
-        .admin-info {
-
-            text-align: right;
-
-        }
-
-
-        .admin-info strong {
-
-            display: block;
-
-            font-size: 12px;
-
-            color: #1e293b;
-
-        }
-
-
-        .admin-info span {
-
-            font-size: 10px;
-
-            color: #64748b;
-
-        }
-
-
-        .avatar {
-
-            width: 34px;
-
-            height: 34px;
-
-            background: #CC4B4B;
-
-            color: white;
-
-            border-radius: 50%;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            font-size: 13px;
-
-            font-weight: bold;
-
-        }
-
-
-        /* =====================================================
-           CONTENT
-        ===================================================== */
-
-        .content {
-
-            padding: 30px;
-
-        }
-
-
-        .page-header {
-
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: center;
-
-            gap: 20px;
-
-            margin-bottom: 25px;
-
-        }
-
-
-        .page-header h2 {
-
-            margin: 0;
-
-            font-size: 25px;
-
-            color: #172033;
-
-        }
-
-
-        .page-header p {
-
-            margin: 7px 0 0;
-
-            color: #64748b;
-
-            font-size: 13px;
-
-        }
-
-
-        /* =====================================================
-           BUTTON
-        ===================================================== */
-
-        .btn-add {
-
-            display: inline-flex;
-
-            align-items: center;
-
-            gap: 8px;
-
-            padding: 10px 16px;
-
-            background: #CC4B4B;
-
-            color: white;
-
-            text-decoration: none;
-
-            border-radius: 9px;
-
-            font-size: 12px;
-
-            font-weight: 600;
-
-            box-shadow: 0 3px 8px rgba(204, 75, 75, .2);
-
-            transition: .2s;
-
-        }
-
-
-        .btn-add:hover {
-
-            background: #b83f3f;
-
-            transform: translateY(-1px);
-
-        }
-
-
-        /* =====================================================
-           ALERT
-        ===================================================== */
-
-        .alert {
-
-            padding: 13px 16px;
-
-            margin-bottom: 20px;
-
-            border-radius: 10px;
-
-            font-size: 13px;
-
-        }
-
-
-        .alert-success {
-
-            background: #ecfdf3;
-
-            color: #166534;
-
-            border: 1px solid #bbf7d0;
-
-        }
-
-
-        /* =====================================================
-           CARD
-        ===================================================== */
-
-        .card {
-
-            background: white;
-
-            border: 1px solid #e5e7eb;
-
-            border-radius: 15px;
-
-            box-shadow: 0 3px 12px rgba(0, 0, 0, .04);
-
-            overflow: hidden;
-
-        }
-
-
-        .card-header {
-
-            padding: 20px 23px;
-
-            border-bottom: 1px solid #edf0f2;
-
-            display: flex;
-
-            align-items: center;
-
-            gap: 12px;
-
-        }
-
-
-        .card-icon {
-
-            width: 40px;
-
-            height: 40px;
-
-            background: #fbe8e8;
-
-            color: #CC4B4B;
-
-            border-radius: 10px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            font-size: 18px;
-
-        }
-
-
-        .card-header h3 {
-
-            margin: 0;
-
-            font-size: 16px;
-
-            color: #1e293b;
-
-        }
-
-
-        .card-header p {
-
-            margin: 4px 0 0;
-
-            font-size: 11px;
-
-            color: #94a3b8;
-
-        }
-
-
-        /* =====================================================
-           TABLE
-        ===================================================== */
-
-        .table-wrapper {
-
-            width: 100%;
-
-            overflow-x: auto;
-
-        }
-
-
-        table {
-
-            width: 100%;
-
-            min-width: 900px;
-
-            border-collapse: collapse;
-
-        }
-
-
-        thead {
-
-            background: #fafafa;
-
-        }
-
-
-        th {
-
-            padding: 13px 14px;
-
-            text-align: left;
-
-            font-size: 11px;
-
-            color: #64748b;
-
-            font-weight: 700;
-
-            text-transform: uppercase;
-
-            letter-spacing: .3px;
-
-            border-bottom: 1px solid #e5e7eb;
-
-            white-space: nowrap;
-
-        }
-
-
-        td {
-
-            padding: 14px;
-
-            border-bottom: 1px solid #f1f5f9;
-
-            vertical-align: middle;
-
-            font-size: 13px;
-
-            color: #475569;
-
-        }
-
-
-        tbody tr {
-
-            transition: .15s;
-
-        }
-
-
-        tbody tr:hover {
-
-            background: #fffafa;
-
-        }
-
-
-        tbody tr:last-child td {
-
-            border-bottom: none;
-
-        }
-
-
-        /* =====================================================
-           IMAGE
-        ===================================================== */
-
-        .implementation-image {
-
-            width: 80px;
-
-            height: 60px;
-
-            object-fit: cover;
-
-            border-radius: 8px;
-
-            display: block;
-
-            border: 1px solid #e5e7eb;
-
-        }
-
-
-        .no-image {
-
-            width: 80px;
-
-            height: 60px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            background: #f8fafc;
-
-            color: #94a3b8;
-
-            border: 1px solid #e2e8f0;
-
-            border-radius: 8px;
-
-            font-size: 10px;
-
-            text-align: center;
-
-        }
-
-
-        /* =====================================================
-           TITLE
-        ===================================================== */
-
-        .step-title {
-
-            font-weight: 600;
-
-            color: #1e293b;
-
-            line-height: 1.5;
-
-        }
-
-
-        /* =====================================================
-           DESCRIPTION
-        ===================================================== */
-
-        .description {
-
-            max-width: 400px;
-
-            color: #64748b;
-
-            line-height: 1.6;
-
-        }
-
-
-        /* =====================================================
-           ORDER
-        ===================================================== */
-
-        .order-badge {
-
-            width: 30px;
-
-            height: 30px;
-
-            display: inline-flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            background: #fbe8e8;
-
-            color: #CC4B4B;
-
-            border-radius: 8px;
-
-            font-size: 12px;
-
-            font-weight: 700;
-
-        }
-
-
-        /* =====================================================
-           ACTIONS
-        ===================================================== */
-
-        .action-buttons {
-
-            display: flex;
-
-            gap: 6px;
-
-            flex-wrap: wrap;
-
-        }
-
-
-        .action-btn {
-
-            display: inline-flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            padding: 7px 11px;
-
-            border-radius: 7px;
-
-            text-decoration: none;
-
-            font-size: 11px;
-
-            font-weight: 600;
-
-            transition: .15s;
-
-            white-space: nowrap;
-
-        }
-
-
-        .btn-edit {
-
-            background: #fff8df;
-
-            color: #a16207;
-
-        }
-
-
-        .btn-edit:hover {
-
-            background: #fef3c7;
-
-        }
-
-
-        .btn-delete {
-
-            background: #fef2f2;
-
-            color: #dc2626;
-
-        }
-
-
-        .btn-delete:hover {
-
-            background: #fee2e2;
-
-        }
-
-
-        /* =====================================================
-           EMPTY
-        ===================================================== */
-
-        .empty {
-
-            padding: 60px 20px;
-
-            text-align: center;
-
-        }
-
-
-        .empty-icon {
-
-            width: 60px;
-
-            height: 60px;
-
-            margin: 0 auto 15px;
-
-            border-radius: 50%;
-
-            background: #fbe8e8;
-
-            color: #CC4B4B;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            font-size: 25px;
-
-        }
-
-
-        .empty strong {
-
-            display: block;
-
-            color: #334155;
-
-            font-size: 14px;
-
-        }
-
-
-        .empty p {
-
-            margin: 7px 0 0;
-
-            color: #94a3b8;
-
-            font-size: 12px;
-
-        }
-
-
-        /* =====================================================
-           FOOTER
-        ===================================================== */
-
-        .footer {
-
-            margin-top: 30px;
-
-            padding: 18px 0;
-
-            border-top: 1px solid #e5e7eb;
-
-            color: #94a3b8;
-
-            font-size: 11px;
-
-            display: flex;
-
-            justify-content: space-between;
-
-        }
-
-
-        /* =====================================================
-           RESPONSIVE
-        ===================================================== */
-
-        @media (max-width: 900px) {
-
-            .sidebar {
-
-                width: 70px;
-
-            }
-
-
-            .logo-text,
-            .menu-title,
-            .menu a span:not(.menu-icon),
-            .logout a span:not(.menu-icon) {
-
-                display: none;
-
-            }
-
-
-            .logo-area {
-
-                justify-content: center;
-
-                padding: 15px 5px;
-
-            }
-
-
-            .menu a {
-
-                justify-content: center;
-
-                padding: 12px;
-
-            }
-
-
-            .logout a {
-
-                justify-content: center;
-
-            }
-
-
-            .main {
-
-                margin-left: 70px;
-
-            }
-
-
-            .content {
-
-                padding: 20px;
-
-            }
-
-        }
-
-
-        @media (max-width: 650px) {
-
-            .page-header {
-
-                flex-direction: column;
-
-                align-items: flex-start;
-
-            }
-
-
-            .admin-info {
-
-                display: none;
-
-            }
-
-
-            .topbar {
-
-                padding: 0 18px;
-
-            }
-
-
-            .topbar-title h1 {
-
-                font-size: 18px;
-
-            }
-
-
-            .content {
-
-                padding: 15px;
-
-            }
-
-        }
-
-    </style>
-
+    <title><?= html_escape($title); ?> - Desa Terpadu</title>
 </head>
 
+<body class="bg-gray-100 text-gray-800 min-h-screen">
 
-<body>
+    <div class="admin-wrapper">
 
+        <!-- SIDEBAR -->
+        <?php $this->load->view('admin/sidebar'); ?>
 
-    <!-- =====================================================
-         SIDEBAR
-    ===================================================== -->
+        <!-- MAIN AREA -->
+        <div class="ml-0 lg:ml-64">
 
-    <aside class="sidebar">
-
-
-        <!-- Logo -->
-
-        <div class="logo-area">
-
-            <div class="logo">
-                D
-            </div>
-
-
-            <div class="logo-text">
-
-                <h2>
-                    Desa Terpadu
-                </h2>
-
-                <p>
-                    Admin Panel
-                </p>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- Menu -->
-
-        <nav class="menu">
-
-
-            <p class="menu-title">
-                Menu Utama
-            </p>
-
-
-
-            <!-- Dashboard -->
-
-            <a href="<?= site_url('admin/dashboard'); ?>">
-
-                <span class="menu-icon">
-                    ⌂
-                </span>
-
-                <span>
-                    Dashboard
-                </span>
-
-            </a>
-
-
-
-            <!-- Artikel -->
-
-            <a href="<?= site_url('admin/articles'); ?>">
-
-                <span class="menu-icon">
-                    📰
-                </span>
-
-                <span>
-                    Artikel
-                </span>
-
-            </a>
-
-
-
-            <!-- Testimoni -->
-
-            <a href="<?= site_url('admin/testimoni'); ?>">
-
-                <span class="menu-icon">
-                    💬
-                </span>
-
-                <span>
-                    Testimoni
-                </span>
-
-            </a>
-
-
-
-            <!-- FAQ -->
-
-            <a href="<?= site_url('admin/faq'); ?>">
-
-                <span class="menu-icon">
-                    ❓
-                </span>
-
-                <span>
-                    FAQ
-                </span>
-
-            </a>
-
-
-
-            <!-- Contact -->
-
-            <a href="<?= site_url('admin/contact_messages'); ?>">
-
-                <span class="menu-icon">
-                    ✉️
-                </span>
-
-                <span>
-                    Pesan Masuk
-                </span>
-
-            </a>
-
-
-
-            <p
-                class="menu-title"
-                style="margin-top: 25px;"
-            >
-                Konten Website
-            </p>
-
-
-
-            <!-- About -->
-
-            <a href="<?= site_url('admin/about'); ?>">
-
-                <span class="menu-icon">
-                    ℹ️
-                </span>
-
-                <span>
-                    About
-                </span>
-
-            </a>
-
-
-
-            <!-- Features -->
-
-            <a href="<?= site_url('admin/features'); ?>">
-
-                <span class="menu-icon">
-                    ⭐
-                </span>
-
-                <span>
-                    Features
-                </span>
-
-            </a>
-
-
-
-            <!-- Implementation -->
-
-            <a
-                href="<?= site_url('admin/implementation'); ?>"
-                class="active"
-            >
-
-                <span class="menu-icon">
-                    ⚙️
-                </span>
-
-                <span>
-                    Implementation
-                </span>
-
-            </a>
-
-
-        </nav>
-
-
-
-        <!-- Logout -->
-
-        <div class="logout">
-
-            <a href="<?= site_url('auth/logout'); ?>">
-
-                <span class="menu-icon">
-                    ↪
-                </span>
-
-                <span>
-                    Logout
-                </span>
-
-            </a>
-
-        </div>
-
-
-    </aside>
-
-
-
-    <!-- =====================================================
-         MAIN
-    ===================================================== -->
-
-    <main class="main">
-
-
-
-        <!-- =================================================
-             TOPBAR
-        ================================================= -->
-
-        <header class="topbar">
-
-
-            <div class="topbar-title">
-
-                <h1>
-                    Implementation
-                </h1>
-
-                <p>
-                    Kelola proses implementasi Desa Terpadu
-                </p>
-
-            </div>
-
-
-
-            <div class="admin-profile">
-
-                <div class="admin-info">
-
-                    <strong>
-                        Administrator
-                    </strong>
-
-                    <span>
-                        Admin Panel
-                    </span>
-
-                </div>
-
-
-                <div class="avatar">
-                    A
-                </div>
-
-            </div>
-
-
-        </header>
-
-
-
-        <!-- =================================================
-             CONTENT
-        ================================================= -->
-
-        <section class="content">
-
-
-
-            <!-- Page Header -->
-
-            <div class="page-header">
-
-
+            <!-- Topbar -->
+            <header class="fixed top-0 right-0 left-0 lg:left-64 h-20 bg-white/95 border-b border-gray-200 flex items-center justify-between px-4 sm:px-8 z-40">
                 <div>
-
-                    <h2>
-                        Proses Implementasi
-                    </h2>
-
-                    <p>
-                        Kelola langkah-langkah implementasi
-                        Desa Terpadu.
-                    </p>
-
+                    <h1 class="text-xl font-bold text-gray-800"><?= html_escape($title); ?></h1>
+                    <p class="text-sm text-gray-400 mt-1">Kelola proses implementasi Desa Terpadu</p>
                 </div>
 
+                <div class="flex items-center gap-3">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-sm font-semibold text-gray-800"><?= html_escape($name); ?></p>
+                        <p class="text-xs text-gray-400 mt-1">Administrator</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white text-sm font-bold">
+                        <?= strtoupper(substr(html_escape($name), 0, 1)); ?>
+                    </div>
+                </div>
+            </header>
 
-            </div>
+            <!-- Content -->
+            <main class="p-4 sm:p-8 pt-24 sm:pt-28 min-h-screen">
 
-
-
-            <!-- =================================================
-                 FLASH MESSAGE
-            ================================================= -->
-
-            <?php if ($this->session->flashdata('success')): ?>
-
-                <div class="alert alert-success">
-
-                    ✓
-
-                    <?= html_escape(
-                        $this->session->flashdata('success')
-                    ); ?>
-
+                <!-- Page Header -->
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Proses Implementasi</h2>
+                    <p class="text-sm text-gray-500 mt-1">Kelola langkah-langkah implementasi Desa Terpadu.</p>
                 </div>
 
-            <?php endif; ?>
-
-
-
-            <!-- =================================================
-                 IMPLEMENTATION CARD
-            ================================================= -->
-
-            <div class="card">
-
-
-                <?php if (!empty($implementation_steps)): ?>
-
-
-                    <!-- Card Header -->
-
-                    <div class="card-header">
-
-
-                        <div class="card-icon">
-                            ⚙️
-                        </div>
-
-
-                        <div>
-
-                            <h3>
-                                Daftar Proses Implementasi
-                            </h3>
-
-                            <p>
-                                Langkah implementasi yang
-                                ditampilkan pada website.
-                            </p>
-
-                        </div>
-
-
+                <!-- Flash Success -->
+                <?php if ($this->session->flashdata('success')): ?>
+                    <div class="flex items-center gap-2 px-4 py-3 mb-5 rounded-lg bg-green-50 text-green-700 border border-green-200 text-sm">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <?= html_escape($this->session->flashdata('success')); ?>
                     </div>
-
-
-
-                    <!-- Table -->
-
-                    <div class="table-wrapper">
-
-
-                        <table>
-
-
-                            <thead>
-
-                                <tr>
-
-                                    <th>
-                                        No
-                                    </th>
-
-                                    <th>
-                                        Gambar
-                                    </th>
-
-                                    <th>
-                                        Judul
-                                    </th>
-
-                                    <th>
-                                        Deskripsi
-                                    </th>
-
-                                    <th>
-                                        Urutan
-                                    </th>
-
-                                    <th>
-                                        Aksi
-                                    </th>
-
-                                </tr>
-
-                            </thead>
-
-
-
-                            <tbody>
-
-
-                                <?php foreach (
-                                    $implementation_steps
-                                    as $step
-                                ): ?>
-
-
-                                    <tr>
-
-
-                                        <!-- No -->
-
-                                        <td>
-
-                                            <span
-                                                class="order-badge"
-                                            >
-
-                                                <?= $step->sort_order; ?>
-
-                                            </span>
-
-                                        </td>
-
-
-
-                                        <!-- Image -->
-
-                                        <td>
-
-
-                                            <?php
-
-                                            $image_path =
-                                                FCPATH .
-                                                'assets/uploads/implementation/' .
-                                                $step->image;
-
-                                            ?>
-
-
-                                            <?php if (
-                                                !empty($step->image) &&
-                                                file_exists($image_path)
-                                            ): ?>
-
-
-                                                <img
-                                                    src="<?= base_url(
-                                                        'assets/uploads/implementation/' .
-                                                        $step->image
-                                                    ); ?>"
-                                                    alt="<?= html_escape(
-                                                        $step->title
-                                                    ); ?>"
-                                                    class="implementation-image"
-                                                >
-
-
-                                            <?php else: ?>
-
-
-                                                <div class="no-image">
-
-                                                    Tidak ada
-                                                    gambar
-
-                                                </div>
-
-
-                                            <?php endif; ?>
-
-
-                                        </td>
-
-
-
-                                        <!-- Title -->
-
-                                        <td>
-
-                                            <div class="step-title">
-
-                                                <?= html_escape(
-                                                    $step->title
-                                                ); ?>
-
-                                            </div>
-
-                                        </td>
-
-
-
-                                        <!-- Description -->
-
-                                        <td>
-
-                                            <div class="description">
-
-                                                <?= html_escape(
-                                                    $step->description
-                                                ); ?>
-
-                                            </div>
-
-                                        </td>
-
-
-
-                                        <!-- Order -->
-
-                                        <td>
-
-                                            <span
-                                                class="order-badge"
-                                            >
-
-                                                <?= $step->sort_order; ?>
-
-                                            </span>
-
-                                        </td>
-
-
-
-                                        <!-- Actions -->
-
-                                        <td>
-
-
-                                            <div
-                                                class="action-buttons"
-                                            >
-
-
-                                                <!-- Edit -->
-
-                                                <a
-                                                    href="<?= site_url(
-                                                        'admin/implementation/edit/' .
-                                                        $step->id
-                                                    ); ?>"
-                                                    class="action-btn btn-edit"
-                                                >
-
-                                                    Edit
-
-                                                </a>
-
-
-
-                                                <!-- Delete -->
-
-                                                <a
-                                                    href="<?= site_url(
-                                                        'admin/implementation/delete/' .
-                                                        $step->id
-                                                    ); ?>"
-                                                    class="action-btn btn-delete"
-                                                    onclick="return confirm('Yakin ingin menghapus data ini?');"
-                                                >
-
-                                                    Hapus
-
-                                                </a>
-
-
-                                            </div>
-
-
-                                        </td>
-
-
-                                    </tr>
-
-
-                                <?php endforeach; ?>
-
-
-                            </tbody>
-
-
-                        </table>
-
-
-                    </div>
-
-
-                <?php else: ?>
-
-
-                    <!-- Empty State -->
-
-                    <div class="empty">
-
-
-                        <div class="empty-icon">
-                            ⚙️
-                        </div>
-
-
-                        <strong>
-                            Belum Ada Data Implementation
-                        </strong>
-
-
-                        <p>
-                            Belum terdapat data proses implementasi
-                            yang tersimpan.
-                        </p>
-
-
-                    </div>
-
-
                 <?php endif; ?>
 
+                <!-- Implementation Card -->
+                <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
 
-            </div>
+                    <?php if (!empty($implementation_steps)): ?>
 
+                        <!-- Card Header -->
+                        <div class="flex items-center gap-3 px-6 py-5 border-b border-gray-200">
+                            <div class="w-10 h-10 rounded-lg bg-red-50 text-red-500 flex items-center justify-center">
+                                <!-- Ikon Cog -->
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-base font-semibold text-gray-800">Daftar Proses Implementasi</h3>
+                                <p class="text-xs text-gray-400 mt-0.5">Langkah implementasi yang ditampilkan pada website.</p>
+                            </div>
+                        </div>
 
+                        <!-- Table Wrapper -->
+                        <div class="overflow-x-auto">
+                            <table class="w-full min-w-[900px] border-collapse">
+                                <thead class="bg-gray-50">
+                                    <tr>
+                                        <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap">No</th>
+                                        <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap">Gambar</th>
+                                        <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap min-w-[200px]">Judul</th>
+                                        <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap min-w-[250px]">Deskripsi</th>
+                                        <th class="px-4 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap">Urutan</th>
+                                        <th class="px-4 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap min-w-[160px]">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100">
+                                    <?php $no = 1; ?>
+                                    <?php foreach ($implementation_steps as $step): ?>
+                                        <tr class="hover:bg-red-50/50 transition">
+                                            <!-- No -->
+                                            <td class="px-4 py-3.5 text-sm text-gray-600 align-middle whitespace-nowrap"><?= $no++; ?></td>
 
-            <!-- Footer -->
+                                            <!-- Gambar -->
+                                            <td class="px-4 py-3.5 align-middle">
+                                                <?php
+                                                $image_path = FCPATH . 'assets/uploads/implementation/' . $step->image;
+                                                ?>
+                                                <?php if (!empty($step->image) && file_exists($image_path)): ?>
+                                                    <img src="<?= base_url('assets/uploads/implementation/' . $step->image); ?>"
+                                                        alt="<?= html_escape($step->title); ?>"
+                                                        class="w-20 h-14 object-cover rounded-lg border border-gray-200">
+                                                <?php else: ?>
+                                                    <div class="w-20 h-14 flex items-center justify-center bg-gray-50 text-gray-400 border border-gray-200 rounded-lg text-xs">
+                                                        Tidak ada gambar
+                                                    </div>
+                                                <?php endif; ?>
+                                            </td>
 
-            <div class="footer">
+                                            <!-- Judul -->
+                                            <td class="px-4 py-3.5 align-middle">
+                                                <div class="font-semibold text-gray-800 leading-snug">
+                                                    <?= html_escape($step->title); ?>
+                                                </div>
+                                            </td>
 
-                <span>
-                    © <?= date('Y'); ?> Desa Terpadu
-                </span>
+                                            <!-- Deskripsi -->
+                                            <td class="px-4 py-3.5 align-middle">
+                                                <div class="max-w-[400px] text-sm text-gray-600 leading-relaxed">
+                                                    <?= html_escape(character_limiter($step->description, 80, '...')); ?>
+                                                </div>
+                                            </td>
 
-                <span>
-                    Admin Panel
-                </span>
+                                            <!-- Urutan -->
+                                            <td class="px-4 py-3.5 align-middle text-center">
+                                                <span class="inline-flex items-center justify-center w-8 h-8 bg-red-50 text-red-500 rounded-lg text-xs font-bold">
+                                                    <?= (int) $step->sort_order; ?>
+                                                </span>
+                                            </td>
 
-            </div>
+                                            <!-- Aksi -->
+                                            <td class="px-4 py-3.5 align-middle text-center whitespace-nowrap">
+                                                <div class="flex flex-wrap justify-center gap-1.5">
+                                                    <a href="<?= site_url('admin/implementation/edit/' . $step->id); ?>"
+                                                        class="inline-flex items-center px-3 py-1.5 bg-amber-50 text-amber-700 rounded-md text-xs font-semibold hover:bg-amber-100 transition">Edit</a>
+                                                    <a href="<?= site_url('admin/implementation/delete/' . $step->id); ?>"
+                                                        onclick="return confirm('Yakin ingin menghapus data ini?');"
+                                                        class="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 rounded-md text-xs font-semibold hover:bg-red-100 transition">Hapus</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
 
+                    <?php else: ?>
 
-        </section>
+                        <!-- Empty State -->
+                        <div class="py-16 px-5 text-center">
+                            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-red-50 text-red-500 flex items-center justify-center">
+                                <!-- Ikon Cog -->
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                            </div>
+                            <strong class="block text-sm font-semibold text-gray-700">Belum Ada Data Implementation</strong>
+                            <p class="mt-2 text-sm text-gray-500">Belum terdapat data proses implementasi yang tersimpan.</p>
+                        </div>
 
+                    <?php endif; ?>
 
-    </main>
+                </div>
 
+                <!-- Footer -->
+                <footer class="mt-8 pt-5 border-t border-gray-200 flex flex-col sm:flex-row justify-between gap-4 text-xs text-gray-400">
+                    <p>© <?= date('Y'); ?> Desa Terpadu</p>
+                    <p>Admin Panel</p>
+                </footer>
+
+            </main>
+        </div>
+    </div>
 
 </body>
 

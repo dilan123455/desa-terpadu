@@ -12,13 +12,11 @@ class Features extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'Fitur Unggulan';
+        $data['title'] = 'Features';
+        $data['name']  = $this->session->userdata('name');
 
-        $data['platforms'] =
-            $this->Features_model->get_platforms();
-
-        $data['items'] =
-            $this->Features_model->get_all_items();
+        $data['platforms'] = $this->Features_model->get_platforms();
+        $data['items']     = $this->Features_model->get_all_items();
 
         $this->load->view('admin/features/index', $data);
     }
@@ -26,9 +24,9 @@ class Features extends CI_Controller
     public function edit_platform($id)
     {
         $data['title'] = 'Edit Platform';
+        $data['name']  = $this->session->userdata('name');
 
-        $data['platform'] =
-            $this->Features_model->get_platform($id);
+        $data['platform'] = $this->Features_model->get_platform($id);
 
         if (!$data['platform']) {
             show_404();
@@ -54,19 +52,18 @@ class Features extends CI_Controller
     public function edit_item($id)
     {
         $data['title'] = 'Edit Fitur';
+        $data['name']  = $this->session->userdata('name');
 
-        $data['item'] =
-            $this->db
-                ->where('id', $id)
-                ->get('feature_items')
-                ->row();
+        $data['item'] = $this->db
+            ->where('id', $id)
+            ->get('feature_items')
+            ->row();
 
         if (!$data['item']) {
             show_404();
         }
 
-        $data['platforms'] =
-            $this->Features_model->get_platforms();
+        $data['platforms'] = $this->Features_model->get_platforms();
 
         $this->load->view('admin/features/edit_item', $data);
     }

@@ -1,701 +1,221 @@
-<style>
-    .testimoni-page {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 30px;
-    }
+<!DOCTYPE html>
+<html lang="id">
 
-    .testimoni-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 25px;
-    }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    .testimoni-header h2 {
-        margin: 0 0 6px;
-        font-size: 28px;
-        font-weight: 700;
-        color: #222;
-    }
+    <link rel="stylesheet" href="<?= base_url('assets/css/output.css'); ?>">
 
-    .testimoni-header p {
-        margin: 0;
-        color: #777;
-        font-size: 14px;
-    }
+    <title><?= html_escape($title); ?> - Desa Terpadu</title>
+</head>
 
-    .btn-kembali {
-        display: inline-block;
-        padding: 9px 16px;
-        background: #f1f1f1;
-        color: #333;
-        text-decoration: none;
-        border-radius: 6px;
-        font-size: 14px;
-    }
+<body class="bg-gray-100 text-gray-800 min-h-screen flex items-center justify-center p-4">
 
-    .btn-kembali:hover {
-        background: #ddd;
-    }
+    <div class="w-full max-w-2xl">
 
-    .testimoni-card {
-        background: #fff;
-        border: 1px solid #e5e5e5;
-        border-radius: 10px;
-        padding: 30px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    }
-
-    .testimoni-card-title {
-        font-size: 18px;
-        font-weight: 600;
-        margin-bottom: 25px;
-        padding-bottom: 15px;
-        border-bottom: 1px solid #eee;
-    }
-
-    .form-group {
-        margin-bottom: 22px;
-    }
-
-    .form-group label {
-        display: block;
-        font-weight: 600;
-        margin-bottom: 8px;
-        color: #333;
-        font-size: 14px;
-    }
-
-    .required {
-        color: #dc3545;
-    }
-
-    .form-control {
-        width: 100%;
-        box-sizing: border-box;
-        padding: 11px 13px;
-        border: 1px solid #d5d5d5;
-        border-radius: 6px;
-        font-size: 14px;
-        outline: none;
-        transition: border-color 0.2s;
-    }
-
-    .form-control:focus {
-        border-color: #4c8bf5;
-    }
-
-    textarea.form-control {
-        min-height: 130px;
-        resize: vertical;
-    }
-
-    .form-help {
-        display: block;
-        margin-top: 6px;
-        font-size: 12px;
-        color: #888;
-    }
-
-    .file-input {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #d5d5d5;
-        border-radius: 6px;
-        box-sizing: border-box;
-        background: #fafafa;
-    }
-
-    /* =========================
-       PHOTO
-    ========================= */
-
-    .photo-preview {
-        margin-top: 15px;
-    }
-
-    .photo-preview-label {
-        display: block;
-        margin-bottom: 8px;
-        font-size: 12px;
-        color: #888;
-    }
-
-    .photo-preview img {
-        width: 120px;
-        height: 120px;
-        object-fit: cover;
-        border-radius: 8px;
-        border: 1px solid #ddd;
-        display: block;
-    }
-
-    .remove-photo-box {
-        margin-top: 12px;
-        padding: 10px 12px;
-        background: #fff5f5;
-        border: 1px solid #f5c2c7;
-        border-radius: 6px;
-    }
-
-    .remove-photo-label {
-        display: flex !important;
-        align-items: center;
-        gap: 8px;
-        margin: 0 !important;
-        color: #dc3545 !important;
-        font-weight: 600 !important;
-        cursor: pointer;
-    }
-
-    .remove-photo-label input {
-        width: 16px;
-        height: 16px;
-        margin: 0;
-        cursor: pointer;
-    }
-
-    .remove-photo-help {
-        margin: 5px 0 0 24px;
-        font-size: 12px;
-        color: #888;
-    }
-
-    /* =========================
-       STATUS
-    ========================= */
-
-    .status-box {
-        padding: 15px;
-        background: #f8f9fa;
-        border-radius: 7px;
-        border: 1px solid #eee;
-    }
-
-    .status-label {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-weight: 600;
-        cursor: pointer;
-    }
-
-    .status-label input {
-        width: 16px;
-        height: 16px;
-    }
-
-    /* =========================
-       BUTTON
-    ========================= */
-
-    .form-actions {
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-        padding-top: 20px;
-        border-top: 1px solid #eee;
-    }
-
-    .btn {
-        display: inline-block;
-        padding: 10px 18px;
-        border-radius: 6px;
-        text-decoration: none;
-        border: none;
-        cursor: pointer;
-        font-size: 14px;
-    }
-
-    .btn-secondary {
-        background: #e9ecef;
-        color: #333;
-    }
-
-    .btn-primary {
-        background: #0d6efd;
-        color: white;
-    }
-
-    .btn-primary:hover {
-        background: #0b5ed7;
-    }
-
-    /* =========================
-       ERROR
-    ========================= */
-
-    .alert-error {
-        background: #f8d7da;
-        color: #842029;
-        border: 1px solid #f5c2c7;
-        padding: 12px 15px;
-        border-radius: 6px;
-        margin-bottom: 20px;
-    }
-
-    /* =========================
-       RESPONSIVE
-    ========================= */
-
-    @media (max-width: 700px) {
-
-        .testimoni-page {
-            padding: 15px;
-        }
-
-        .testimoni-header {
-            display: block;
-        }
-
-        .btn-kembali {
-            margin-top: 15px;
-        }
-
-        .testimoni-card {
-            padding: 20px;
-        }
-
-        .form-actions {
-            justify-content: stretch;
-        }
-
-        .form-actions .btn {
-            flex: 1;
-            text-align: center;
-        }
-    }
-</style>
-
-
-<div class="testimoni-page">
-
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
-
-    <div class="testimoni-header">
-
-        <div>
-            <h2><?= html_escape($title) ?></h2>
-
-            <p>
+        <!-- Header -->
+        <div class="mb-6">
+            <h1 class="text-2xl font-bold text-gray-800">
+                <?= html_escape($title); ?>
+            </h1>
+            <p class="text-sm text-gray-500 mt-1">
                 <?= $action === 'edit'
                     ? 'Perbarui informasi testimoni.'
-                    : 'Tambahkan testimoni baru.'
-                ?>
+                    : 'Tambahkan testimoni baru.'; ?>
             </p>
         </div>
 
-        <a
-            href="<?= base_url('admin/testimoni') ?>"
-            class="btn-kembali"
-        >
-            ← Kembali
-        </a>
+        <!-- Flash Error -->
+        <?php if ($this->session->flashdata('error')): ?>
+            <div class="flex items-center gap-2 px-4 py-3 mb-5 rounded-lg bg-red-50 text-red-700 border border-red-200 text-sm">
+                <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <?= html_escape($this->session->flashdata('error')); ?>
+            </div>
+        <?php endif; ?>
 
-    </div>
+        <!-- Validation Errors -->
+        <?php if (validation_errors()): ?>
+            <div class="flex items-start gap-2 px-4 py-3 mb-5 rounded-lg bg-red-50 text-red-700 border border-red-200 text-sm">
+                <svg class="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div>
+                    <strong class="block mb-1">Periksa kembali data:</strong>
+                    <?= validation_errors(); ?>
+                </div>
+            </div>
+        <?php endif; ?>
 
+        <!-- Card Form -->
+        <div class="bg-white border border-gray-200 rounded-2xl shadow-sm p-6 sm:p-8">
 
-    <!-- =====================================================
-         ERROR VALIDATION
-    ====================================================== -->
+            <h3 class="text-lg font-semibold text-gray-800 mb-6 pb-4 border-b border-gray-100">
+                Informasi Testimoni
+            </h3>
 
-    <?php if (validation_errors()): ?>
-
-        <div class="alert-error">
-            <strong>Periksa kembali data:</strong>
-            <?= validation_errors() ?>
-        </div>
-
-    <?php endif; ?>
-
-
-    <!-- =====================================================
-         FORM
-    ====================================================== -->
-
-    <div class="testimoni-card">
-
-        <div class="testimoni-card-title">
-            Informasi Testimoni
-        </div>
-
-
-        <form
-            action="<?= $action === 'edit'
+            <form action="<?= $action === 'edit'
                 ? site_url('admin/testimoni/update/' . $item->id)
                 : site_url('admin/testimoni/store'); ?>"
-            method="post"
-            enctype="multipart/form-data"
-        >
+                method="post" enctype="multipart/form-data">
 
-            <!-- =================================================
-                 NAMA
-            ================================================== -->
-
-            <div class="form-group">
-
-                <label for="name">
-                    Nama <span class="required">*</span>
-                </label>
-
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    class="form-control"
-                    value="<?= set_value('name', isset($item->name) ? $item->name : '') ?>"
-                    placeholder="Contoh: I Made Arya"
-                    required
-                >
-
-                <small class="form-help">
-                    Masukkan nama orang yang memberikan testimoni.
-                </small>
-
-            </div>
-
-
-            <!-- =================================================
-                 JABATAN
-            ================================================== -->
-
-            <div class="form-group">
-
-                <label for="position">
-                    Jabatan
-                </label>
-
-                <input
-                    type="text"
-                    id="position"
-                    name="position"
-                    class="form-control"
-                    value="<?= set_value('position', isset($item->position) ? $item->position : '') ?>"
-                    placeholder="Contoh: Kepala Desa"
-                >
-
-            </div>
-
-
-            <!-- =================================================
-                 ISI TESTIMONI
-            ================================================== -->
-
-            <div class="form-group">
-
-                <label for="content">
-                    Isi Testimoni <span class="required">*</span>
-                </label>
-
-                <textarea
-                    id="content"
-                    name="content"
-                    class="form-control"
-                    placeholder="Tuliskan isi testimoni..."
-                    required
-                ><?= set_value('content', isset($item->content) ? $item->content : '') ?></textarea>
-
-                <small class="form-help">
-                    Tuliskan pengalaman atau pendapat dari pemberi testimoni.
-                </small>
-
-            </div>
-
-
-            <!-- =================================================
-                 FOTO
-            ================================================== -->
-
-            <div class="form-group">
-
-                <label for="photo">
-                    Foto
-                </label>
-
-
-                <?php if ($action === 'edit'): ?>
-
-                    <small class="form-help">
-                        Pilih foto baru jika ingin mengganti foto.
-                    </small>
-
-                <?php else: ?>
-
-                    <small class="form-help">
-                        Pilih foto untuk testimoni.
-                    </small>
-
-                <?php endif; ?>
-
-
-                <!-- INPUT FOTO -->
-
-                <input
-                    type="file"
-                    id="photo"
-                    name="photo"
-                    class="file-input"
-                    accept="image/jpeg,image/png,image/jpg"
-                >
-
-
-                <!-- PREVIEW FOTO -->
-
-                <div
-                    class="photo-preview"
-                    id="photoPreviewContainer"
-                >
-
-                    <?php if (
-                        $action === 'edit' &&
-                        !empty($item->photo)
-                    ): ?>
-
-                        <span class="photo-preview-label">
-                            Foto saat ini:
-                        </span>
-
-                        <img
-                            id="imagePreview"
-                            src="<?= base_url('uploads/testimoni/' . $item->photo) ?>"
-                            alt="<?= html_escape($item->name) ?>"
-                        >
-
-                    <?php else: ?>
-
-                        <img
-                            id="imagePreview"
-                            src=""
-                            alt="Preview"
-                            style="display: none;"
-                        >
-
-                    <?php endif; ?>
-
+                <!-- Nama -->
+                <div class="mb-5">
+                    <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">
+                        Nama <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="name" name="name"
+                        value="<?= set_value('name', isset($item->name) ? $item->name : ''); ?>"
+                        placeholder="Contoh: I Made Arya"
+                        required
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 text-sm">
+                    <p class="mt-2 text-xs text-gray-400">Masukkan nama orang yang memberikan testimoni.</p>
                 </div>
 
+                <!-- Jabatan -->
+                <div class="mb-5">
+                    <label for="position" class="block text-sm font-semibold text-gray-700 mb-2">Jabatan</label>
+                    <input type="text" id="position" name="position"
+                        value="<?= set_value('position', isset($item->position) ? $item->position : ''); ?>"
+                        placeholder="Contoh: Kepala Desa"
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 text-sm">
+                </div>
 
-                <!-- HAPUS FOTO -->
+                <!-- Isi Testimoni -->
+                <div class="mb-5">
+                    <label for="content" class="block text-sm font-semibold text-gray-700 mb-2">
+                        Isi Testimoni <span class="text-red-500">*</span>
+                    </label>
+                    <textarea id="content" name="content"
+                        rows="5"
+                        placeholder="Tuliskan isi testimoni..."
+                        required
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 text-sm resize-y"><?= set_value('content', isset($item->content) ? $item->content : ''); ?></textarea>
+                    <p class="mt-2 text-xs text-gray-400">Tuliskan pengalaman atau pendapat dari pemberi testimoni.</p>
+                </div>
 
-                <?php if (
-                    $action === 'edit' &&
-                    !empty($item->photo)
-                ): ?>
+                <!-- Foto -->
+                <div class="mb-5">
+                    <label for="photo" class="block text-sm font-semibold text-gray-700 mb-2">Foto</label>
 
-                    <div class="remove-photo-box">
+                    <input type="file" id="photo" name="photo"
+                        accept=".jpg,.jpeg,.png"
+                        class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-600 hover:file:bg-red-100 cursor-pointer">
+                    <p class="mt-2 text-xs text-gray-400">
+                        <?= $action === 'edit' ? 'Pilih foto baru jika ingin mengganti foto.' : 'Pilih foto untuk testimoni.'; ?>
+                        Format JPG, JPEG, atau PNG. Maksimal 5 MB.
+                    </p>
 
-                        <label
-                            for="remove_photo"
-                            class="remove-photo-label"
-                        >
-
-                            <input
-                                type="checkbox"
-                                name="remove_photo"
-                                id="remove_photo"
-                                value="1"
-                            >
-
-                            Hapus foto
-
-                        </label>
-
-                        <div class="remove-photo-help">
-                            Centang jika ingin menghapus foto saat ini.
-                        </div>
-
+                    <!-- Preview Foto -->
+                    <div class="mt-3" id="photoPreviewContainer">
+                        <?php if ($action === 'edit' && !empty($item->photo)): ?>
+                            <span class="block text-xs font-semibold text-gray-500 mb-2">Foto saat ini:</span>
+                            <img id="imagePreview"
+                                src="<?= base_url('uploads/testimoni/' . $item->photo); ?>"
+                                alt="<?= html_escape($item->name); ?>"
+                                class="w-32 h-32 object-cover rounded-lg border border-gray-200">
+                        <?php else: ?>
+                            <img id="imagePreview"
+                                src=""
+                                alt="Preview"
+                                class="w-32 h-32 object-cover rounded-lg border border-gray-200 hidden">
+                        <?php endif; ?>
                     </div>
 
-                <?php endif; ?>
-
-
-                <small class="form-help">
-                    Format JPG, JPEG, atau PNG. Maksimal 5 MB.
-                </small>
-
-            </div>
-
-
-            <!-- =================================================
-                 STATUS
-            ================================================== -->
-
-            <div class="form-group">
-
-                <label>
-                    Status Testimoni
-                </label>
-
-                <div class="status-box">
-
-                    <label class="status-label">
-
-                        <input
-                            type="checkbox"
-                            id="is_active"
-                            name="is_active"
-                            value="1"
-                            <?= (
-                                !isset($item) ||
-                                !$item ||
-                                $item->status === 'active'
-                            ) ? 'checked' : '' ?>
-                        >
-
-                        Aktif
-
-                    </label>
-
-                    <small class="form-help">
-                        Testimoni aktif akan ditampilkan pada website.
-                    </small>
-
+                    <!-- Hapus Foto (hanya edit & ada foto) -->
+                    <?php if ($action === 'edit' && !empty($item->photo)): ?>
+                        <div class="mt-4 px-4 py-3 bg-red-50 border border-red-200 rounded-lg">
+                            <label for="remove_photo" class="flex items-center gap-2 text-sm font-semibold text-red-600 cursor-pointer">
+                                <input type="checkbox" name="remove_photo" id="remove_photo" value="1"
+                                    class="rounded border-gray-300 text-red-500 focus:ring-red-400">
+                                Hapus foto
+                            </label>
+                            <p class="mt-1 ml-6 text-xs text-gray-500">Centang jika ingin menghapus foto saat ini.</p>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
-            </div>
+                <!-- Status -->
+                <div class="mb-6">
+                    <span class="block text-sm font-semibold text-gray-700 mb-2">Status Testimoni</span>
+                    <div class="px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg">
+                        <label for="is_active" class="flex items-center gap-2 text-sm font-semibold text-gray-700 cursor-pointer">
+                            <input type="checkbox" id="is_active" name="is_active" value="1"
+                                <?= (!isset($item) || !$item || $item->status === 'active') ? 'checked' : ''; ?>
+                                class="rounded border-gray-300 text-red-500 focus:ring-red-400">
+                            Aktif
+                        </label>
+                        <p class="mt-1 ml-6 text-xs text-gray-500">Testimoni aktif akan ditampilkan pada website.</p>
+                    </div>
+                </div>
 
+                <!-- Actions -->
+                <div class="flex flex-col sm:flex-row justify-end gap-3 pt-5 border-t border-gray-100">
+                    <a href="<?= site_url('admin/testimoni'); ?>"
+                        class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-gray-200 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-300 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Batal
+                    </a>
+                    <button type="submit"
+                        class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-red-500 text-white rounded-lg text-sm font-semibold shadow-md hover:bg-red-600 transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Simpan
+                    </button>
+                </div>
 
-            <!-- =================================================
-                 BUTTON
-            ================================================== -->
+            </form>
 
-            <div class="form-actions">
-
-                <a
-                    href="<?= base_url('admin/testimoni') ?>"
-                    class="btn btn-secondary"
-                >
-                    Batal
-                </a>
-
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    Simpan
-                </button>
-
-            </div>
-
-        </form>
+        </div>
 
     </div>
 
-</div>
+    <!-- Script Preview & Hapus Foto -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const photoInput = document.getElementById('photo');
+            const imagePreview = document.getElementById('imagePreview');
+            const removePhoto = document.getElementById('remove_photo');
+            const previewLabel = document.querySelector('.photo-preview-label'); // opsional
 
+            // Preview foto baru
+            if (photoInput && imagePreview) {
+                photoInput.addEventListener('change', function (event) {
+                    const file = event.target.files[0];
+                    if (!file) return;
 
-<!-- =========================================================
-     JAVASCRIPT
-========================================================= -->
+                    // Batal centang hapus foto jika memilih foto baru
+                    if (removePhoto) removePhoto.checked = false;
 
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    const photoInput = document.getElementById('photo');
-    const imagePreview = document.getElementById('imagePreview');
-    const removePhoto = document.getElementById('remove_photo');
-
-    /*
-    |--------------------------------------------------------------------------
-    | PILIH FOTO BARU
-    |--------------------------------------------------------------------------
-    */
-
-    if (photoInput) {
-
-        photoInput.addEventListener('change', function (event) {
-
-            const file = event.target.files[0];
-
-            if (!file) {
-                return;
+                    imagePreview.src = URL.createObjectURL(file);
+                    imagePreview.classList.remove('hidden');
+                });
             }
 
-            /*
-             * Kalau user memilih foto baru,
-             * otomatis batalkan checkbox hapus.
-             */
-            if (removePhoto) {
-                removePhoto.checked = false;
-            }
-
-            /*
-             * Tampilkan preview foto baru.
-             */
-            if (imagePreview) {
-
-                imagePreview.src = URL.createObjectURL(file);
-                imagePreview.style.display = 'block';
-
-                const label = document.querySelector(
-                    '.photo-preview-label'
-                );
-
-                if (label) {
-                    label.textContent = 'Preview foto baru:';
-                }
-            }
-
-        });
-
-    }
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | CHECKBOX HAPUS FOTO
-    |--------------------------------------------------------------------------
-    */
-
-    if (removePhoto) {
-
-        removePhoto.addEventListener('change', function () {
-
-            if (this.checked) {
-
-                /*
-                 * Sembunyikan preview saat checkbox hapus dicentang.
-                 */
-                if (imagePreview) {
-                    imagePreview.style.display = 'none';
-                }
-
-            } else {
-
-                /*
-                 * Jika dibatalkan, tampilkan kembali
-                 * foto lama jika memang ada.
-                 */
-                if (imagePreview) {
-
-                    <?php if (
-                        $action === 'edit' &&
-                        !empty($item->photo)
-                    ): ?>
-
-                        /*
-                         * Jika tidak ada foto baru yang dipilih,
-                         * kembalikan foto lama.
-                         */
-                        if (!photoInput.files.length) {
-                            imagePreview.src =
-                                "<?= base_url('uploads/testimoni/' . $item->photo) ?>";
-
-                            imagePreview.style.display = 'block';
+            // Toggle hapus foto
+            if (removePhoto && imagePreview) {
+                removePhoto.addEventListener('change', function () {
+                    if (this.checked) {
+                        imagePreview.classList.add('hidden');
+                    } else {
+                        // Jika tidak ada file baru dipilih, tampilkan kembali foto lama
+                        if (photoInput && !photoInput.files.length) {
+                            <?php if ($action === 'edit' && !empty($item->photo)): ?>
+                                imagePreview.src = "<?= base_url('uploads/testimoni/' . $item->photo); ?>";
+                                imagePreview.classList.remove('hidden');
+                            <?php endif; ?>
                         }
-
-                    <?php endif; ?>
-
-                }
-
+                    }
+                });
             }
-
         });
+    </script>
 
-    }
+</body>
 
-});
-</script>
+</html>

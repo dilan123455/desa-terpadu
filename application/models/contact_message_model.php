@@ -37,6 +37,12 @@ class Contact_message_model extends CI_Model
             ->delete($this->table);
     }
 
+    // Hitung semua pesan masuk
+    public function count_all()
+    {
+        return $this->db->count_all_results($this->table);
+    }
+
     public function count_unread()
     {
         return $this->db
@@ -52,7 +58,7 @@ class Contact_message_model extends CI_Model
     }
 
     public function insert($data)
-{
-    return $this->db->insert($this->table, $data);
-}
+    {
+        return $this->db->insert($this->table, $data);
+    }
 }

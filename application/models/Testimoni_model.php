@@ -39,6 +39,12 @@ class Testimoni_model extends CI_Model
             ->where('id', $id)
             ->delete($this->table);
     }
+
+    // Hitung semua data testimoni
+    public function count_all()
+    {
+        return $this->db->count_all_results($this->table);
+    }
  
     // Dipakai frontend (Home) buat nampilin testimoni aktif
     public function get_active()

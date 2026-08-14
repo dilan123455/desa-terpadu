@@ -5,1179 +5,216 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <link rel="stylesheet" href="<?= base_url('assets/css/output.css'); ?>">
+
     <title><?= html_escape($title); ?> - Desa Terpadu</title>
-
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f3f4f6;
-            color: #1f2937;
-        }
-
-        /* ================= SIDEBAR ================= */
-
-        .sidebar {
-            width: 230px;
-            background: #ffffff;
-            border-right: 1px solid #e5e7eb;
-            min-height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .logo-area {
-            height: 72px;
-            padding: 15px 18px;
-            border-bottom: 1px solid #e5e7eb;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo {
-            width: 40px;
-            height: 40px;
-            background: #CC4B4B;
-            color: white;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .logo-text h2 {
-            margin: 0;
-            font-size: 14px;
-            color: #172554;
-        }
-
-        .logo-text p {
-            margin: 3px 0 0;
-            font-size: 10px;
-            color: #64748b;
-        }
-
-        .menu {
-            padding: 22px 12px;
-            flex: 1;
-        }
-
-        .menu-title {
-            font-size: 10px;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: .5px;
-            margin: 0 10px 10px;
-        }
-
-        .menu a {
-            display: flex;
-            align-items: center;
-            gap: 11px;
-            padding: 11px 13px;
-            margin-bottom: 4px;
-            border-radius: 9px;
-            text-decoration: none;
-            color: #475569;
-            font-size: 13px;
-            transition: .2s;
-        }
-
-        .menu a:hover {
-            background: #fbe8e8;
-            color: #CC4B4B;
-        }
-
-        .menu a.active {
-            background: #fbe8e8;
-            color: #CC4B4B;
-            font-weight: 600;
-        }
-
-        .menu-icon {
-            width: 20px;
-            text-align: center;
-            font-size: 15px;
-        }
-
-        /* ================= LOGOUT ================= */
-
-        .logout {
-            padding: 15px 12px;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .logout a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 11px 13px;
-            border-radius: 9px;
-            color: #dc2626;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 500;
-        }
-
-        .logout a:hover {
-            background: #fef2f2;
-        }
-
-        /* ================= MAIN ================= */
-
-        .main {
-            margin-left: 230px;
-            min-height: 100vh;
-        }
-
-        /* ================= TOPBAR ================= */
-
-        .topbar {
-            height: 72px;
-            background: white;
-            border-bottom: 1px solid #e5e7eb;
-            padding: 0 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .topbar-title h1 {
-            margin: 0;
-            font-size: 22px;
-            color: #172033;
-        }
-
-        .topbar-title p {
-            margin: 4px 0 0;
-            color: #64748b;
-            font-size: 12px;
-        }
-
-        .admin-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .admin-info {
-            text-align: right;
-        }
-
-        .admin-info strong {
-            display: block;
-            font-size: 12px;
-            color: #1e293b;
-        }
-
-        .admin-info span {
-            font-size: 10px;
-            color: #64748b;
-        }
-
-        .avatar {
-            width: 34px;
-            height: 34px;
-            background: #CC4B4B;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        /* ================= CONTENT ================= */
-
-        .content {
-            padding: 30px;
-        }
-
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-
-        .page-header h2 {
-            margin: 0;
-            font-size: 25px;
-            color: #172033;
-        }
-
-        .page-header p {
-            margin: 7px 0 0;
-            color: #64748b;
-            font-size: 13px;
-        }
-
-        /* ================= BUTTON ================= */
-
-        .btn-add {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 16px;
-            background: #CC4B4B;
-            color: white;
-            text-decoration: none;
-            border-radius: 9px;
-            font-size: 12px;
-            font-weight: 600;
-            box-shadow: 0 3px 8px rgba(204, 75, 75, .2);
-            transition: .2s;
-            white-space: nowrap;
-        }
-
-        .btn-add:hover {
-            background: #b83f3f;
-            transform: translateY(-1px);
-        }
-
-        /* ================= ALERT ================= */
-
-        .alert {
-            padding: 13px 16px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            font-size: 13px;
-        }
-
-        .alert-success {
-            background: #ecfdf3;
-            color: #166534;
-            border: 1px solid #bbf7d0;
-        }
-
-        .alert-error {
-            background: #fef2f2;
-            color: #991b1b;
-            border: 1px solid #fecaca;
-        }
-
-        /* ================= CARD ================= */
-
-        .card {
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 15px;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, .04);
-            overflow: hidden;
-        }
-
-        .card-header {
-            padding: 20px 23px;
-            border-bottom: 1px solid #edf0f2;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .card-header-left {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .card-icon {
-            width: 40px;
-            height: 40px;
-            background: #fbe8e8;
-            color: #CC4B4B;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-        }
-
-        .card-header h3 {
-            margin: 0;
-            font-size: 16px;
-            color: #1e293b;
-        }
-
-        .card-header p {
-            margin: 4px 0 0;
-            font-size: 11px;
-            color: #94a3b8;
-        }
-
-        /* ================= TABLE ================= */
-
-        .table-wrapper {
-            overflow-x: auto;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
-
-        thead tr {
-            background: #fafafa;
-        }
-
-        th {
-            padding: 13px 14px;
-            border-bottom: 1px solid #e5e7eb;
-            color: #64748b;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: .3px;
-            white-space: nowrap;
-        }
-
-        th.left {
-            text-align: left;
-        }
-
-        th.center {
-            text-align: center;
-        }
-
-        td {
-            padding: 14px;
-            border-bottom: 1px solid #f1f5f9;
-            color: #475569;
-            vertical-align: middle;
-        }
-
-        tbody tr {
-            transition: .15s;
-        }
-
-        tbody tr:hover {
-            background: #fffafa;
-        }
-
-        tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        .number {
-            text-align: center;
-            color: #94a3b8;
-            font-weight: 600;
-        }
-
-        /* ================= PHOTO ================= */
-
-        .photo-wrapper {
-            text-align: center;
-        }
-
-        .photo {
-            width: 48px;
-            height: 48px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 2px solid #f1f5f9;
-        }
-
-        .no-photo {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            color: #94a3b8;
-            font-size: 11px;
-        }
-
-        /* ================= NAME ================= */
-
-        .name {
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .position {
-            color: #64748b;
-        }
-
-        /* ================= CONTENT ================= */
-
-        .testimonial-content {
-            max-width: 350px;
-            line-height: 1.6;
-            color: #64748b;
-        }
-
-        /* ================= STATUS ================= */
-
-        .status {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .status-active {
-            background: #ecfdf3;
-            color: #15803d;
-        }
-
-        .status-inactive {
-            background: #f1f5f9;
-            color: #64748b;
-        }
-
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: currentColor;
-        }
-
-        /* ================= ACTION ================= */
-
-        .actions {
-            text-align: center;
-            white-space: nowrap;
-        }
-
-        .action-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 7px 10px;
-            margin: 2px;
-            border-radius: 7px;
-            text-decoration: none;
-            font-size: 11px;
-            font-weight: 600;
-            transition: .15s;
-        }
-
-        .btn-detail {
-            background: #e8f7fa;
-            color: #087990;
-        }
-
-        .btn-detail:hover {
-            background: #cff4fc;
-        }
-
-        .btn-edit {
-            background: #fff8df;
-            color: #a16207;
-        }
-
-        .btn-edit:hover {
-            background: #fef3c7;
-        }
-
-        .btn-delete {
-            background: #fef2f2;
-            color: #dc2626;
-        }
-
-        .btn-delete:hover {
-            background: #fee2e2;
-        }
-
-        /* ================= EMPTY ================= */
-
-        .empty {
-            padding: 50px 20px;
-            text-align: center;
-        }
-
-        .empty-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 15px;
-            border-radius: 50%;
-            background: #fbe8e8;
-            color: #CC4B4B;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 25px;
-        }
-
-        .empty strong {
-            display: block;
-            color: #334155;
-            font-size: 14px;
-        }
-
-        .empty p {
-            margin: 7px 0 0;
-            color: #94a3b8;
-            font-size: 12px;
-        }
-
-        /* ================= FOOTER ================= */
-
-        .footer {
-            margin-top: 30px;
-            padding: 18px 0;
-            border-top: 1px solid #e5e7eb;
-            color: #94a3b8;
-            font-size: 11px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        /* ================= RESPONSIVE ================= */
-
-        @media (max-width: 900px) {
-
-            .sidebar {
-                width: 70px;
-            }
-
-            .logo-text,
-            .menu-title,
-            .menu a span:not(.menu-icon),
-            .logout a span:not(.menu-icon) {
-                display: none;
-            }
-
-            .logo-area {
-                justify-content: center;
-                padding: 15px 5px;
-            }
-
-            .menu a {
-                justify-content: center;
-                padding: 12px;
-            }
-
-            .logout a {
-                justify-content: center;
-            }
-
-            .main {
-                margin-left: 70px;
-            }
-
-            .content {
-                padding: 20px;
-            }
-        }
-
-        @media (max-width: 650px) {
-
-            .page-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .admin-info {
-                display: none;
-            }
-
-            .topbar {
-                padding: 0 18px;
-            }
-
-            .topbar-title h1 {
-                font-size: 18px;
-            }
-
-            .content {
-                padding: 15px;
-            }
-
-            .card-header {
-                padding: 16px;
-            }
-        }
-    </style>
-
 </head>
 
-<body>
+<body class="bg-gray-100 text-gray-800 min-h-screen">
 
+    <div class="admin-wrapper">
 
-    <!-- ================= SIDEBAR ================= -->
+        <!-- SIDEBAR -->
+        <?php $this->load->view('admin/sidebar'); ?>
 
-    <aside class="sidebar">
+        <!-- MAIN AREA -->
+        <div class="ml-0 lg:ml-64">
 
-        <!-- Logo -->
-        <div class="logo-area">
-
-            <div class="logo">
-                D
-            </div>
-
-            <div class="logo-text">
-
-                <h2>
-                    Desa Terpadu
-                </h2>
-
-                <p>
-                    Admin Panel
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- Menu -->
-        <nav class="menu">
-
-            <p class="menu-title">
-                Menu Utama
-            </p>
-
-
-            <!-- Dashboard -->
-            <a href="<?= site_url('admin/dashboard'); ?>">
-
-                <span class="menu-icon">⌂</span>
-
-                <span>
-                    Dashboard
-                </span>
-
-            </a>
-
-
-            <!-- Artikel -->
-            <a href="<?= site_url('admin/articles'); ?>">
-
-                <span class="menu-icon">📰</span>
-
-                <span>
-                    Artikel
-                </span>
-
-            </a>
-
-
-            <!-- Testimoni -->
-            <a
-                href="<?= site_url('admin/testimoni'); ?>"
-                class="active"
-            >
-
-                <span class="menu-icon">💬</span>
-
-                <span>
-                    Testimoni
-                </span>
-
-            </a>
-
-
-            <!-- FAQ -->
-            <a href="<?= site_url('admin/faq'); ?>">
-
-                <span class="menu-icon">❓</span>
-
-                <span>
-                    FAQ
-                </span>
-
-            </a>
-
-
-            <!-- Contact -->
-            <a href="<?= site_url('admin/contact_messages'); ?>">
-
-                <span class="menu-icon">✉️</span>
-
-                <span>
-                    Pesan Masuk
-                </span>
-
-            </a>
-
-
-            <p
-                class="menu-title"
-                style="margin-top: 25px;"
-            >
-                Konten Website
-            </p>
-
-
-            <!-- About -->
-            <a href="<?= site_url('admin/about'); ?>">
-
-                <span class="menu-icon">ℹ️</span>
-
-                <span>
-                    About
-                </span>
-
-            </a>
-
-
-            <!-- Features -->
-            <a href="<?= site_url('admin/features'); ?>">
-
-                <span class="menu-icon">⭐</span>
-
-                <span>
-                    Features
-                </span>
-
-            </a>
-
-
-            <!-- Implementation -->
-            <a href="<?= site_url('admin/implementation'); ?>">
-
-                <span class="menu-icon">⚙️</span>
-
-                <span>
-                    Implementation
-                </span>
-
-            </a>
-
-        </nav>
-
-
-        <!-- Logout -->
-        <div class="logout">
-
-            <a href="<?= site_url('auth/logout'); ?>">
-
-                <span class="menu-icon">↪</span>
-
-                <span>
-                    Logout
-                </span>
-
-            </a>
-
-        </div>
-
-    </aside>
-
-
-
-    <!-- ================= MAIN ================= -->
-
-    <main class="main">
-
-
-        <!-- Topbar -->
-        <header class="topbar">
-
-            <div class="topbar-title">
-
-                <h1>
-                    Testimoni
-                </h1>
-
-                <p>
-                    Kelola testimoni masyarakat Desa Terpadu
-                </p>
-
-            </div>
-
-
-            <div class="admin-profile">
-
-                <div class="admin-info">
-
-                    <strong>
-                        Administrator
-                    </strong>
-
-                    <span>
-                        Admin Panel
-                    </span>
-
-                </div>
-
-                <div class="avatar">
-                    A
-                </div>
-
-            </div>
-
-        </header>
-
-
-
-        <!-- ================= CONTENT ================= -->
-
-        <section class="content">
-
-
-            <!-- Page Header -->
-            <div class="page-header">
-
+            <!-- Topbar -->
+            <header class="fixed top-0 right-0 left-0 lg:left-64 h-20 bg-white/95 border-b border-gray-200 flex items-center justify-between px-4 sm:px-8 z-40">
                 <div>
-
-                    <h2>
-                        Kelola Testimoni
-                    </h2>
-
-                    <p>
-                        Kelola testimoni masyarakat yang ditampilkan
-                        pada website Desa Terpadu.
-                    </p>
-
+                    <h1 class="text-xl font-bold text-gray-800"><?= html_escape($title); ?></h1>
+                    <p class="text-sm text-gray-400 mt-1">Kelola testimoni masyarakat Desa Terpadu</p>
                 </div>
 
-
-                <!-- Tambah -->
-                <a
-                    href="<?= base_url('admin/testimoni/create'); ?>"
-                    class="btn-add"
-                >
-                    <span>+</span>
-                    Tambah Testimoni
-                </a>
-
-            </div>
-
-
-
-            <!-- ================= ALERT SUCCESS ================= -->
-
-            <?php if ($this->session->flashdata('success')): ?>
-
-                <div class="alert alert-success">
-
-                    ✓
-                    <?= $this->session->flashdata('success'); ?>
-
+                <div class="flex items-center gap-3">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-sm font-semibold text-gray-800"><?= html_escape($name); ?></p>
+                        <p class="text-xs text-gray-400 mt-1">Administrator</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white text-sm font-bold">
+                        <?= strtoupper(substr(html_escape($name), 0, 1)); ?>
+                    </div>
                 </div>
+            </header>
 
-            <?php endif; ?>
+            <!-- Content -->
+            <main class="p-4 sm:p-8 pt-24 sm:pt-28 min-h-screen">
 
-
-
-            <!-- ================= ALERT ERROR ================= -->
-
-            <?php if ($this->session->flashdata('error')): ?>
-
-                <div class="alert alert-error">
-
-                    ⚠
-                    <?= $this->session->flashdata('error'); ?>
-
-                </div>
-
-            <?php endif; ?>
-
-
-
-            <!-- ================= TABLE CARD ================= -->
-
-            <div class="card">
-
-
-                <!-- Card Header -->
-                <div class="card-header">
-
-                    <div class="card-header-left">
-
-                        <div class="card-icon">
-                            💬
-                        </div>
-
-                        <div>
-
-                            <h3>
-                                Daftar Testimoni
-                            </h3>
-
-                            <p>
-                                Data testimoni yang tersimpan di sistem
-                            </p>
-
-                        </div>
-
+                <!-- Page Header -->
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Kelola Testimoni</h2>
+                        <p class="text-sm text-gray-500 mt-1">Kelola testimoni masyarakat yang ditampilkan pada website Desa Terpadu.</p>
                     </div>
 
+                    <!-- Tambah Testimoni -->
+                    <a href="<?= base_url('admin/testimoni/create'); ?>"
+                        class="inline-flex items-center gap-2 px-4 py-2.5 bg-red-500 text-white rounded-lg text-sm font-semibold shadow-md hover:bg-red-600 transition whitespace-nowrap">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Tambah Testimoni
+                    </a>
                 </div>
 
+                <!-- Flash Success -->
+                <?php if ($this->session->flashdata('success')): ?>
+                    <div class="flex items-center gap-2 px-4 py-3 mb-5 rounded-lg bg-green-50 text-green-700 border border-green-200 text-sm">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <?= html_escape($this->session->flashdata('success')); ?>
+                    </div>
+                <?php endif; ?>
 
+                <!-- Flash Error -->
+                <?php if ($this->session->flashdata('error')): ?>
+                    <div class="flex items-center gap-2 px-4 py-3 mb-5 rounded-lg bg-red-50 text-red-700 border border-red-200 text-sm">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <?= html_escape($this->session->flashdata('error')); ?>
+                    </div>
+                <?php endif; ?>
 
-                <!-- Table -->
-                <div class="table-wrapper">
+                <!-- Testimoni Card -->
+                <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
 
-                    <table>
+                    <?php if (empty($testimonies)): ?>
 
-                        <thead>
+                        <!-- Empty State -->
+                        <div class="py-16 px-5 text-center">
+                            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-red-50 text-red-500 flex items-center justify-center">
+                                <!-- Ikon Chat Bubble -->
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                </svg>
+                            </div>
+                            <strong class="block text-sm font-semibold text-gray-700">Belum Ada Testimoni</strong>
+                            <p class="mt-2 text-sm text-gray-500">Belum terdapat data testimoni yang tersimpan.</p>
+                            <a href="<?= base_url('admin/testimoni/create'); ?>"
+                                class="mt-5 inline-flex items-center gap-2 px-4 py-2.5 bg-red-500 text-white rounded-lg text-sm font-semibold shadow-md hover:bg-red-600 transition">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                </svg>
+                                Tambah Testimoni
+                            </a>
+                        </div>
 
-                            <tr>
+                    <?php else: ?>
 
-                                <th class="center">
-                                    #
-                                </th>
+                        <!-- Card Header -->
+                        <div class="flex items-center gap-3 px-6 py-5 border-b border-gray-200">
+                            <div class="w-10 h-10 rounded-lg bg-red-50 text-red-500 flex items-center justify-center">
+                                <!-- Ikon Chat Bubble -->
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="text-base font-semibold text-gray-800">Daftar Testimoni</h3>
+                                <p class="text-xs text-gray-400 mt-0.5">Data testimoni yang tersimpan di sistem</p>
+                            </div>
+                        </div>
 
-                                <th class="center">
-                                    Foto
-                                </th>
-
-                                <th class="left">
-                                    Nama
-                                </th>
-
-                                <th class="left">
-                                    Jabatan
-                                </th>
-
-                                <th class="left">
-                                    Isi Testimoni
-                                </th>
-
-                                <th class="center">
-                                    Status
-                                </th>
-
-                                <th class="center">
-                                    Aksi
-                                </th>
-
-                            </tr>
-
-                        </thead>
-
-
-                        <tbody>
-
-
-                            <?php if (empty($testimonies)): ?>
-
-
-                                <!-- Empty -->
-                                <tr>
-
-                                    <td colspan="7">
-
-                                        <div class="empty">
-
-                                            <div class="empty-icon">
-                                                💬
-                                            </div>
-
-                                            <strong>
-                                                Belum Ada Testimoni
-                                            </strong>
-
-                                            <p>
-                                                Belum terdapat data testimoni
-                                                yang tersimpan.
-                                            </p>
-
-                                        </div>
-
-                                    </td>
-
-                                </tr>
-
-
-                            <?php else: ?>
-
-
-                                <?php $no = 1; ?>
-
-
-                                <?php foreach ($testimonies as $row): ?>
-
-
+                        <!-- Table Wrapper -->
+                        <div class="overflow-x-auto">
+                            <table class="w-full min-w-[900px] border-collapse">
+                                <thead class="bg-gray-50">
                                     <tr>
+                                        <th class="px-4 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap">#</th>
+                                        <th class="px-4 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap">Foto</th>
+                                        <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap">Nama</th>
+                                        <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap">Jabatan</th>
+                                        <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap min-w-[250px]">Isi Testimoni</th>
+                                        <th class="px-4 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap">Status</th>
+                                        <th class="px-4 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap min-w-[200px]">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-100">
+                                    <?php $no = 1; ?>
+                                    <?php foreach ($testimonies as $row): ?>
+                                        <tr class="hover:bg-red-50/50 transition">
+                                            <!-- Nomor -->
+                                            <td class="px-4 py-3.5 text-center text-sm text-gray-600 align-middle whitespace-nowrap"><?= $no++; ?></td>
 
-
-                                        <!-- Nomor -->
-                                        <td class="number">
-
-                                            <?= $no++; ?>
-
-                                        </td>
-
-
-
-                                        <!-- Foto -->
-                                        <td>
-
-                                            <div class="photo-wrapper">
-
+                                            <!-- Foto -->
+                                            <td class="px-4 py-3.5 align-middle text-center">
                                                 <?php if (!empty($row->photo)): ?>
-
-                                                    <img
-                                                        src="<?= base_url('uploads/testimoni/' . $row->photo); ?>"
+                                                    <img src="<?= base_url('uploads/testimoni/' . $row->photo); ?>"
                                                         alt="<?= html_escape($row->name); ?>"
-                                                        class="photo"
-                                                    >
-
+                                                        class="w-12 h-12 object-cover rounded-full border-2 border-gray-200 inline-block">
                                                 <?php else: ?>
-
-                                                    <span class="no-photo">
+                                                    <span class="w-12 h-12 rounded-full bg-gray-100 border border-gray-200 flex items-center justify-center text-gray-400 text-xs inline-flex">
                                                         —
                                                     </span>
-
                                                 <?php endif; ?>
+                                            </td>
 
-                                            </div>
+                                            <!-- Nama -->
+                                            <td class="px-4 py-3.5 align-middle">
+                                                <span class="font-semibold text-gray-800"><?= html_escape($row->name); ?></span>
+                                            </td>
 
-                                        </td>
-
-
-
-                                        <!-- Nama -->
-                                        <td>
-
-                                            <span class="name">
-                                                <?= html_escape($row->name); ?>
-                                            </span>
-
-                                        </td>
-
-
-
-                                        <!-- Jabatan -->
-                                        <td>
-
-                                            <span class="position">
+                                            <!-- Jabatan -->
+                                            <td class="px-4 py-3.5 text-sm text-gray-600 align-middle whitespace-nowrap">
                                                 <?= html_escape($row->position); ?>
-                                            </span>
+                                            </td>
 
-                                        </td>
+                                            <!-- Isi Testimoni (perbaikan ellipsis) -->
+                                            <td class="px-4 py-3.5 align-middle">
+                                                <div class="max-w-[350px] leading-relaxed text-sm text-gray-600">
+                                                    <?= html_escape(character_limiter($row->content, 80, '...')); ?>
+                                                </div>
+                                            </td>
 
+                                            <!-- Status -->
+                                            <td class="px-4 py-3.5 align-middle text-center whitespace-nowrap">
+                                                <?php if ($row->status === 'active'): ?>
+                                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-50 text-green-700 text-xs font-semibold">
+                                                        <span class="w-1.5 h-1.5 rounded-full bg-green-600"></span>
+                                                        Aktif
+                                                    </span>
+                                                <?php else: ?>
+                                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100 text-gray-600 text-xs font-semibold">
+                                                        <span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span>
+                                                        Nonaktif
+                                                    </span>
+                                                <?php endif; ?>
+                                            </td>
 
+                                            <!-- Aksi -->
+                                            <td class="px-4 py-3.5 align-middle text-center whitespace-nowrap">
+                                                <div class="flex flex-wrap justify-center gap-1.5">
+                                                    <a href="<?= base_url('admin/testimoni/detail/' . $row->id); ?>"
+                                                        class="inline-flex items-center px-3 py-1.5 bg-cyan-50 text-cyan-700 rounded-md text-xs font-semibold hover:bg-cyan-100 transition">Detail</a>
+                                                    <a href="<?= base_url('admin/testimoni/edit/' . $row->id); ?>"
+                                                        class="inline-flex items-center px-3 py-1.5 bg-amber-50 text-amber-700 rounded-md text-xs font-semibold hover:bg-amber-100 transition">Edit</a>
+                                                    <a href="<?= base_url('admin/testimoni/delete/' . $row->id); ?>"
+                                                        onclick="return confirm('Yakin ingin menghapus testimoni ini?');"
+                                                        class="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 rounded-md text-xs font-semibold hover:bg-red-100 transition">Hapus</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
 
-                                        <!-- Isi -->
-                                        <td>
-
-                                            <div class="testimonial-content">
-
-                                                <?= html_escape(
-                                                    character_limiter($row->content, 80)
-                                                ); ?>
-
-                                            </div>
-
-                                        </td>
-
-
-
-                                        <!-- Status -->
-                                        <td style="text-align: center;">
-
-                                            <?php if ($row->status === 'active'): ?>
-
-                                                <span class="status status-active">
-
-                                                    <span class="status-dot"></span>
-
-                                                    Aktif
-
-                                                </span>
-
-                                            <?php else: ?>
-
-                                                <span class="status status-inactive">
-
-                                                    <span class="status-dot"></span>
-
-                                                    Nonaktif
-
-                                                </span>
-
-                                            <?php endif; ?>
-
-                                        </td>
-
-
-
-                                        <!-- Aksi -->
-                                        <td class="actions">
-
-
-                                            <!-- Detail -->
-                                            <a
-                                                href="<?= base_url('admin/testimoni/detail/' . $row->id); ?>"
-                                                class="action-btn btn-detail"
-                                            >
-                                                Detail
-                                            </a>
-
-
-                                            <!-- Edit -->
-                                            <a
-                                                href="<?= base_url('admin/testimoni/edit/' . $row->id); ?>"
-                                                class="action-btn btn-edit"
-                                            >
-                                                Edit
-                                            </a>
-
-
-                                            <!-- Hapus -->
-                                            <a
-                                                href="<?= base_url('admin/testimoni/delete/' . $row->id); ?>"
-                                                onclick="return confirm('Yakin ingin menghapus testimoni ini?');"
-                                                class="action-btn btn-delete"
-                                            >
-                                                Hapus
-                                            </a>
-
-
-                                        </td>
-
-
-                                    </tr>
-
-
-                                <?php endforeach; ?>
-
-
-                            <?php endif; ?>
-
-
-                        </tbody>
-
-                    </table>
+                    <?php endif; ?>
 
                 </div>
 
-            </div>
+                <!-- Footer -->
+                <footer class="mt-8 pt-5 border-t border-gray-200 flex flex-col sm:flex-row justify-between gap-4 text-xs text-gray-400">
+                    <p>© <?= date('Y'); ?> Desa Terpadu</p>
+                    <p>Admin Panel</p>
+                </footer>
 
-
-
-            <!-- Footer -->
-           <div class="footer">
-
-                <span>
-                    © <?= date('Y'); ?> Desa Terpadu
-                </span>
-
-                <span>
-                    Admin Panel
-                </span>
-
-            </div>
-
-
-        </section>
-
-    </main>
+            </main>
+        </div>
+    </div>
 
 </body>
 

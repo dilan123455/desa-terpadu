@@ -22,24 +22,26 @@ class Faq extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'Kelola FAQ';
-        $data['faqs'] = $this->Faq_model->get_all();
+        $data['title'] = 'FAQ';
+        $data['name']  = $this->session->userdata('name');
+        $data['faqs']  = $this->Faq_model->get_all();
 
         $this->load->view('admin/faq/index', $data);
     }
 
     public function create()
-{
-    $data['title'] = 'Tambah FAQ';
+    {
+        $data['title'] = 'Tambah FAQ';
+        $data['name']  = $this->session->userdata('name');
 
-    $this->load->view('admin/faq/create', $data);
-}
+        $this->load->view('admin/faq/create', $data);
+    }
 
     public function store()
     {
-        $question = trim($this->input->post('question', TRUE));
-        $answer = trim($this->input->post('answer', FALSE));
-        $status = $this->input->post('status', TRUE);
+        $question   = trim($this->input->post('question', TRUE));
+        $answer     = trim($this->input->post('answer', FALSE));
+        $status     = $this->input->post('status', TRUE);
         $sort_order = (int) $this->input->post('sort_order');
 
         if ($question === '' || $answer === '') {
@@ -53,12 +55,12 @@ class Faq extends CI_Controller
         }
 
         $data = [
-            'question' => $question,
-            'answer' => $answer,
-            'status' => ($status === 'inactive') ? 'inactive' : 'active',
-            'sort_order' => $sort_order,
-            'created_at' => date('Y-m-d H:i:s'),
-            'updated_at' => date('Y-m-d H:i:s')
+            'question'    => $question,
+            'answer'      => $answer,
+            'status'      => ($status === 'inactive') ? 'inactive' : 'active',
+            'sort_order'  => $sort_order,
+            'created_at'  => date('Y-m-d H:i:s'),
+            'updated_at'  => date('Y-m-d H:i:s')
         ];
 
         $this->Faq_model->insert($data);
@@ -72,18 +74,19 @@ class Faq extends CI_Controller
     }
 
     public function edit($id)
-{
-    $faq = $this->Faq_model->get_by_id($id);
+    {
+        $faq = $this->Faq_model->get_by_id($id);
 
-    if (!$faq) {
-        show_404();
+        if (!$faq) {
+            show_404();
+        }
+
+        $data['title'] = 'Edit FAQ';
+        $data['name']  = $this->session->userdata('name');
+        $data['faq']   = $faq;
+
+        $this->load->view('admin/faq/edit', $data);
     }
-
-    $data['title'] = 'Edit FAQ';
-    $data['faq'] = $faq;
-
-    $this->load->view('admin/faq/edit', $data);
-}
 
     public function detail($id)
     {
@@ -94,7 +97,8 @@ class Faq extends CI_Controller
         }
 
         $data['title'] = 'Detail FAQ';
-        $data['faq'] = $faq;
+        $data['name']  = $this->session->userdata('name');
+        $data['faq']   = $faq;
 
         $this->load->view('admin/faq/detail', $data);
     }
@@ -107,9 +111,9 @@ class Faq extends CI_Controller
             show_404();
         }
 
-        $question = trim($this->input->post('question', TRUE));
-        $answer = trim($this->input->post('answer', FALSE));
-        $status = $this->input->post('status', TRUE);
+        $question   = trim($this->input->post('question', TRUE));
+        $answer     = trim($this->input->post('answer', FALSE));
+        $status     = $this->input->post('status', TRUE);
         $sort_order = (int) $this->input->post('sort_order');
 
         if ($question === '' || $answer === '') {
@@ -123,11 +127,11 @@ class Faq extends CI_Controller
         }
 
         $data = [
-            'question' => $question,
-            'answer' => $answer,
-            'status' => ($status === 'inactive') ? 'inactive' : 'active',
-            'sort_order' => $sort_order,
-            'updated_at' => date('Y-m-d H:i:s')
+            'question'    => $question,
+            'answer'      => $answer,
+            'status'      => ($status === 'inactive') ? 'inactive' : 'active',
+            'sort_order'  => $sort_order,
+            'updated_at'  => date('Y-m-d H:i:s')
         ];
 
         $this->Faq_model->update($id, $data);

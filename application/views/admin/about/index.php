@@ -5,866 +5,236 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title><?= html_escape($title); ?> - Desa Terpadu</title>
-
     <link rel="stylesheet" href="<?= base_url('assets/css/output.css'); ?>">
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f3f4f6;
-            color: #1f2937;
-        }
-
-        .sidebar {
-            width: 230px;
-            background: #ffffff;
-            border-right: 1px solid #e5e7eb;
-            min-height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .logo-area {
-            height: 72px;
-            padding: 15px 18px;
-            border-bottom: 1px solid #e5e7eb;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo {
-            width: 40px;
-            height: 40px;
-            background: #CC4B4B;
-            color: white;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: bold;
-        }
-
-        .logo-text h2 {
-            margin: 0;
-            font-size: 14px;
-            color: #172554;
-        }
-
-        .logo-text p {
-            margin: 3px 0 0;
-            font-size: 10px;
-            color: #64748b;
-        }
-
-        .menu {
-            padding: 22px 12px;
-            flex: 1;
-        }
-
-        .menu-title {
-            font-size: 10px;
-            color: #94a3b8;
-            text-transform: uppercase;
-            letter-spacing: .5px;
-            margin: 0 10px 10px;
-        }
-
-        .menu a {
-            display: flex;
-            align-items: center;
-            gap: 11px;
-            padding: 11px 13px;
-            margin-bottom: 4px;
-            border-radius: 9px;
-            text-decoration: none;
-            color: #475569;
-            font-size: 13px;
-            transition: .2s;
-        }
-
-        .menu a:hover {
-            background: #fef2f2;
-            color: #CC4B4B;
-        }
-
-        .menu a.active {
-            background: #fbe8e8;
-            color: #CC4B4B;
-            font-weight: 600;
-        }
-
-        .menu-icon {
-            width: 20px;
-            text-align: center;
-            font-size: 15px;
-        }
-
-        .logout {
-            padding: 15px 12px;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .logout a {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 11px 13px;
-            border-radius: 9px;
-            color: #dc2626;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 500;
-        }
-
-        .logout a:hover {
-            background: #fef2f2;
-        }
-
-        .main {
-            margin-left: 230px;
-            min-height: 100vh;
-        }
-
-        .topbar {
-            height: 72px;
-            background: white;
-            border-bottom: 1px solid #e5e7eb;
-            padding: 0 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .topbar-title h1 {
-            margin: 0;
-            font-size: 22px;
-            color: #172033;
-        }
-
-        .topbar-title p {
-            margin: 4px 0 0;
-            color: #64748b;
-            font-size: 12px;
-        }
-
-        .admin-profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .admin-info {
-            text-align: right;
-        }
-
-        .admin-info strong {
-            display: block;
-            font-size: 12px;
-            color: #1e293b;
-        }
-
-        .admin-info span {
-            font-size: 10px;
-            color: #64748b;
-        }
-
-        .avatar {
-            width: 34px;
-            height: 34px;
-            background: #CC4B4B;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        .content {
-            padding: 30px;
-        }
-
-        .page-header {
-            margin-bottom: 25px;
-        }
-
-        .page-header h2 {
-            margin: 0;
-            font-size: 25px;
-            color: #172033;
-        }
-
-        .page-header p {
-            margin: 7px 0 0;
-            color: #64748b;
-            font-size: 13px;
-        }
-
-        .about-card {
-            background: white;
-            border-radius: 16px;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, .04);
-            overflow: hidden;
-        }
-
-        .card-header {
-            padding: 22px 25px;
-            border-bottom: 1px solid #edf0f2;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .card-title {
-            display: flex;
-            align-items: center;
-            gap: 13px;
-        }
-
-        .card-icon {
-            width: 42px;
-            height: 42px;
-            border-radius: 11px;
-            background: #fbe8e8;
-            color: #CC4B4B;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 19px;
-        }
-
-        .card-title h3 {
-            margin: 0;
-            font-size: 17px;
-            color: #1e293b;
-        }
-
-        .card-title p {
-            margin: 4px 0 0;
-            font-size: 11px;
-            color: #94a3b8;
-        }
-
-        .btn-edit {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 9px 15px;
-            border-radius: 8px;
-            background: #CC4B4B;
-            color: white;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 600;
-            transition: .2s;
-        }
-
-        .btn-edit:hover {
-            background: #b83f3f;
-        }
-
-        .card-body {
-            padding: 25px;
-        }
-
-        .info {
-            margin-bottom: 23px;
-        }
-
-        .info:last-child {
-            margin-bottom: 0;
-        }
-
-        .label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 9px;
-            font-size: 11px;
-            font-weight: 700;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: .4px;
-        }
-
-        .value {
-            padding: 16px 18px;
-            background: #f8fafc;
-            border: 1px solid #eef2f7;
-            border-radius: 10px;
-            line-height: 1.7;
-            color: #334155;
-            font-size: 13px;
-        }
-
-        .title-value {
-            font-size: 16px;
-            font-weight: 600;
-            color: #1e293b;
-        }
-
-        .empty {
-            padding: 25px;
-            text-align: center;
-            background: #fff7f7;
-            border: 1px solid #f5d0d0;
-            color: #991b1b;
-            border-radius: 10px;
-            font-size: 13px;
-        }
-
-        .empty-icon {
-            font-size: 30px;
-            margin-bottom: 10px;
-        }
-
-        .footer {
-            margin-top: 30px;
-            padding: 18px 0;
-            border-top: 1px solid #e5e7eb;
-            color: #94a3b8;
-            font-size: 11px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        @media (max-width: 768px) {
-
-            .sidebar {
-                width: 70px;
-            }
-
-            .logo-text,
-            .menu-title,
-            .menu a span:not(.menu-icon),
-            .logout a span:not(.menu-icon) {
-                display: none;
-            }
-
-            .logo-area {
-                justify-content: center;
-                padding: 15px 5px;
-            }
-
-            .menu a {
-                justify-content: center;
-                padding: 12px;
-            }
-
-            .logout a {
-                justify-content: center;
-            }
-
-            .main {
-                margin-left: 70px;
-            }
-
-            .topbar {
-                padding: 0 18px;
-            }
-
-            .content {
-                padding: 20px;
-            }
-
-            .admin-info {
-                display: none;
-            }
-
-            .card-header {
-                align-items: flex-start;
-                gap: 15px;
-            }
-        }
-    </style>
-
+    <title><?= html_escape($title); ?> - Desa Terpadu</title>
 </head>
 
-<body>
+<body class="bg-gray-100 text-gray-800 min-h-screen">
 
-    <!-- ================= SIDEBAR ================= -->
+    <div class="admin-wrapper">
 
-    <aside class="sidebar">
+        <!-- SIDEBAR -->
+        <?php $this->load->view('admin/sidebar'); ?>
 
-        <!-- Logo -->
-        <div class="logo-area">
+        <!-- MAIN AREA -->
+        <div class="ml-0 lg:ml-64">
 
-            <div class="logo">
-                D
-            </div>
-
-            <div class="logo-text">
-                <h2>Desa Terpadu</h2>
-                <p>Admin Panel</p>
-            </div>
-
-        </div>
-
-
-        <!-- Menu -->
-        <nav class="menu">
-
-            <p class="menu-title">
-                Menu Utama
-            </p>
-
-
-            <!-- Dashboard -->
-            <a href="<?= site_url('admin/dashboard'); ?>">
-
-                <span class="menu-icon">⌂</span>
-
-                <span>
-                    Dashboard
-                </span>
-
-            </a>
-
-
-            <!-- Artikel -->
-            <a href="<?= site_url('admin/articles'); ?>">
-
-                <span class="menu-icon">📰</span>
-
-                <span>
-                    Artikel
-                </span>
-
-            </a>
-
-
-            <!-- Testimoni -->
-            <a href="<?= site_url('admin/testimoni'); ?>">
-
-                <span class="menu-icon">💬</span>
-
-                <span>
-                    Testimoni
-                </span>
-
-            </a>
-
-
-            <!-- FAQ -->
-            <a href="<?= site_url('admin/faq'); ?>">
-
-                <span class="menu-icon">❓</span>
-
-                <span>
-                    FAQ
-                </span>
-
-            </a>
-
-
-            <!-- Contact -->
-            <a href="<?= site_url('admin/contact_messages'); ?>">
-
-                <span class="menu-icon">✉️</span>
-
-                <span>
-                    Pesan Masuk
-                </span>
-
-            </a>
-
-
-            <p class="menu-title" style="margin-top: 25px;">
-                Konten Website
-            </p>
-
-
-            <!-- About -->
-            <a
-                href="<?= site_url('admin/about'); ?>"
-                class="active"
-            >
-
-                <span class="menu-icon">ℹ️</span>
-
-                <span>
-                    About
-                </span>
-
-            </a>
-
-
-            <!-- Features -->
-            <a href="<?= site_url('admin/features'); ?>">
-
-                <span class="menu-icon">⭐</span>
-
-                <span>
-                    Features
-                </span>
-
-            </a>
-
-
-            <!-- Implementation -->
-            <a href="<?= site_url('admin/implementation'); ?>">
-
-                <span class="menu-icon">⚙️</span>
-
-                <span>
-                    Implementation
-                </span>
-
-            </a>
-
-        </nav>
-
-
-        <!-- Logout -->
-        <div class="logout">
-
-            <a href="<?= site_url('auth/logout'); ?>">
-
-                <span class="menu-icon">↪</span>
-
-                <span>
-                    Logout
-                </span>
-
-            </a>
-
-        </div>
-
-    </aside>
-
-
-
-    <!-- ================= MAIN ================= -->
-
-    <main class="main">
-
-
-        <!-- Topbar -->
-        <header class="topbar">
-
-            <div class="topbar-title">
-
-                <h1>
-                    About
-                </h1>
-
-                <p>
-                    Kelola informasi tentang Desa Terpadu
-                </p>
-
-            </div>
-
-
-            <div class="admin-profile">
-
-                <div class="admin-info">
-
-                    <strong>
-                        Administrator
-                    </strong>
-
-                    <span>
-                        Admin Panel
-                    </span>
-
-                </div>
-
-                <div class="avatar">
-                    A
-                </div>
-
-            </div>
-
-        </header>
-
-
-
-        <!-- Content -->
-        <section class="content">
-
-
-            <!-- Page Header -->
-            <div class="page-header">
-
-                <h2>
-                    Tentang Desa Terpadu
-                </h2>
-
-                <p>
-                    Informasi ini akan digunakan pada bagian About di website Desa Terpadu.
-                </p>
-
-            </div>
-
-
-
-            <?php if (!empty($about)): ?>
-
-
-                <!-- About Card -->
-                <div class="about-card">
-
-
-                    <!-- Card Header -->
-                    <div class="card-header">
-
-                        <div class="card-title">
-
-                            <div class="card-icon">
-                                ℹ️
-                            </div>
-
-                            <div>
-
-                                <h3>
-                                    Informasi Utama
-                                </h3>
-
-                                <p>
-                                    Data yang ditampilkan pada halaman About
-                                </p>
-
-                            </div>
-
-                        </div>
-
-
-                        <a
-                            href="<?= site_url('admin/about/edit'); ?>"
-                            class="btn-edit"
-                        >
-                            ✏️ Edit Informasi
-                        </a>
-
-                    </div>
-
-
-
-                    <!-- Card Body -->
-                    <div class="card-body">
-
-
-                        <!-- Judul -->
-                        <div class="info">
-
-                            <span class="label">
-                                📌 Judul
-                            </span>
-
-                            <div class="value title-value">
-
-                                <?= html_escape($about->title); ?>
-
-                            </div>
-
-                        </div>
-
-
-
-                        <!-- Deskripsi -->
-                        <div class="info">
-
-                            <span class="label">
-                                📝 Deskripsi
-                            </span>
-
-                            <div class="value">
-
-                                <?= nl2br(html_escape($about->description)); ?>
-
-                            </div>
-
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-
-                <?php if (!empty($slides)): ?>
-
-    <div class="about-card" style="margin-top: 25px;">
-
-        <div class="card-header">
-
-            <div class="card-title">
-
-                <div class="card-icon">
-                    🖼️
-                </div>
-
+            <!-- Topbar -->
+            <header class="fixed top-0 right-0 left-0 lg:left-64 h-20 bg-white/95 border-b border-gray-200 flex items-center justify-between px-4 sm:px-8 z-40">
                 <div>
-
-                    <h3>
-                        Gambar Carousel
-                    </h3>
-
-                    <p>
-                        Gambar yang ditampilkan pada bagian About website.
-                    </p>
-
+                    <h1 class="text-xl font-bold text-gray-800"><?= html_escape($title); ?></h1>
+                    <p class="text-sm text-gray-400 mt-1">Kelola informasi tentang Desa Terpadu</p>
                 </div>
 
-            </div>
-
-        </div>
-
-
-        <div class="card-body">
-
-            <?php foreach ($slides as $slide): ?>
-
-                <div
-                    style="
-                        display:flex;
-                        align-items:center;
-                        gap:20px;
-                        padding:18px 0;
-                        border-bottom:1px solid #edf0f2;
-                    "
-                >
-
-                    <!-- Gambar -->
-                    <div style="width:180px; flex-shrink:0;">
-
-                        <img
-                            src="<?= base_url('assets/uploads/about/' . $slide->image); ?>"
-                            alt="<?= html_escape($slide->title); ?>"
-                            style="
-                                width:100%;
-                                height:100px;
-                                object-fit:cover;
-                                border-radius:10px;
-                                border:1px solid #e5e7eb;
-                            "
-                        >
-
+                <div class="flex items-center gap-3">
+                    <div class="text-right hidden sm:block">
+                        <p class="text-sm font-semibold text-gray-800"><?= html_escape($name); ?></p>
+                        <p class="text-xs text-gray-400 mt-1">Administrator</p>
                     </div>
-
-
-                    <!-- Informasi -->
-                    <div style="flex:1;">
-
-                        <div
-                            style="
-                                font-size:15px;
-                                font-weight:600;
-                                color:#1e293b;
-                                margin-bottom:6px;
-                            "
-                        >
-                            <?= html_escape($slide->title); ?>
-                        </div>
-
-                        <div
-                            style="
-                                font-size:12px;
-                                color:#64748b;
-                                margin-bottom:5px;
-                            "
-                        >
-                            File:
-                            <?= html_escape($slide->image); ?>
-                        </div>
-
-                        <div
-                            style="
-                                font-size:12px;
-                                color:#64748b;
-                            "
-                        >
-                            Urutan:
-                            <?= html_escape($slide->sort_order); ?>
-                        </div>
-
+                    <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white text-sm font-bold">
+                        <?= strtoupper(substr(html_escape($name), 0, 1)); ?>
                     </div>
+                </div>
+            </header>
 
+            <!-- Content -->
+            <main class="p-4 sm:p-8 pt-24 sm:pt-28 min-h-screen">
 
-                    <!-- Edit -->
-                    <div>
-
-                        <a
-                            href="<?= site_url('admin/about/edit_slide/' . $slide->id); ?>"
-                            class="btn-edit"
-                        >
-                            ✏️ Edit
-                        </a>
-
-                    </div>
-
+                <!-- Page Header -->
+                <div class="mb-6">
+                    <h2 class="text-2xl font-bold text-gray-800">Tentang Desa Terpadu</h2>
+                    <p class="text-sm text-gray-500 mt-1">Informasi ini akan digunakan pada bagian About di website Desa Terpadu.</p>
                 </div>
 
-            <?php endforeach; ?>
+                <?php if (!empty($about)): ?>
 
-        </div>
+                    <!-- ==================== ABOUT CARD ==================== -->
+                    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
 
-    </div>
-
-<?php endif; ?>
-            <?php else: ?>
-
-
-                <!-- Empty State -->
-                <div class="about-card">
-
-                    <div class="card-body">
-
-                        <div class="empty">
-
-                            <div class="empty-icon">
-                                ℹ️
+                        <!-- Card Header -->
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-6 py-5 border-b border-gray-200">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-red-50 text-red-500 flex items-center justify-center">
+                                    <!-- Ikon Information Circle -->
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-base font-semibold text-gray-800">Informasi Utama</h3>
+                                    <p class="text-xs text-gray-400 mt-0.5">Data yang ditampilkan pada halaman About</p>
+                                </div>
                             </div>
 
-                            <strong>
-                                Data Tentang Desa Terpadu Belum Tersedia
-                            </strong>
+                            <a href="<?= site_url('admin/about/edit'); ?>"
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg text-sm font-semibold shadow-md hover:bg-red-600 transition whitespace-nowrap">
+                                <!-- Ikon Pencil -->
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                </svg>
+                                Edit Informasi
+                            </a>
+                        </div>
 
-                            <p>
-                                Silakan tambahkan informasi About terlebih dahulu.
-                            </p>
+                        <!-- Card Body -->
+                        <div class="p-6 space-y-6">
+
+                            <!-- Judul -->
+                            <div>
+                                <span class="flex items-center gap-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
+                                    <!-- Ikon Document Text -->
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                    Judul
+                                </span>
+                                <div class="px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-base font-semibold text-gray-800 leading-relaxed">
+                                    <?= html_escape($about->title); ?>
+                                </div>
+                            </div>
+
+                            <!-- Deskripsi -->
+                            <div>
+                                <span class="flex items-center gap-2 text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">
+                                    <!-- Ikon Clipboard List -->
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                                    </svg>
+                                    Deskripsi
+                                </span>
+                                <div class="px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700 leading-relaxed">
+                                    <?= nl2br(html_escape($about->description)); ?>
+                                </div>
+                            </div>
 
                         </div>
 
                     </div>
 
-                </div>
+                    <!-- ==================== SLIDES CARD ==================== -->
+                    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden mt-6">
 
+                        <!-- Slides Card Header -->
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 px-6 py-5 border-b border-gray-200">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-red-50 text-red-500 flex items-center justify-center">
+                                    <!-- Ikon Photograph -->
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3 class="text-base font-semibold text-gray-800">Gambar Carousel</h3>
+                                    <p class="text-xs text-gray-400 mt-0.5">Gambar yang ditampilkan pada bagian About website.</p>
+                                </div>
+                            </div>
 
-            <?php endif; ?>
+                            <!-- Tombol Tambah Slide -->
+                            <a href="<?= site_url('admin/about/slide_create'); ?>"
+                                class="inline-flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg text-sm font-semibold shadow-md hover:bg-red-600 transition whitespace-nowrap self-start sm:self-center">
+                                <!-- Ikon Plus -->
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                </svg>
+                                Tambah Slide
+                            </a>
+                        </div>
 
+                        <?php if (!empty($slides)): ?>
 
+                            <!-- Slides List -->
+                            <div class="p-6 divide-y divide-gray-100">
+                                <?php foreach ($slides as $slide): ?>
+                                    <div class="flex flex-col sm:flex-row sm:items-center gap-4 py-4 first:pt-0 last:pb-0">
 
-            <!-- Footer -->
-            <div class="footer">
+                                        <!-- Gambar -->
+                                        <div class="w-full sm:w-[180px] flex-shrink-0">
+                                            <img src="<?= base_url('assets/uploads/about/' . $slide->image); ?>"
+                                                alt="<?= html_escape($slide->title); ?>"
+                                                class="w-full h-[100px] object-cover rounded-lg border border-gray-200">
+                                        </div>
 
-                <span>
-                    © <?= date('Y'); ?> Desa Terpadu
-                </span>
+                                        <!-- Informasi -->
+                                        <div class="flex-1">
+                                            <div class="text-sm font-semibold text-gray-800 mb-1">
+                                                <?= html_escape($slide->title); ?>
+                                            </div>
+                                            <div class="text-xs text-gray-500 mb-1">
+                                                File: <?= html_escape($slide->image); ?>
+                                            </div>
+                                            <div class="text-xs text-gray-500">
+                                                Urutan: <?= html_escape($slide->sort_order); ?>
+                                            </div>
+                                        </div>
 
-                <span>
-                    Admin Panel
-                </span>
+                                        <!-- Edit Slide -->
+                                        <div>
+                                            <a href="<?= site_url('admin/about/edit_slide/' . $slide->id); ?>"
+                                                class="inline-flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg text-sm font-semibold shadow-md hover:bg-red-600 transition whitespace-nowrap">
+                                                <!-- Ikon Pencil -->
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                </svg>
+                                                Edit
+                                            </a>
+                                        </div>
 
-            </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
 
+                        <?php else: ?>
 
-        </section>
+                            <!-- Empty Slides -->
+                            <div class="p-8 text-center">
+                                <div class="w-14 h-14 mx-auto mb-3 rounded-full bg-gray-100 text-gray-400 flex items-center justify-center">
+                                    <!-- Ikon Photograph -->
+                                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                </div>
+                                <p class="text-sm text-gray-500">Belum ada gambar carousel.</p>
+                                <a href="<?= site_url('admin/about/slide_create'); ?>"
+                                    class="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg text-sm font-semibold shadow-md hover:bg-red-600 transition">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    Tambah Slide
+                                </a>
+                            </div>
 
-    </main>
+                        <?php endif; ?>
+
+                    </div>
+
+                <?php else: ?>
+
+                    <!-- Empty State About -->
+                    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+                        <div class="p-8 text-center">
+                            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-red-50 text-red-500 flex items-center justify-center">
+                                <!-- Ikon Information Circle -->
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <strong class="block text-sm font-semibold text-gray-700">Data Tentang Desa Terpadu Belum Tersedia</strong>
+                            <p class="mt-2 text-sm text-gray-500">Silakan tambahkan informasi About terlebih dahulu.</p>
+                        </div>
+                    </div>
+
+                <?php endif; ?>
+
+                <!-- Footer -->
+                <footer class="mt-8 pt-5 border-t border-gray-200 flex flex-col sm:flex-row justify-between gap-4 text-xs text-gray-400">
+                    <p>© <?= date('Y'); ?> Desa Terpadu</p>
+                    <p>Admin Panel</p>
+                </footer>
+
+            </main>
+        </div>
+    </div>
 
 </body>
 

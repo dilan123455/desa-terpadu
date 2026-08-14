@@ -51,5 +51,10 @@ class Faq_model extends CI_Model
             ->delete($this->table);
     }
 
+    // Hitung semua data FAQ
+    public function count_all()
+    {
+        return $this->db->count_all_results($this->table);
+    }
     
 }
