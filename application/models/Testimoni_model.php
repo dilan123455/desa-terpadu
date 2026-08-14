@@ -1,10 +1,10 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
- 
+
 class Testimoni_model extends CI_Model
 {
     private $table = 'testimonials';
- 
+
     public function get_all()
     {
         return $this->db
@@ -12,7 +12,7 @@ class Testimoni_model extends CI_Model
             ->get($this->table)
             ->result();
     }
- 
+
     public function get_by_id($id)
     {
         return $this->db
@@ -20,19 +20,19 @@ class Testimoni_model extends CI_Model
             ->get($this->table)
             ->row();
     }
- 
+
     public function insert($data)
     {
         return $this->db->insert($this->table, $data);
     }
- 
+
     public function update($id, $data)
     {
         return $this->db
             ->where('id', $id)
             ->update($this->table, $data);
     }
- 
+
     public function delete($id)
     {
         return $this->db
@@ -45,8 +45,8 @@ class Testimoni_model extends CI_Model
     {
         return $this->db->count_all_results($this->table);
     }
- 
-    // Dipakai frontend (Home) buat nampilin testimoni aktif
+
+    // Dipakai frontend (Home) untuk menampilkan testimoni aktif
     public function get_active()
     {
         $this->db->from($this->table);
@@ -62,9 +62,4 @@ class Testimoni_model extends CI_Model
             ->get()
             ->result();
     }
-
-    public function count_all()
-{
-    return $this->db->count_all('testimonials');
-}
 }

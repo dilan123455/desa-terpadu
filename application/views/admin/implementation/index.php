@@ -87,7 +87,7 @@
                                         <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap min-w-[200px]">Judul</th>
                                         <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap min-w-[250px]">Deskripsi</th>
                                         <th class="px-4 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap">Urutan</th>
-                                        <th class="px-4 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap min-w-[160px]">Aksi</th>
+                                        <th class="px-4 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap min-w-[100px]">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-100">
@@ -136,12 +136,11 @@
 
                                             <!-- Aksi -->
                                             <td class="px-4 py-3.5 align-middle text-center whitespace-nowrap">
-                                                <div class="flex flex-wrap justify-center gap-1.5">
+                                                <div class="flex justify-center">
                                                     <a href="<?= site_url('admin/implementation/edit/' . $step->id); ?>"
-                                                        class="inline-flex items-center px-3 py-1.5 bg-amber-50 text-amber-700 rounded-md text-xs font-semibold hover:bg-amber-100 transition">Edit</a>
-                                                    <a href="<?= site_url('admin/implementation/delete/' . $step->id); ?>"
-                                                        onclick="return confirm('Yakin ingin menghapus data ini?');"
-                                                        class="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 rounded-md text-xs font-semibold hover:bg-red-100 transition">Hapus</a>
+                                                        class="inline-flex items-center px-3 py-1.5 bg-amber-50 text-amber-700 rounded-md text-xs font-semibold hover:bg-amber-100 transition">
+                                                        Edit
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>
