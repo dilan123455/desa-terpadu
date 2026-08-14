@@ -16,22 +16,17 @@ class Dashboard extends CI_Controller
     public function index()
     {
         $data['title'] = 'Dashboard';
-        $data['name'] = $this->session->userdata('name');
+        $data['name']  = $this->session->userdata('name');
 
         // Load model
         $this->load->model('Article_model');
         $this->load->model('Testimoni_model');
         $this->load->model('Faq_model');
-        $this->load->model('Contact_message_model');
 
         // Ambil total data untuk statistik
-        $data['total_articles'] = $this->Article_model->count_all();
+        $data['total_articles']     = $this->Article_model->count_all();
         $data['total_testimonials'] = $this->Testimoni_model->count_all();
-        $data['total_faqs'] = $this->Faq_model->count_all();
-        $data['total_messages'] = $this->Contact_message_model->count_all();
-
-        // Opsional: jumlah pesan yang belum dibaca
-        $data['total_unread_messages'] = $this->Contact_message_model->count_unread();
+        $data['total_faqs']         = $this->Faq_model->count_all();
 
         $this->load->view('admin/dashboard', $data);
     }

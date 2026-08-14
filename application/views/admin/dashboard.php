@@ -55,8 +55,8 @@
                     </div>
                 </section>
 
-                <!-- Statistics -->
-                <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-5 mb-8">
+                <!-- Statistics (hanya 3 kartu) -->
+                <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mb-8">
                     <!-- Artikel -->
                     <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition">
                         <div class="flex items-center justify-between gap-4">
@@ -104,22 +104,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Pesan Masuk -->
-                    <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition">
-                        <div class="flex items-center justify-between gap-4">
-                            <div>
-                                <p class="text-sm text-gray-500">Pesan Masuk</p>
-                                <h3 class="text-3xl font-bold text-gray-800 mt-1"><?= (int) $total_messages; ?></h3>
-                                <p class="text-xs text-gray-400 mt-1">Pesan dari pengunjung</p>
-                            </div>
-                            <div class="w-12 h-12 rounded-xl bg-orange-100 text-orange-500 flex items-center justify-center">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
                 </section>
 
                 <!-- Quick Access Header -->
@@ -128,7 +112,7 @@
                     <p class="text-sm text-gray-400 mt-1">Kelola konten website dengan cepat.</p>
                 </section>
 
-                <!-- Quick Access Cards -->
+                <!-- Quick Access Cards (tanpa Contact) -->
                 <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                     <!-- Artikel -->
                     <a href="<?= site_url('admin/articles'); ?>" class="block bg-white border border-gray-200 rounded-2xl p-5 hover:shadow-md hover:border-red-200 transition">
@@ -170,20 +154,6 @@
                         </div>
                         <h4 class="mt-4 text-lg font-bold text-gray-800">Kelola FAQ</h4>
                         <p class="mt-1 text-sm text-gray-500">Kelola pertanyaan dan jawaban yang sering ditanyakan.</p>
-                    </a>
-
-                    <!-- Pesan Masuk -->
-                    <a href="<?= site_url('admin/contact_messages'); ?>" class="block bg-white border border-gray-200 rounded-2xl p-5 hover:shadow-md hover:border-red-200 transition">
-                        <div class="flex items-center justify-between">
-                            <div class="w-12 h-12 rounded-xl bg-orange-100 text-orange-500 flex items-center justify-center">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                                </svg>
-                            </div>
-                            <span class="text-2xl text-gray-300">→</span>
-                        </div>
-                        <h4 class="mt-4 text-lg font-bold text-gray-800">Pesan Masuk</h4>
-                        <p class="mt-1 text-sm text-gray-500">Lihat pesan dan konsultasi dari pengunjung.</p>
                     </a>
 
                     <!-- About -->
