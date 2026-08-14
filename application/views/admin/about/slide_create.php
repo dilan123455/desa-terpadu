@@ -152,7 +152,7 @@
                     <div class="actions">
 
                 <a
-                    href="<?= site_url('admin/about/slides'); ?>"
+                    href="<?= site_url('admin/about'); ?>"
                     class="btn btn-secondary"
                 >
                     Batal

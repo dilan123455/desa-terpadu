@@ -184,7 +184,7 @@
     <div class="header-actions">
 
         <a
-            href="<?= site_url('admin/contact_messages'); ?>"
+            href="<?= site_url('admin/contact'); ?>"
             class="btn btn-secondary"
         >
             ← Kembali
@@ -193,7 +193,7 @@
         <?php if ($message->status !== 'replied'): ?>
 
             <a
-                href="<?= site_url('admin/contact_messages/mark_replied/' . $message->id); ?>"
+                href="<?= site_url('admin/contact/mark_replied/' . $message->id); ?>"
                 class="btn btn-success"
                 onclick="return confirm('Tandai pesan ini sebagai sudah dibalas?');"
             >
@@ -203,7 +203,7 @@
         <?php endif; ?>
 
         <a
-            href="<?= site_url('admin/contact_messages/delete/' . $message->id); ?>"
+            href="<?= site_url('admin/contact/delete/' . $message->id); ?>"
             class="btn btn-danger"
             onclick="return confirm('Yakin ingin menghapus pesan ini?');"
         >

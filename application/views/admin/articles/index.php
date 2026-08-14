@@ -1222,7 +1222,7 @@
 
             <!-- Contact -->
 
-            <a href="<?= site_url('admin/contact_messages'); ?>">
+            <a href="<?= site_url('admin/contact'); ?>">
 
                 <span class="menu-icon">
                     ✉️
