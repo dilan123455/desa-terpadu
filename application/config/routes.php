@@ -19,10 +19,20 @@ $route['translate_uri_dashes'] = FALSE;
 |--------------------------------------------------------------------------
 */
 
-$route['auth/login']         = 'Auth/login';
-$route['auth/process_login'] = 'Auth/process_login';
-$route['auth/logout']        = 'Auth/logout';
+$route['auth/login']            = 'Auth/login';
+$route['auth/process_login']    = 'Auth/process_login';
+$route['auth/logout']           = 'Auth/logout';
 
+$route['auth/forgot_password']         = 'Auth/forgot_password';
+$route['auth/send_reset_link']         = 'Auth/send_reset_link';
+
+$route['auth/reset_password/(:any)']   = 'Auth/reset_password/$1';
+$route['auth/update_password']         = 'Auth/update_password';
+
+$route['auth/forgot_password'] = 'Auth/forgot_password';
+$route['auth/send_reset_link'] = 'Auth/send_reset_link';
+$route['auth/reset_password/(:any)'] = 'Auth/reset_password/$1';
+$route['auth/update_password'] = 'Auth/update_password';
 
 /*
 |--------------------------------------------------------------------------
