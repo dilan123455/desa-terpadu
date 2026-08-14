@@ -114,6 +114,32 @@
             text-align: center;
             color: #64748b;
         }
+
+        .btn-kembali {
+    display: inline-block;
+    padding: 10px 16px;
+    background: #f1f1f1;
+    color: #333;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.btn-kembali:hover {
+    background: #ddd;
+}
+
+.btn-tambah {
+    display: inline-block;
+    padding: 10px 16px;
+    background: #d9534f;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+}
     </style>
 </head>
 
@@ -122,23 +148,31 @@
 <div class="container">
 
     <div class="header">
+    <div>
+        <h1>Manfaat About</h1>
+        <p>Kelola manfaat yang ditampilkan pada halaman About.</p>
+    </div>
 
-        <div>
-            <h1>Manfaat About</h1>
-
-            <p>
-                Kelola manfaat yang ditampilkan pada halaman About.
-            </p>
-        </div>
+    <div style="display: flex; gap: 10px;">
 
         <a
-            href="<?= site_url('admin/about/benefit_create'); ?>"
-            class="btn btn-primary"
+            href="<?= site_url('admin/about#slides'); ?>"
+            class="btn-kembali"
+        >
+            ← Kembali ke Slides
+        </a>
+
+        <a
+            href="<?= site_url('admin/about/benefits/create'); ?>"
+            class="btn-tambah"
         >
             + Tambah Manfaat
         </a>
 
     </div>
+</div>
+
+     
 
     <div class="card">
 
