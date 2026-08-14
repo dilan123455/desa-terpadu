@@ -100,7 +100,6 @@ public function send_reset_link()
     // Cari user berdasarkan email
     $user = $this->db
         ->where('email', $email)
-        ->where('status', 'active')
         ->get('users')
         ->row();
 
@@ -111,14 +110,25 @@ public function send_reset_link()
      */
     if (!$user) {
 
-        $this->session->set_flashdata(
-            'success',
-            'Jika email terdaftar, link reset password akan dikirim.'
-        );
+    echo '<pre>';
+    echo "USER TIDAK DITEMUKAN\n\n";
+    echo "Email yang dicari: ";
+    echo $email;
+    echo "\n\n";
 
-        redirect('auth/forgot_password');
-        return;
-    }
+    echo "Data users dengan email tersebut:\n";
+
+    $check = $this->db
+        ->where('email', $email)
+        ->get('users')
+        ->row();
+
+    print_r($check);
+
+    echo '</pre>';
+
+    exit;
+}
 
 
     // Hapus token lama milik user
@@ -180,81 +190,170 @@ public function send_reset_link()
     );
 
 
-    $message = '
+  $message = '
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Reset Password - Desa Terpadu</title>
+</head>
+
+<body style="
+    margin:0;
+    padding:0;
+    background:#f5f5f5;
+    font-family:Arial, Helvetica, sans-serif;
+">
+
+    <div style="
+        max-width:600px;
+        margin:30px auto;
+        background:#ffffff;
+        border-radius:10px;
+        overflow:hidden;
+        border:1px solid #e5e7eb;
+    ">
+
+        <!-- Header -->
         <div style="
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
+            background:#CC4B4B;
+            padding:25px;
+            text-align:center;
+            color:#ffffff;
         ">
 
-            <h2>
-                Reset Password
+            <h2 style="
+                margin:0;
+                font-size:24px;
+            ">
+                Desa Terpadu
             </h2>
 
+            <p style="
+                margin:8px 0 0;
+                font-size:14px;
+            ">
+                Panel Administrasi
+            </p>
+
+        </div>
+
+
+        <!-- Content -->
+        <div style="
+            padding:30px;
+            color:#333333;
+            line-height:1.6;
+        ">
+
+            <h3 style="
+                margin-top:0;
+                color:#222222;
+            ">
+                Reset Password
+            </h3>
+
             <p>
-                Halo ' . html_escape($user->name) . ',
+                Halo <strong>' . html_escape($user->name) . '</strong>,
             </p>
 
             <p>
-                Kami menerima permintaan untuk
-                mengatur ulang password akun Desa Terpadu Anda.
+                Kami menerima permintaan untuk mengatur ulang
+                password akun Desa Terpadu Anda.
             </p>
 
             <p>
-                Klik tombol berikut untuk membuat password baru:
+                Silakan klik tombol di bawah ini untuk membuat
+                password baru:
             </p>
 
-            <p>
+            <p style="text-align:center; margin:30px 0;">
+
                 <a href="' . $reset_link . '"
                    style="
                        display:inline-block;
-                       padding:12px 20px;
                        background:#CC4B4B;
-                       color:white;
+                       color:#ffffff;
                        text-decoration:none;
-                       border-radius:6px;
+                       padding:14px 25px;
+                       border-radius:7px;
+                       font-weight:bold;
                    ">
                     Reset Password
                 </a>
+
             </p>
 
             <p>
-                Link ini berlaku selama <strong>1 jam</strong>.
+                Link reset password ini berlaku selama
+                <strong>1 jam</strong>.
             </p>
 
             <p>
                 Jika Anda tidak meminta reset password,
-                abaikan email ini.
+                silakan abaikan email ini.
             </p>
 
-            <hr>
+            <hr style="
+                border:0;
+                border-top:1px solid #eeeeee;
+                margin:25px 0;
+            ">
 
-            <small>
-                Desa Terpadu
-            </small>
+            <p style="
+                font-size:12px;
+                color:#777777;
+                margin-bottom:0;
+            ">
+                Email ini dikirim secara otomatis oleh sistem
+                Desa Terpadu. Mohon jangan membalas email ini.
+            </p>
 
         </div>
-    ';
+
+    </div>
+
+</body>
+</html>
+';
 
 
-  if (!$this->email->send()) {
+$this->email->set_mailtype('html');
 
-    echo '<h3>EMAIL GAGAL DIKIRIM</h3>';
+$this->email->set_alt_message(
+    "Halo " . $user->name . ",\n\n" .
+    "Kami menerima permintaan untuk mengatur ulang password akun Desa Terpadu Anda.\n\n" .
+    "Silakan buka link berikut untuk membuat password baru:\n" .
+    $reset_link . "\n\n" .
+    "Link ini berlaku selama 1 jam.\n\n" .
+    "Jika Anda tidak meminta reset password, abaikan email ini.\n\n" .
+    "Desa Terpadu"
+);
 
-    echo '<pre>';
-    echo $this->email->print_debugger();
-    echo '</pre>';
+$this->email->message($message);
 
-    exit;
+if (!$this->email->send()) {
+
+    log_message(
+        'error',
+        $this->email->print_debugger()
+    );
+
+    $this->session->set_flashdata(
+        'error',
+        'Email reset password gagal dikirim.'
+    );
+
+    redirect('auth/forgot_password');
+    return;
 }
 
-echo '<h3>EMAIL BERHASIL DIKIRIM</h3>';
+$this->session->set_flashdata(
+    'success',
+    'Link reset password telah dikirim ke email Anda.'
+);
 
-echo '<pre>';
-echo $this->email->print_debugger();
-echo '</pre>';
-
-exit;
+redirect('auth/forgot_password');
 }
 
 public function reset_password($token = NULL)

@@ -43,6 +43,31 @@
                     </div>
                 <?php endif; ?>
 
+                <!-- Flash success -->
+<?php if ($this->session->flashdata('success')): ?>
+    <div class="flex items-start gap-3 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-5">
+
+        <svg
+            class="w-5 h-5 mt-0.5 shrink-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+        >
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 13l4 4L19 7"
+            />
+        </svg>
+
+        <p class="text-sm">
+            <?= html_escape($this->session->flashdata('success')); ?>
+        </p>
+
+    </div>
+<?php endif; ?>
+
                 <!-- Form -->
                 <form action="<?= site_url('auth/process_login') ?>" method="post">
 
