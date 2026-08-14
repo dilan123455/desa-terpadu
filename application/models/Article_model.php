@@ -92,4 +92,38 @@ class Article_model extends CI_Model
         
         return $this->db->get()->result();
     }
+
+    // ==========================================
+    // METHOD UNTUK PREV / NEXT ARTIKEL
+    // ==========================================
+
+    // Artikel sebelumnya (lebih kecil dari id saat ini)
+    public function get_prev_article($current_id)
+    {
+        return $this->db
+            ->select('articles.*, users.name AS author_name')
+            ->from($this->table)
+            ->join('users', 'users.id = articles.author_id', 'left')
+            ->where('articles.status', 'published')
+            ->where('articles.id <', $current_id)
+            ->order_by('articles.id', 'DESC')
+            ->limit(1)
+            ->get()
+            ->row();
+    }
+
+    // Artikel berikutnya (lebih besar dari id saat ini)
+    public function get_next_article($current_id)
+    {
+        return $this->db
+            ->select('articles.*, users.name AS author_name')
+            ->from($this->table)
+            ->join('users', 'users.id = articles.author_id', 'left')
+            ->where('articles.status', 'published')
+            ->where('articles.id >', $current_id)
+            ->order_by('articles.id', 'ASC')
+            ->limit(1)
+            ->get()
+            ->row();
+    }
 }

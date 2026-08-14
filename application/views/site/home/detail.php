@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $article->title ?> - Desa Digital</title>
+    <title><?= html_escape($article->title) ?> - Desa Terpadu</title>
     <link rel="stylesheet" href="<?= base_url('assets/css/output.css'); ?>">
 </head>
 <body>
@@ -12,23 +12,23 @@
 
     <div class="bg-white font-sans text-gray-800">
         <main class="max-w-4xl mx-auto px-4 pt-28 pb-16 md:pt-36 md:pb-20">
-            
+
             <!-- Header Artikel -->
             <div class="text-center mb-8">
                 <h1 class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight mb-4">
-                    <?= $article->title ?>
+                    <?= html_escape($article->title) ?>
                 </h1>
                 <div class="text-sm text-gray-500">
-                    <span><?= date('F d, Y', strtotime($article->published_at)) ?></span> 
-                    <span class="mx-2">|</span> 
-                    <span><?= $article->author_name ?></span>
+                    <span><?= date('F d, Y', strtotime($article->published_at)) ?></span>
+                    <span class="mx-2">|</span>
+                    <span><?= html_escape($article->author_name) ?></span>
                 </div>
             </div>
 
             <!-- Gambar Utama Artikel -->
             <div class="mb-10">
                 <img src="<?= base_url('assets/uploads/'.$article->image) ?>" 
-                     alt="<?= $article->title ?>" 
+                     alt="<?= html_escape($article->title) ?>" 
                      class="w-full h-auto object-cover rounded-lg shadow-sm"
                      loading="lazy"
                      decoding="async">
@@ -39,8 +39,33 @@
                 <?= $article->content ?>
             </div>
 
+            <!-- Previous / Next sederhana -->
+            <div class="flex justify-between items-center mt-8">
+                <div class="flex-1">
+                    <?php if (!empty($prev_article)): ?>
+                        <a href="<?= base_url('blog/detail/'.$prev_article->slug) ?>" 
+                           class="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-red-500 transition">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                            </svg>
+                            Previous
+                        </a>
+                    <?php endif; ?>
+                </div>
+                <div class="flex-1 text-right">
+                    <?php if (!empty($next_article)): ?>
+                        <a href="<?= base_url('blog/detail/'.$next_article->slug) ?>" 
+                           class="inline-flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-red-500 transition">
+                            Next
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                            </svg>
+                        </a>
+                    <?php endif; ?>
+                </div>
+            </div>
+
             <?php
-                // Siapkan URL share untuk artikel ini
                 $share_url = base_url('blog/detail/'.$article->slug);
                 $wa_share = 'https://api.whatsapp.com/send?text=' . urlencode($article->title . ' - ' . $share_url);
                 $twitter_share = 'https://twitter.com/intent/tweet?url=' . urlencode($share_url) . '&text=' . urlencode($article->title);
@@ -48,7 +73,7 @@
                 $facebook_share = 'https://www.facebook.com/sharer/sharer.php?u=' . urlencode($share_url);
             ?>
 
-            <!-- Share & Next Post -->
+            <!-- Share & Kembali -->
             <div class="flex flex-col md:flex-row justify-between items-center border-t border-b border-gray-100 py-6 mt-10 gap-4">
                 <div class="flex items-center gap-3 text-sm font-medium text-gray-600">
                     <span>Share this Post:</span>
@@ -88,8 +113,9 @@
                     </div>
                 </div>
                 <div class="text-sm">
-                    <a href="<?= base_url('blog') ?>" class="inline-flex items-center gap-2 text-gray-500 hover:text-red-500 transition font-medium">
-                        Kembali ke List <span>&larr;</span>
+                    <a href="<?= base_url('blog') ?>" 
+                       class="inline-flex items-center px-5 py-2.5 bg-red-500 text-white rounded-lg text-sm font-semibold shadow-md hover:bg-red-600 hover:shadow-lg transition whitespace-nowrap">
+                        Kembali ke List
                     </a>
                 </div>
             </div>
@@ -98,7 +124,7 @@
             <?php if (!empty($related_artikel)): ?>
             <div class="mt-12">
                 <h2 class="text-2xl font-bold text-gray-900 mb-6">Related Posts</h2>
-                
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <?php foreach($related_artikel as $row): ?>
                     <div class="group cursor-pointer" onclick="window.location.href='<?= base_url('blog/detail/'.$row->slug) ?>'">
@@ -108,7 +134,7 @@
                                  loading="lazy"
                                  decoding="async">
                         </div>
-                        <h3 class="font-semibold text-gray-800 group-hover:text-red-500 transition"><?= $row->title ?></h3>
+                        <h3 class="font-semibold text-gray-800 group-hover:text-red-500 transition"><?= html_escape($row->title) ?></h3>
                         <p class="text-xs text-gray-500 mt-2 line-clamp-2">
                             <?= word_limiter(strip_tags($row->content), 15) ?>
                         </p>

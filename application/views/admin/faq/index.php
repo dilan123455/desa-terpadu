@@ -85,8 +85,11 @@
 
                         <!-- Empty State -->
                         <div class="py-16 px-5 text-center">
-                            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-red-50 text-red-500 flex items-center justify-center text-3xl">
-                                ❓
+                            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-red-50 text-red-500 flex items-center justify-center">
+                                <!-- Ikon Question Mark Circle -->
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
                             </div>
                             <strong class="block text-sm font-semibold text-gray-700">Belum Ada FAQ</strong>
                             <p class="mt-2 text-sm text-gray-500">Belum terdapat pertanyaan dan jawaban yang tersimpan di sistem.</p>
@@ -103,8 +106,11 @@
 
                         <!-- Card Header -->
                         <div class="flex items-center gap-3 px-6 py-5 border-b border-gray-200">
-                            <div class="w-10 h-10 rounded-lg bg-red-50 text-red-500 flex items-center justify-center text-lg">
-                                ❓
+                            <div class="w-10 h-10 rounded-lg bg-red-50 text-red-500 flex items-center justify-center">
+                                <!-- Ikon Question Mark Circle -->
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
                             </div>
                             <div>
                                 <h3 class="text-base font-semibold text-gray-800">Daftar FAQ</h3>
@@ -139,10 +145,10 @@
                                                 </div>
                                             </td>
 
-                                            <!-- Jawaban -->
+                                            <!-- Jawaban (PERBAIKAN ellipsis) -->
                                             <td class="px-4 py-3.5 align-middle">
                                                 <div class="max-w-[430px] text-sm text-gray-600 leading-relaxed">
-                                                    <?= html_escape(character_limiter(strip_tags($faq->answer), 100)); ?>
+                                                    <?= html_escape(character_limiter(strip_tags($faq->answer), 100, '...')); ?>
                                                 </div>
                                             </td>
 
@@ -168,16 +174,22 @@
                                                 <?php endif; ?>
                                             </td>
 
-                                            <!-- Aksi -->
+                                            <!-- Aksi (tombol sejajar rapi) -->
                                             <td class="px-4 py-3.5 align-middle text-center whitespace-nowrap">
-                                                <div class="flex flex-wrap justify-center gap-1.5">
+                                                <div class="flex items-center justify-center gap-1.5">
                                                     <a href="<?= site_url('admin/faq/detail/' . $faq->id); ?>"
-                                                        class="inline-flex items-center px-3 py-1.5 bg-cyan-50 text-cyan-700 rounded-md text-xs font-semibold hover:bg-cyan-100 transition">Detail</a>
+                                                        class="inline-flex items-center justify-center px-3 py-1.5 bg-cyan-50 text-cyan-700 rounded-md text-xs font-semibold hover:bg-cyan-100 transition whitespace-nowrap shrink-0">
+                                                        Detail
+                                                    </a>
                                                     <a href="<?= site_url('admin/faq/edit/' . $faq->id); ?>"
-                                                        class="inline-flex items-center px-3 py-1.5 bg-amber-50 text-amber-700 rounded-md text-xs font-semibold hover:bg-amber-100 transition">Edit</a>
+                                                        class="inline-flex items-center justify-center px-3 py-1.5 bg-amber-50 text-amber-700 rounded-md text-xs font-semibold hover:bg-amber-100 transition whitespace-nowrap shrink-0">
+                                                        Edit
+                                                    </a>
                                                     <a href="<?= site_url('admin/faq/delete/' . $faq->id); ?>"
                                                         onclick="return confirm('Yakin ingin menghapus FAQ ini?');"
-                                                        class="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 rounded-md text-xs font-semibold hover:bg-red-100 transition">Hapus</a>
+                                                        class="inline-flex items-center justify-center px-3 py-1.5 bg-red-50 text-red-600 rounded-md text-xs font-semibold hover:bg-red-100 transition whitespace-nowrap shrink-0">
+                                                        Hapus
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>

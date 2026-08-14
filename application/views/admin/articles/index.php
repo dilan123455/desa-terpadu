@@ -118,24 +118,26 @@
 
                         <!-- Table Wrapper -->
                         <div class="overflow-x-auto">
-                            <table class="w-full min-w-[950px] border-collapse">
+                            <table class="w-full min-w-[900px] border-collapse">
                                 <thead class="bg-gray-50">
                                     <tr>
                                         <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap">No</th>
                                         <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap">Gambar</th>
                                         <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap min-w-[250px]">Judul</th>
                                         <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap">Kategori</th>
-                                        <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap">Penulis</th>
                                         <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap">Status</th>
                                         <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap">Tanggal</th>
-                                        <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap min-w-[200px]">Aksi</th>
+                                        <th class="px-4 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap min-w-[200px]">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-gray-100">
                                     <?php $no = 1; ?>
                                     <?php foreach ($articles as $article): ?>
                                         <tr class="hover:bg-red-50/50 transition">
+                                            <!-- Nomor -->
                                             <td class="px-4 py-3.5 text-sm text-gray-600 align-middle whitespace-nowrap"><?= $no++; ?></td>
+
+                                            <!-- Gambar -->
                                             <td class="px-4 py-3.5 align-middle">
                                                 <?php if (!empty($article->image)): ?>
                                                     <img class="w-[75px] h-[52px] object-cover rounded-lg border border-gray-200" src="<?= base_url('assets/uploads/' . $article->image); ?>" alt="<?= html_escape($article->title); ?>">
@@ -145,19 +147,22 @@
                                                     </div>
                                                 <?php endif; ?>
                                             </td>
+
+                                            <!-- Judul -->
                                             <td class="px-4 py-3.5 align-middle">
                                                 <div class="min-w-[250px] font-semibold text-gray-800 leading-snug">
                                                     <?= html_escape($article->title); ?>
                                                 </div>
                                             </td>
+
+                                            <!-- Kategori -->
                                             <td class="px-4 py-3.5 align-middle whitespace-nowrap">
                                                 <span class="inline-block px-2.5 py-1 bg-red-50 text-red-600 rounded-md text-xs font-semibold">
                                                     <?= html_escape($article->category); ?>
                                                 </span>
                                             </td>
-                                            <td class="px-4 py-3.5 text-sm text-gray-600 align-middle whitespace-nowrap">
-                                                <?= html_escape($article->author_name ?? '-'); ?>
-                                            </td>
+
+                                            <!-- Status -->
                                             <td class="px-4 py-3.5 align-middle whitespace-nowrap">
                                                 <?php if ($article->status === 'published'): ?>
                                                     <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-50 text-green-700 text-xs font-semibold">
@@ -171,14 +176,28 @@
                                                     </span>
                                                 <?php endif; ?>
                                             </td>
+
+                                            <!-- Tanggal -->
                                             <td class="px-4 py-3.5 text-xs text-gray-500 align-middle whitespace-nowrap">
                                                 <?= date('d M Y', strtotime($article->created_at)); ?>
                                             </td>
-                                            <td class="px-4 py-3.5 align-middle whitespace-nowrap">
-                                                <div class="flex flex-wrap gap-1.5">
-                                                    <a href="<?= site_url('admin/articles/detail/' . $article->id); ?>" class="inline-flex items-center px-3 py-1.5 bg-cyan-50 text-cyan-700 rounded-md text-xs font-semibold hover:bg-cyan-100 transition whitespace-nowrap">Detail</a>
-                                                    <a href="<?= site_url('admin/articles/edit/' . $article->id); ?>" class="inline-flex items-center px-3 py-1.5 bg-amber-50 text-amber-700 rounded-md text-xs font-semibold hover:bg-amber-100 transition whitespace-nowrap">Edit</a>
-                                                    <a href="<?= site_url('admin/articles/delete/' . $article->id); ?>" class="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-600 rounded-md text-xs font-semibold hover:bg-red-100 transition whitespace-nowrap" onclick="return confirm('Yakin ingin menghapus artikel ini?');">Hapus</a>
+
+                                            <!-- Aksi (rapi & sejajar) -->
+                                            <td class="px-4 py-3.5 align-middle text-center whitespace-nowrap">
+                                                <div class="flex items-center justify-center gap-1.5">
+                                                    <a href="<?= site_url('admin/articles/detail/' . $article->id); ?>"
+                                                        class="inline-flex items-center justify-center px-3 py-1.5 bg-cyan-50 text-cyan-700 rounded-md text-xs font-semibold hover:bg-cyan-100 transition whitespace-nowrap shrink-0">
+                                                        Detail
+                                                    </a>
+                                                    <a href="<?= site_url('admin/articles/edit/' . $article->id); ?>"
+                                                        class="inline-flex items-center justify-center px-3 py-1.5 bg-amber-50 text-amber-700 rounded-md text-xs font-semibold hover:bg-amber-100 transition whitespace-nowrap shrink-0">
+                                                        Edit
+                                                    </a>
+                                                    <a href="<?= site_url('admin/articles/delete/' . $article->id); ?>"
+                                                        onclick="return confirm('Yakin ingin menghapus artikel ini?');"
+                                                        class="inline-flex items-center justify-center px-3 py-1.5 bg-red-50 text-red-600 rounded-md text-xs font-semibold hover:bg-red-100 transition whitespace-nowrap shrink-0">
+                                                        Hapus
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>

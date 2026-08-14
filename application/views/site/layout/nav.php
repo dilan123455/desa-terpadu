@@ -41,7 +41,7 @@ $currentMethod = strtolower($CI->router->fetch_method());
             </nav>
 
             <!-- Tombol Mobile dengan onclick langsung -->
-            <button id="menu-button" type="button" 
+            <button type="button" 
                     onclick="toggleMobileMenu()" 
                     class="rounded-md bg-[#c64648] p-2 text-white sm:hidden">
                 <svg class="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -51,8 +51,11 @@ $currentMethod = strtolower($CI->router->fetch_method());
         </div>
     </div>
 
-    <!-- Menu Mobile -->
-    <nav id="mobile-menu" class="hidden border-t border-white/20 sm:hidden">
+    <!-- Menu Mobile (animasi smooth) -->
+    <div id="mobile-menu" 
+         class="sm:hidden absolute top-full left-0 w-full bg-[#cc4b4d] border-t border-white/20 shadow-lg 
+                opacity-0 pointer-events-none translate-y-[-10px] 
+                transition-all duration-300 ease-in-out">
         <div class="flex flex-col items-center py-5">
             <a href="<?= base_url('home#hero') ?>" 
                class="mobile-nav-link nav-link border-b-2 py-3 text-lg transition-colors duration-200 <?= ($currentClass === 'home' && $currentMethod === 'index') ? 'text-[#fff0c7] border-[#fff0c7]' : 'text-white border-transparent hover:text-[#fff0c7] hover:border-[#fff0c7]' ?>" 
@@ -65,16 +68,24 @@ $currentMethod = strtolower($CI->router->fetch_method());
             <a href="<?= base_url('faq') ?>" 
                class="mobile-nav-link nav-link border-b-2 py-3 text-lg transition-colors duration-200 <?= ($currentClass === 'faq' && $currentMethod === 'index') ? 'text-[#fff0c7] border-[#fff0c7]' : 'text-white border-transparent hover:text-[#fff0c7] hover:border-[#fff0c7]' ?>">FAQ</a>
         </div>
-    </nav>
+    </div>
 </header>
 
 <script>
     // === FUNGSI GLOBAL UNTUK TOGGLE MENU MOBILE ===
-    // Didefinisikan di luar DOMContentLoaded agar selalu tersedia
     function toggleMobileMenu() {
         var mobileMenu = document.getElementById('mobile-menu');
         if (mobileMenu) {
-            mobileMenu.classList.toggle('hidden');
+            // Toggle class untuk animasi
+            if (mobileMenu.classList.contains('opacity-0')) {
+                // Buka menu
+                mobileMenu.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+                mobileMenu.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
+            } else {
+                // Tutup menu
+                mobileMenu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+                mobileMenu.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
+            }
         }
     }
 
@@ -83,7 +94,8 @@ $currentMethod = strtolower($CI->router->fetch_method());
         if (e.target.closest('.mobile-nav-link')) {
             var mobileMenu = document.getElementById('mobile-menu');
             if (mobileMenu) {
-                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
+                mobileMenu.classList.add('opacity-0', 'pointer-events-none', 'translate-y-[-10px]');
             }
         }
     });
@@ -101,7 +113,6 @@ $currentMethod = strtolower($CI->router->fetch_method());
             });
         }
 
-        // Klik pada link dengan data-section
         document.querySelectorAll('.nav-link[data-section]').forEach(link => {
             link.addEventListener('click', function (e) {
                 const targetUrl = new URL(this.href);
@@ -119,7 +130,6 @@ $currentMethod = strtolower($CI->router->fetch_method());
             });
         });
 
-        // Scrollspy hanya di halaman yang memiliki section
         function initScrollspy() {
             const sections = document.querySelectorAll('section[id]');
             if (!sections.length) return;
@@ -131,7 +141,6 @@ $currentMethod = strtolower($CI->router->fetch_method());
             sections.forEach(section => observer.observe(section));
         }
 
-        // Inisialisasi saat halaman dimuat
         const isHomePage = document.querySelector('section#hero') !== null;
         if (isHomePage) {
             if (window.location.hash) {

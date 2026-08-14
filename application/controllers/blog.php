@@ -31,9 +31,20 @@ class Blog extends CI_Controller
             show_404();
         }
 
-        $data['title'] = $data['article']->title;
-        // Ambil related posts berdasarkan kategori
-        $data['related_artikel'] = $this->Article_model->get_related($data['article']->category, $data['article']->id, 2);
+        $article = $data['article'];
+
+        $data['title'] = $article->title;
+
+        // Related posts berdasarkan kategori
+        $data['related_artikel'] = $this->Article_model->get_related(
+            $article->category,
+            $article->id,
+            2
+        );
+
+        // Previous & Next Artikel
+        $data['prev_article'] = $this->Article_model->get_prev_article($article->id);
+        $data['next_article'] = $this->Article_model->get_next_article($article->id);
 
         $this->load->view('site/layout/nav');
         $this->load->view('site/home/detail', $data);

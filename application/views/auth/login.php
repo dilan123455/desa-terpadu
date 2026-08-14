@@ -16,11 +16,11 @@
             <!-- Header Card -->
             <div class="bg-[#cc4b4d] px-8 py-8 text-center">
                 <div class="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-4 backdrop-blur-sm">
-                    <img 
-                        src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                        alt="Desa Terpadu"
-                        class="h-10 w-10"
-                    />
+                    <!-- Ikon User (pengganti logo) -->
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                    </svg>
                 </div>
                 <h1 class="text-2xl font-bold text-white">Desa Terpadu</h1>
                 <p class="text-white/80 text-sm mt-1">Panel Administrasi</p>
@@ -44,29 +44,15 @@
                 <?php endif; ?>
 
                 <!-- Flash success -->
-<?php if ($this->session->flashdata('success')): ?>
-    <div class="flex items-start gap-3 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-5">
-
-        <svg
-            class="w-5 h-5 mt-0.5 shrink-0"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-        >
-            <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 13l4 4L19 7"
-            />
-        </svg>
-
-        <p class="text-sm">
-            <?= html_escape($this->session->flashdata('success')); ?>
-        </p>
-
-    </div>
-<?php endif; ?>
+                <?php if ($this->session->flashdata('success')): ?>
+                    <div class="flex items-start gap-3 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-5">
+                        <svg class="w-5 h-5 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 13l4 4L19 7"/>
+                        </svg>
+                        <p class="text-sm"><?= html_escape($this->session->flashdata('success')); ?></p>
+                    </div>
+                <?php endif; ?>
 
                 <!-- Form -->
                 <form action="<?= site_url('auth/process_login') ?>" method="post">
@@ -113,8 +99,6 @@
                                 placeholder="Masukkan password"
                                 class="w-full pl-10 pr-11 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#cc4b4d] focus:border-transparent transition"
                             >
-
-                            
                             <!-- Toggle password -->
                             <button
                                 type="button"
@@ -132,18 +116,14 @@
 
                     <br>
 
-                    <!-- Remember + Forgot -->
-                    <div class="flex items-center justify-between text-sm">
-                        <label class="flex items-center gap-2 text-gray-600 cursor-pointer">
-                            <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-[#cc4b4d] focus:ring-[#cc4b4d]">
-                            Ingat saya
-                        </label>
-                     <a
-    href="<?= site_url('auth/forgot_password'); ?>"
-    class="text-[#cc4b4d] hover:underline font-medium"
->
-    Lupa password?
-</a>
+                    <!-- Lupa password -->
+                    <div class="flex justify-end text-sm">
+                        <a
+                            href="<?= site_url('auth/forgot_password'); ?>"
+                            class="text-[#cc4b4d] hover:underline font-medium"
+                        >
+                            Lupa password?
+                        </a>
                     </div>
 
                     <br>
