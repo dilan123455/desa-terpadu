@@ -56,4 +56,9 @@ class Testimoni_model extends CI_Model
             ->get()
             ->result();
     }
+
+    public function count_all()
+{
+    return $this->db->count_all('testimonials');
+}
 }

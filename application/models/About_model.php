@@ -48,6 +48,12 @@ class About_model extends CI_Model
             ->row();
     }
 
+    public function insert_slide($data)
+{
+    return $this->db
+        ->insert('about_slides', $data);
+}
+
     public function update_slide($id, $data)
     {
         return $this->db

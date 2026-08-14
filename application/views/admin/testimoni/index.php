@@ -705,7 +705,7 @@
                 <span class="menu-icon">✉️</span>
 
                 <span>
-                    Pesan Masuk
+                    Contact
                 </span>
 
             </a>

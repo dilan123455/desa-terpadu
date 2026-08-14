@@ -25,4 +25,9 @@ class Implementation_model extends CI_Model
             ->where('id', $id)
             ->update('implementation_steps', $data);
     }
+
+    public function count_all()
+{
+    return $this->db->count_all('implementation_steps');
+}
 }

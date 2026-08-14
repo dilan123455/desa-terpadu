@@ -471,12 +471,12 @@
 
 
             <!-- Contact -->
-            <a href="<?= site_url('admin/contact_messages'); ?>">
+            <a href="<?= site_url('admin/contact'); ?>">
 
                 <span class="menu-icon">✉️</span>
 
                 <span>
-                    Pesan Masuk
+                    Contact
                 </span>
 
             </a>
@@ -642,12 +642,30 @@
                         </div>
 
 
-                        <a
-                            href="<?= site_url('admin/about/edit'); ?>"
-                            class="btn-edit"
-                        >
-                            ✏️ Edit Informasi
-                        </a>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+
+    <a
+        href="<?= site_url('admin/about/edit'); ?>"
+        class="btn-edit"
+    >
+        ✏️ Edit Informasi
+    </a>
+
+    <a
+        href="<?= site_url('admin/about'); ?>#slides"
+        class="btn-edit"
+    >
+        🖼️ Kelola Slide
+    </a>
+
+    <a
+        href="<?= site_url('admin/about/benefits'); ?>"
+        class="btn-edit"
+    >
+        ⭐ Kelola Manfaat
+    </a>
+
+</div>
 
                     </div>
 
@@ -673,6 +691,7 @@
                         </div>
 
 
+                        
 
                         <!-- Deskripsi -->
                         <div class="info">
@@ -689,6 +708,122 @@
 
                         </div>
 
+
+                        <!-- ================= SLIDE ABOUT ================= -->
+
+<div class="about-card" id="slides" style="margin-top: 25px;">
+
+    <div class="card-header">
+
+        <div class="card-title">
+
+            <div class="card-icon">
+                🖼️
+            </div>
+
+            <div>
+                <h3>
+                    Slide About
+                </h3>
+
+                <p>
+                    Gambar yang ditampilkan pada carousel About website
+                </p>
+            </div>
+
+        </div>
+
+        <a
+            href="<?= site_url('admin/about/slide_create'); ?>"
+            class="btn-edit"
+        >
+            ➕ Tambah Slide
+        </a>
+
+    </div>
+
+
+    <div class="card-body">
+
+        <?php if (!empty($slides)): ?>
+
+            <?php foreach ($slides as $slide): ?>
+
+                <div style="
+                    display:flex;
+                    align-items:center;
+                    gap:20px;
+                    padding:15px 0;
+                    border-bottom:1px solid #e5e7eb;
+                ">
+
+                    <img
+                        src="<?= base_url('assets/uploads/about/' . $slide->image); ?>"
+                        alt="<?= html_escape($slide->title); ?>"
+                        style="
+                            width:160px;
+                            height:90px;
+                            object-fit:cover;
+                            border-radius:10px;
+                            border:1px solid #e5e7eb;
+                        "
+                    >
+
+                    <div style="flex:1;">
+
+                        <strong style="
+                            display:block;
+                            margin-bottom:5px;
+                        ">
+                            <?= html_escape($slide->title); ?>
+                        </strong>
+
+                        <span style="
+                            font-size:12px;
+                            color:#64748b;
+                        ">
+                            Urutan: <?= html_escape($slide->sort_order); ?>
+                        </span>
+
+                    </div>
+
+                    <div style="
+                        display:flex;
+                        gap:8px;
+                    ">
+
+                        <a
+                            href="<?= site_url('admin/about/edit_slide/' . $slide->id); ?>"
+                            class="btn-edit"
+                        >
+                            ✏️ Edit
+                        </a>
+
+                        <a
+                            href="<?= site_url('admin/about/slide_delete/' . $slide->id); ?>"
+                            class="btn-edit"
+                            onclick="return confirm('Yakin ingin menghapus slide ini?');"
+                        >
+                            🗑️ Hapus
+                        </a>
+
+                    </div>
+
+                </div>
+
+            <?php endforeach; ?>
+
+        <?php else: ?>
+
+            <div class="empty">
+                Belum ada slide About.
+            </div>
+
+        <?php endif; ?>
+
+    </div>
+
+</div>
 
                     </div>
 

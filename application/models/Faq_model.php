@@ -51,5 +51,9 @@ class Faq_model extends CI_Model
             ->delete($this->table);
     }
 
+    public function count_all()
+{
+    return $this->db->count_all('faqs');
+}
     
 }

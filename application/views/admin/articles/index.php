@@ -1229,7 +1229,7 @@
                 </span>
 
                 <span>
-                    Pesan Masuk
+                    Contact
                 </span>
 
             </a>

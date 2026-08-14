@@ -85,6 +85,10 @@ class About extends CI_Controller
 
         $this->About_model->update_about($about->id, $data);
 
+        $config['upload_path']   = FCPATH . 'assets/uploads/';
+$config['allowed_types'] = 'jpg|jpeg|png|webp';
+$config['max_size']      = 6144; // Maksimal 6 MB
+$config['encrypt_name']  = TRUE;
         redirect('admin/about');
     }
 
@@ -129,7 +133,7 @@ public function slide_store()
         'sort_order' => $this->input->post('sort_order', TRUE)
     );
 
-    $this->db->insert('about_slides', $data);
+   $this->About_model->insert_slide($data);
 
     redirect('admin/about');
 }

@@ -257,59 +257,176 @@
             </div>
 
 
-            <div class="form-group">
+           <!-- FOTO ARTIKEL -->
+<div class="form-group">
 
-                <label>
-                    Gambar Artikel
-                </label>
+    <label for="articleImage">
+        Foto Artikel
+    </label>
 
-                <div class="image-preview-wrapper">
-
-                    <?php if (!empty($article->image)): ?>
-
-                        <img
-                            id="imagePreview"
-                            class="image-preview"
-                            src="<?= base_url('assets/uploads/' . $article->image); ?>"
-                            alt="<?= html_escape($article->title); ?>"
-                        >
-
-                    <?php else: ?>
-
-                        <div
-                            id="noImageText"
-                            class="no-image"
-                        >
-                            Belum ada gambar
-                        </div>
-
-                        <img
-                            id="imagePreview"
-                            class="image-preview"
-                            src=""
-                            alt="Preview gambar"
-                            style="display: none;"
-                        >
-
-                    <?php endif; ?>
-
-                </div>
+    <!-- Pesan error gambar -->
+    <div
+        id="imageError"
+        class="image-error"
+        style="display:none;"
+    ></div>
 
 
-                <input
-                    type="file"
-                    name="image"
-                    id="imageInput"
-                    accept="image/jpeg,image/png,image/webp"
-                >
+    <!-- SATU AREA GAMBAR SAJA -->
+    <div
+        id="imageContainer"
+        style="
+            margin-bottom: 15px;
+        "
+    >
 
-                <div class="help-text">
-                    Biarkan kosong jika tidak ingin mengganti gambar.
-                    Format JPG, JPEG, PNG, atau WEBP. Maksimal 5 MB.
-                </div>
+        <?php if (!empty($article->image)): ?>
 
+            <img
+                id="articleImagePreview"
+                src="<?= base_url('assets/uploads/' . $article->image); ?>"
+                alt="<?= html_escape($article->title); ?>"
+                style="
+                    width: 220px;
+                    height: 140px;
+                    object-fit: cover;
+                    border-radius: 8px;
+                    border: 1px solid #ddd;
+                    display: block;
+                "
+            >
+
+        <?php else: ?>
+
+            <div
+                id="noImagePlaceholder"
+                style="
+                    width: 220px;
+                    height: 140px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: #f1f1f1;
+                    border: 1px solid #ddd;
+                    border-radius: 8px;
+                    color: #888;
+                    font-size: 14px;
+                "
+            >
+                Tidak ada gambar
             </div>
 
+            <img
+                id="articleImagePreview"
+                src=""
+                alt="Preview gambar"
+                style="
+                    width: 220px;
+                    height: 140px;
+                    object-fit: cover;
+                    border-radius: 8px;
+                    border: 1px solid #ddd;
+                    display: none;
+                "
+            >
+
+        <?php endif; ?>
+
+    </div>
+
+
+    <!-- INPUT GAMBAR -->
+    <input
+        type="file"
+        name="image"
+        id="articleImage"
+        class="file-input"
+        accept="image/jpeg,image/png,image/webp"
+    >
+
+
+    <small class="form-help">
+        Format: JPG, JPEG, PNG, WEBP.
+        Ukuran maksimal <strong>6 MB</strong>.
+    </small>
+
+
+    <!-- CHECKBOX HAPUS -->
+    <?php if (!empty($article->image)): ?>
+
+        <div
+            id="removeImageBox"
+            style="
+                margin-top: 12px;
+                padding: 12px 15px;
+                background: #fff5f5;
+                border: 1px solid #f5c2c7;
+                border-radius: 6px;
+            "
+        >
+
+            <label
+                style="
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    cursor: pointer;
+                    color: #dc3545;
+                    font-weight: 600;
+                    font-size: 14px;
+                "
+            >
+
+                <input
+                    type="checkbox"
+                    name="remove_image"
+                    id="removeImage"
+                    value="1"
+                    style="
+                        width: 16px;
+                        height: 16px;
+                    "
+                >
+
+                Hapus gambar
+
+            </label>
+
+            <small
+                style="
+                    display: block;
+                    margin-top: 5px;
+                    margin-left: 24px;
+                    color: #888;
+                    font-size: 12px;
+                "
+            >
+                Centang jika artikel tidak ingin menggunakan gambar.
+            </small>
+
+        </div>
+
+    <?php endif; ?>
+
+
+    <!-- PESAN GAMBAR VALID -->
+    <div
+        id="imageSuccess"
+        style="
+            display: none;
+            margin-top: 10px;
+            padding: 10px 13px;
+            background: #d1e7dd;
+            color: #0f5132;
+            border: 1px solid #badbcc;
+            border-radius: 6px;
+            font-size: 13px;
+        "
+    ></div>
+
+</div>
+
+            
 
             <div class="form-group">
 
@@ -381,27 +498,329 @@
 
 </div>
 
-
 <script>
-document.getElementById('imageInput').addEventListener('change', function(event) {
 
-    const file = event.target.files[0];
+document.addEventListener('DOMContentLoaded', function () {
 
-    if (!file) {
-        return;
+    const imageInput = document.getElementById('articleImage');
+    const imagePreview = document.getElementById('articleImagePreview');
+    const imageError = document.getElementById('imageError');
+    const imageSuccess = document.getElementById('imageSuccess');
+    const removeImage = document.getElementById('removeImage');
+    const noImagePlaceholder = document.getElementById('noImagePlaceholder');
+    const form = document.getElementById('articleForm');
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | FUNGSI FORMAT UKURAN FILE
+    |--------------------------------------------------------------------------
+    */
+
+    function formatFileSize(bytes) {
+
+        if (bytes < 1024) {
+            return bytes + ' B';
+        }
+
+        if (bytes < 1024 * 1024) {
+            return (bytes / 1024).toFixed(1) + ' KB';
+        }
+
+        return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
     }
 
-    const imagePreview = document.getElementById('imagePreview');
-    const noImageText = document.getElementById('noImageText');
 
-    imagePreview.src = URL.createObjectURL(file);
-    imagePreview.style.display = 'block';
+    /*
+    |--------------------------------------------------------------------------
+    | FUNGSI ERROR
+    |--------------------------------------------------------------------------
+    */
 
-    if (noImageText) {
-        noImageText.style.display = 'none';
+    function showError(message) {
+
+        imageError.innerHTML =
+            '<strong>Gambar tidak dapat digunakan.</strong><br>' +
+            message;
+
+        imageError.style.display = 'block';
+
+        imageSuccess.style.display = 'none';
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | FUNGSI RESET ERROR
+    |--------------------------------------------------------------------------
+    */
+
+    function clearMessage() {
+
+        imageError.style.display = 'none';
+        imageError.innerHTML = '';
+
+        imageSuccess.style.display = 'none';
+        imageSuccess.innerHTML = '';
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | PILIH GAMBAR BARU
+    |--------------------------------------------------------------------------
+    */
+
+    if (imageInput) {
+
+        imageInput.addEventListener('change', function () {
+
+            clearMessage();
+
+            const file = this.files[0];
+
+            if (!file) {
+                return;
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | FORMAT
+            |--------------------------------------------------------------------------
+            */
+
+            const allowedTypes = [
+                'image/jpeg',
+                'image/png',
+                'image/webp'
+            ];
+
+            if (!allowedTypes.includes(file.type)) {
+
+                showError(
+                    'Format gambar tidak diperbolehkan. ' +
+                    'Gunakan JPG, JPEG, PNG, atau WEBP.'
+                );
+
+                imageInput.value = '';
+
+                return;
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | UKURAN MAKSIMAL 6 MB
+            |--------------------------------------------------------------------------
+            */
+
+            const maxSize = 6 * 1024 * 1024;
+
+            if (file.size > maxSize) {
+
+                showError(
+                    'Ukuran gambar adalah <strong>' +
+                    formatFileSize(file.size) +
+                    '</strong>.<br>' +
+                    'Maksimal ukuran gambar adalah <strong>6 MB</strong>.'
+                );
+
+                imageInput.value = '';
+
+                return;
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | JIKA PILIH GAMBAR BARU
+            | CHECKBOX HAPUS OTOMATIS DIBATALKAN
+            |--------------------------------------------------------------------------
+            */
+
+            if (removeImage) {
+                removeImage.checked = false;
+            }
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | TAMPILKAN GAMBAR BARU
+            | GAMBAR LAMA LANGSUNG DIGANTI
+            |--------------------------------------------------------------------------
+            */
+
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+
+                if (imagePreview) {
+
+                    imagePreview.src = e.target.result;
+
+                    imagePreview.style.display = 'block';
+                }
+
+
+                if (noImagePlaceholder) {
+
+                    noImagePlaceholder.style.display = 'none';
+                }
+
+            };
+
+            reader.readAsDataURL(file);
+
+
+            /*
+            |--------------------------------------------------------------------------
+            | PESAN VALID
+            |--------------------------------------------------------------------------
+            */
+
+            imageSuccess.innerHTML =
+                '✓ Gambar baru dipilih. Ukuran: <strong>' +
+                formatFileSize(file.size) +
+                '</strong>.';
+
+            imageSuccess.style.display = 'block';
+
+        });
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CHECKBOX HAPUS GAMBAR
+    |--------------------------------------------------------------------------
+    */
+
+    if (removeImage) {
+
+        removeImage.addEventListener('change', function () {
+
+            clearMessage();
+
+
+            if (this.checked) {
+
+                /*
+                | Hapus gambar dari tampilan
+                */
+
+                if (imagePreview) {
+                    imagePreview.style.display = 'none';
+                }
+
+                if (noImagePlaceholder) {
+                    noImagePlaceholder.style.display = 'flex';
+                    noImagePlaceholder.innerHTML = 'Gambar akan dihapus';
+                }
+
+
+                /*
+                | Kosongkan input file
+                */
+
+                if (imageInput) {
+                    imageInput.value = '';
+                }
+
+            } else {
+
+                /*
+                | Jika batal hapus dan tidak ada gambar baru,
+                | tampilkan kembali gambar lama.
+                */
+
+                <?php if (!empty($article->image)): ?>
+
+                    if (imagePreview) {
+
+                        imagePreview.src =
+                            "<?= base_url('assets/uploads/' . $article->image); ?>";
+
+                        imagePreview.style.display = 'block';
+                    }
+
+                    if (noImagePlaceholder) {
+                        noImagePlaceholder.style.display = 'none';
+                    }
+
+                <?php endif; ?>
+
+            }
+
+        });
+
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CEK LAGI SAAT SUBMIT
+    |--------------------------------------------------------------------------
+    */
+
+    if (form) {
+
+        form.addEventListener('submit', function (event) {
+
+            const file = imageInput
+                ? imageInput.files[0]
+                : null;
+
+
+            /*
+            | Kalau ada file baru
+            */
+
+            if (file) {
+
+                const maxSize = 6 * 1024 * 1024;
+
+                const allowedTypes = [
+                    'image/jpeg',
+                    'image/png',
+                    'image/webp'
+                ];
+
+
+                if (!allowedTypes.includes(file.type)) {
+
+                    event.preventDefault();
+
+                    showError(
+                        'Format gambar tidak diperbolehkan. ' +
+                        'Gunakan JPG, JPEG, PNG, atau WEBP.'
+                    );
+
+                    return;
+                }
+
+
+                if (file.size > maxSize) {
+
+                    event.preventDefault();
+
+                    showError(
+                        'Ukuran gambar melebihi 6 MB. ' +
+                        'Silakan pilih gambar dengan ukuran maksimal 6 MB.'
+                    );
+
+                    return;
+                }
+
+            }
+
+        });
+
     }
 
 });
+
 </script>
 
 </body>

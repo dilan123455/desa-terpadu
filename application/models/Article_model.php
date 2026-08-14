@@ -87,5 +87,9 @@ class Article_model extends CI_Model
         
         return $this->db->get()->result();
     }
+
+    public function count_all()
+{
+    return $this->db->count_all('articles');
 }
-?>
+}

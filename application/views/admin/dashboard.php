@@ -905,7 +905,7 @@
             <!-- Contact -->
 
             <a
-                href="<?= site_url('admin/contact_messages'); ?>"
+                href="<?= site_url('admin/contact'); ?>"
                 class="sidebar-link"
             >
 
@@ -914,7 +914,7 @@
                 </span>
 
                 <span>
-                    Pesan Masuk
+                    Contact
                 </span>
 
             </a>
@@ -1100,11 +1100,11 @@
                             <?= html_escape($name); ?>
                         </h3>
 
-                        <p class="welcome-description">
-                            Kelola informasi, artikel, testimoni,
-                            FAQ, dan konten website Desa Terpadu
-                            melalui panel admin.
-                        </p>
+                        <<p class="welcome-description">
+    Kelola informasi, artikel, testimoni,
+    FAQ, About, Features, dan Implementation
+    website Desa Terpadu melalui panel admin.
+</p>
 
                     </div>
 
@@ -1140,7 +1140,7 @@
                             </p>
 
                             <h3 class="stat-number">
-                                -
+                                 <?= $total_articles; ?>
                             </h3>
 
                             <p class="stat-description">
@@ -1173,7 +1173,7 @@
                             </p>
 
                             <h3 class="stat-number">
-                                -
+                                 <?= $total_testimonials; ?>
                             </h3>
 
                             <p class="stat-description">
@@ -1206,7 +1206,7 @@
                             </p>
 
                             <h3 class="stat-number">
-                                -
+                                 <?= $total_faqs; ?>
                             </h3>
 
                             <p class="stat-description">
@@ -1224,38 +1224,38 @@
 
                 </div>
 
+                <!-- Implementation -->
+
+<div class="stat-card">
+
+    <div class="stat-content">
+
+        <div>
+
+            <p class="stat-label">
+                Implementation
+            </p>
+
+            <h3 class="stat-number">
+                <?= $total_implementation; ?>
+            </h3>
+
+            <p class="stat-description">
+                Total implementation
+            </p>
+
+        </div>
+
+        <div class="stat-icon icon-orange">
+            ⚙️
+        </div>
+
+    </div>
+
+</div>
 
 
-                <!-- Pesan -->
 
-                <div class="stat-card">
-
-                    <div class="stat-content">
-
-                        <div>
-
-                            <p class="stat-label">
-                                Pesan Masuk
-                            </p>
-
-                            <h3 class="stat-number">
-                                -
-                            </h3>
-
-                            <p class="stat-description">
-                                Pesan dari pengunjung
-                            </p>
-
-                        </div>
-
-
-                        <div class="stat-icon icon-orange">
-                            ✉️
-                        </div>
-
-                    </div>
-
-                </div>
 
             </section>
 
@@ -1380,34 +1380,6 @@
 
 
 
-                <!-- Contact -->
-
-                <a
-                    href="<?= site_url('admin/contact_messages'); ?>"
-                    class="quick-card"
-                >
-
-                    <div class="quick-card-top">
-
-                        <div class="quick-icon icon-orange">
-                            ✉️
-                        </div>
-
-                        <span class="quick-arrow">
-                            →
-                        </span>
-
-                    </div>
-
-                    <h4>
-                        Pesan Masuk
-                    </h4>
-
-                    <p>
-                        Lihat pesan dan konsultasi dari pengunjung.
-                    </p>
-
-                </a>
 
 
 
