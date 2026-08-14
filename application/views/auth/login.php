@@ -88,6 +88,8 @@
                                 placeholder="Masukkan password"
                                 class="w-full pl-10 pr-11 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#cc4b4d] focus:border-transparent transition"
                             >
+
+                            
                             <!-- Toggle password -->
                             <button
                                 type="button"
@@ -103,15 +105,23 @@
                         </div>
                     </div>
 
+                    <br>
+
                     <!-- Remember + Forgot -->
                     <div class="flex items-center justify-between text-sm">
                         <label class="flex items-center gap-2 text-gray-600 cursor-pointer">
                             <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-[#cc4b4d] focus:ring-[#cc4b4d]">
                             Ingat saya
                         </label>
-                        <a href="#" class="text-[#cc4b4d] hover:underline font-medium">Lupa password?</a>
+                     <a
+    href="<?= site_url('auth/forgot_password'); ?>"
+    class="text-[#cc4b4d] hover:underline font-medium"
+>
+    Lupa password?
+</a>
                     </div>
 
+                    <br>
                     <!-- Button -->
                     <button
                         type="submit"

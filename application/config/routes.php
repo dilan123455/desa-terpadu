@@ -1,100 +1,135 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+
 /*
-| -------------------------------------------------------------------------
-| URI ROUTING
-| -------------------------------------------------------------------------
-| This file lets you re-map URI requests to specific controller functions.
-|
-| Typically there is a one-to-one relationship between a URL string
-| and its corresponding controller class/method. The segments in a
-| URL normally follow this pattern:
-|
-|	example.com/class/method/id/
-|
-| In some instances, however, you may want to remap this relationship
-| so that a different class/function is called than the one
-| corresponding to the URL.
-|
-| Please see the user guide for complete details:
-|
-|	https://codeigniter.com/userguide3/general/routing.html
-|
-| -------------------------------------------------------------------------
-| RESERVED ROUTES
-| -------------------------------------------------------------------------
-|
-| There are three reserved routes:
-|
-|	$route['default_controller'] = 'welcome';
-|
-| This route indicates which controller class should be loaded if the
-| URI contains no data. In the above example, the "welcome" class
-| would be loaded.
-|
-|	$route['404_override'] = 'errors/page_missing';
-|
-| This route will tell the Router which controller/method to use if those
-| provided in the URL cannot be matched to a valid route.
-|
-|	$route['translate_uri_dashes'] = FALSE;
-|
-| This is not exactly a route, but allows you to automatically route
-| controller and method names that contain dashes. '-' isn't a valid
-| class or method name character, so it requires translation.
-| When you set this option to TRUE, it will replace ALL dashes in the
-| controller and method URI segments.
-|
-| Examples:	my-controller/index	-> my_controller/index
-|		my-controller/my-method	-> my_controller/my_method
+|--------------------------------------------------------------------------
+| Default / System
+|--------------------------------------------------------------------------
 */
+
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 
-$route['admin/articles'] = 'admin/Articles/index';
-$route['admin/articles/create'] = 'admin/Articles/create';
-$route['admin/articles/store'] = 'admin/Articles/store';
-$route['admin/articles/edit/(:num)'] = 'admin/Articles/edit/$1';
-$route['admin/articles/update/(:num)'] = 'admin/Articles/update/$1';
-$route['admin/articles/delete/(:num)'] = 'admin/Articles/delete/$1';
+/*
+|--------------------------------------------------------------------------
+| AUTH
+|--------------------------------------------------------------------------
+*/
+
+$route['auth/login']            = 'Auth/login';
+$route['auth/process_login']    = 'Auth/process_login';
+$route['auth/logout']           = 'Auth/logout';
+
+$route['auth/forgot_password']         = 'Auth/forgot_password';
+$route['auth/send_reset_link']         = 'Auth/send_reset_link';
+
+$route['auth/reset_password/(:any)']   = 'Auth/reset_password/$1';
+$route['auth/update_password']         = 'Auth/update_password';
+
+$route['auth/forgot_password'] = 'Auth/forgot_password';
+$route['auth/send_reset_link'] = 'Auth/send_reset_link';
+$route['auth/reset_password/(:any)'] = 'Auth/reset_password/$1';
+$route['auth/update_password'] = 'Auth/update_password';
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN - ARTICLES
+|--------------------------------------------------------------------------
+*/
+
+$route['admin/articles']                = 'admin/Articles/index';
+$route['admin/articles/create']         = 'admin/Articles/create';
+$route['admin/articles/store']          = 'admin/Articles/store';
+$route['admin/articles/edit/(:num)']    = 'admin/Articles/edit/$1';
+$route['admin/articles/update/(:num)']  = 'admin/Articles/update/$1';
+$route['admin/articles/delete/(:num)']  = 'admin/Articles/delete/$1';
 
 
+/*
+|--------------------------------------------------------------------------
+| ADMIN - TESTIMONI
+|--------------------------------------------------------------------------
+*/
 
-$route['admin/testimoni']                  = 'admin/Testimoni/index';
-$route['admin/testimoni/create']           = 'admin/Testimoni/create';
-$route['admin/testimoni/store']            = 'admin/Testimoni/store';
-$route['admin/testimoni/edit/(:num)']      = 'admin/Testimoni/edit/$1';
-$route['admin/testimoni/update/(:num)']    = 'admin/Testimoni/update/$1';
-$route['admin/testimoni/delete/(:num)']    = 'admin/Testimoni/delete/$1';
-$route['auth/login']                       = 'Auth/login';
-$route['auth/process_login']               = 'Auth/process_login';
-$route['auth/logout']                      = 'Auth/logout';
-
-
-$route['admin/faq'] = 'admin/Faq/index';
-$route['admin/faq/create'] = 'admin/Faq/create';
-$route['admin/faq/store'] = 'admin/Faq/store';
-$route['admin/faq/detail/(:num)'] = 'admin/Faq/detail/$1';
-$route['admin/faq/edit/(:num)'] = 'admin/Faq/edit/$1';
-$route['admin/faq/update/(:num)'] = 'admin/Faq/update/$1';
-$route['admin/faq/delete/(:num)'] = 'admin/Faq/delete/$1';
+$route['admin/testimoni']                = 'admin/Testimoni/index';
+$route['admin/testimoni/create']         = 'admin/Testimoni/create';
+$route['admin/testimoni/store']          = 'admin/Testimoni/store';
+$route['admin/testimoni/edit/(:num)']    = 'admin/Testimoni/edit/$1';
+$route['admin/testimoni/update/(:num)']  = 'admin/Testimoni/update/$1';
+$route['admin/testimoni/delete/(:num)']  = 'admin/Testimoni/delete/$1';
 
 
-$route['admin/contact_messages'] = 'admin/Contact_messages/index';
-$route['admin/contact_messages/detail/(:num)'] = 'admin/Contact_messages/detail/$1';
-$route['admin/contact_messages/mark_read/(:num)'] = 'admin/Contact_messages/mark_read/$1';
-$route['admin/contact_messages/mark_replied/(:num)'] = 'admin/Contact_messages/mark_replied/$1';
-$route['admin/contact_messages/delete/(:num)'] = 'admin/Contact_messages/delete/$1';
+/*
+|--------------------------------------------------------------------------
+| ADMIN - FAQ
+|--------------------------------------------------------------------------
+*/
+
+$route['admin/faq']                = 'admin/Faq/index';
+$route['admin/faq/create']         = 'admin/Faq/create';
+$route['admin/faq/store']          = 'admin/Faq/store';
+$route['admin/faq/detail/(:num)']  = 'admin/Faq/detail/$1';
+$route['admin/faq/edit/(:num)']    = 'admin/Faq/edit/$1';
+$route['admin/faq/update/(:num)']  = 'admin/Faq/update/$1';
+$route['admin/faq/delete/(:num)']  = 'admin/Faq/delete/$1';
+
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN - CONTACT
+|--------------------------------------------------------------------------
+|
+| Contact = informasi kontak website
+| (phone, email, address, maps_url)
+|
+*/
+
+$route['admin/contact']                  = 'admin/Contact/index';
+$route['admin/contact/edit/(:num)']     = 'admin/Contact/edit/$1';
+$route['admin/contact/update/(:num)']   = 'admin/Contact/update/$1';
+
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN - ABOUT
+|--------------------------------------------------------------------------
+*/
+
+$route['admin/about']          = 'admin/about/index';
+$route['admin/about/store']    = 'admin/about/store';
+
+$route['admin/about/edit']     = 'admin/about/edit';
+$route['admin/about/update']   = 'admin/about/update';
+
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN - ABOUT SLIDES
+|--------------------------------------------------------------------------
+|
+| Digunakan oleh halaman daftar slide About.
+|
+*/
+
+$route['admin/about/slides'] = 'admin/about/index';
+
+/*
+|--------------------------------------------------------------------------
+| PUBLIC - ABOUT
+|--------------------------------------------------------------------------
+*/
 
 $route['about'] = 'about/index';
-$route['admin/about'] = 'admin/about/index';
-$route['admin/about/store'] = 'admin/about/store';
 
-$route['admin/about/edit'] = 'admin/about/edit';
-$route['admin/about/update'] = 'admin/about/update';
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN - FEATURES
+|--------------------------------------------------------------------------
+*/
 
 $route['admin/features'] = 'admin/features/index';
 

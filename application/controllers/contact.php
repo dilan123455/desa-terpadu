@@ -7,7 +7,7 @@ class Contact extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->model('Contact_message_model');
+        $this->load->model('Contact_model');
         $this->load->helper(['url', 'form']);
     }
 
@@ -49,7 +49,7 @@ class Contact extends CI_Controller
             'created_at' => date('Y-m-d H:i:s')
         ];
 
-        $this->Contact_message_model->insert($data);
+        $this->Contact_model->insert($data);
 
         $this->session->set_flashdata(
             'success',
