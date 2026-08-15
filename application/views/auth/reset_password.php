@@ -6,7 +6,7 @@
     <title>Reset Password - Desa Terpadu</title>
     <link rel="stylesheet" href="<?= base_url('assets/css/output.css'); ?>">
 </head>
-<body class="min-h-screen bg-gradient-to-br from-[#cc4b4d] via-[#b83e40] to-[#8a2d2f] flex items-center justify-center p-4">
+<body class="min-h-screen bg-linear-to-br from-[#cc4b4d] via-[#b83e40] to-[#8a2d2f] flex items-center justify-center p-4">
 
     <div class="w-full max-w-md">
 

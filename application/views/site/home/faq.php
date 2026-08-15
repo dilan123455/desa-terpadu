@@ -62,8 +62,8 @@
             <!-- SECTION: WAVE SEPARATOR & CTA -->
             <div class="relative bg-[#f3ebe5] pt-16 pb-20 mt-10">
                 <!-- Top Curved Wave SVG -->
-                <div class="absolute top-0 left-0 w-full overflow-hidden leading-[0]">
-                    <svg class="relative block w-[calc(110%+1.3px)] h-[50px] md:h-[70px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <div class="absolute top-0 left-0 w-full overflow-hidden leading-0">
+                    <svg class="relative block w-[calc(110%+1.3px)] h-12.5 md:h-17.5" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
                         <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="fill-white"></path>
                     </svg>
                 </div>
@@ -76,7 +76,9 @@
                     <p class="text-[#555] text-base md:text-lg mb-8">
                         Langsung ajukan pertanyaan anda melalui whatsapp kami
                     </p>
-                    <a href="#" class="inline-block bg-[#9a3a41] hover:bg-[#822e34] text-white font-medium py-3 px-8 rounded transition-colors duration-200 shadow-sm">
+                    <a href="https://api.whatsapp.com/send/?phone=6285172238883&text&type=phone_number&app_absent=0" 
+                       target="_blank" 
+                       class="inline-block bg-[#9a3a41] hover:bg-[#822e34] text-white font-medium py-3 px-8 rounded transition-colors duration-200 shadow-sm">
                         Kirim Pesan Whatsapp
                     </a>
                 </div>

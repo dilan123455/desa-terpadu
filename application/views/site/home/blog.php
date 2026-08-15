@@ -124,5 +124,9 @@
 
         </main>
     </div>
+
+    <!-- === BAGIAN PEMANGGILAN SOCIAL MEDIA POSTS (PALING BAWAH) === -->
+    <?php $this->load->view('site/home/social_media_post'); ?>
+
 </body>
 </html>
