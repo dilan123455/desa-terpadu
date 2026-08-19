@@ -29,60 +29,63 @@
                  TOPBAR
             ====================================================== -->
 
-            <header
-                class="fixed top-0 right-0 left-0 lg:left-64 h-20
-                       bg-white/95 border-b border-gray-200
-                       flex items-center justify-between
-                       px-4 sm:px-8 z-40"
-            >
+          <header 
+    class="fixed top-0 right-0 left-0 lg:left-64 h-20 
+           bg-white/95 border-b border-gray-200 
+           flex items-center justify-between
+           px-4 sm:px-8 z-40"
+>
 
-                <div>
+    <!-- LEFT -->
+    <div>
 
-                    <h1 class="text-xl font-bold text-gray-800">
-                        <?= html_escape($title); ?>
-                    </h1>
+        <h1 class="text-xl font-bold text-gray-800">
+            <?= html_escape($title); ?>
+        </h1>
 
-                    <p class="text-sm text-gray-400 mt-1">
-                        Kelola fitur unggulan Desa Terpadu
-                    </p>
+        <p class="text-sm text-gray-400 mt-1">
+            Kelola fitur unggulan Desa Terpadu
+        </p>
 
-                </div>
-
-
-                <div class="flex items-center gap-3">
-
-                    <div class="text-right hidden sm:block">
-
-                        <p class="text-sm font-semibold text-gray-800">
-                            <?= html_escape($name); ?>
-                        </p>
-
-                        <p class="text-xs text-gray-400 mt-1">
-                            Administrator
-                        </p>
-
-                    </div>
+    </div>
 
 
-                    <div
-                        class="w-10 h-10 rounded-full bg-red-500
-                               flex items-center justify-center
-                               text-white text-sm font-bold"
-                    >
+    <!-- RIGHT : ADMINISTRATOR -->
+    <div class="flex items-center gap-3">
 
-                        <?= strtoupper(
-                            substr(
-                                html_escape($name),
-                                0,
-                                1
-                            )
-                        ); ?>
+        <div class="text-right hidden sm:block">
 
-                    </div>
+            <p class="text-sm font-semibold text-gray-800">
+                <?= html_escape($name); ?>
+            </p>
 
-                </div>
+            <p class="text-xs text-gray-400 mt-1">
+                Administrator
+            </p>
 
-            </header>
+        </div>
+
+
+        <div 
+            class="w-10 h-10 rounded-full bg-red-500 
+                   flex items-center justify-center 
+                   text-white text-sm font-bold"
+        >
+
+            <?= strtoupper(
+                substr(
+                    html_escape($name),
+                    0,
+                    1
+                )
+            ); ?>
+
+        </div>
+
+    </div>
+
+</header>
+
 
 
 
@@ -93,20 +96,59 @@
             <main class="p-4 sm:p-8 pt-24 sm:pt-28 min-h-screen">
 
 
-                <!-- PAGE HEADER -->
+               <!-- PAGE HEADER -->
 
-                <div class="mb-6">
+<div class="mb-6 flex items-start justify-between gap-4">
 
-                    <h2 class="text-2xl font-bold text-gray-800">
-                        Fitur Unggulan
-                    </h2>
+    <!-- TITLE -->
+    <div>
 
-                    <p class="text-sm text-gray-500 mt-1">
-                        Kelola informasi platform dan fitur Desa Terpadu.
-                    </p>
+        <h2 class="text-2xl font-bold text-gray-800">
+            Fitur Unggulan
+        </h2>
 
-                </div>
+        <p class="text-sm text-gray-500 mt-1">
+            Kelola informasi platform dan fitur Desa Terpadu.
+        </p>
 
+    </div>
+
+
+    <!-- TAMBAH PLATFORM -->
+    <a
+        href="<?= site_url('admin/features/create-platform'); ?>"
+        class="inline-flex items-center justify-center gap-2
+               px-4 py-2.5
+               bg-red-500 hover:bg-red-600
+               text-white rounded-lg
+               text-sm font-semibold
+               shadow-sm hover:shadow-md
+               transition
+               whitespace-nowrap"
+    >
+
+        <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+        >
+
+            <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4v16M4 12h16"
+            />
+
+        </svg>
+
+        Tambah Platform
+
+    </a>
+
+</div>
+                
 
 
                 <!-- =================================================
@@ -293,7 +335,7 @@
                                 </div>
 
 
-
+                                        <div class="flex items-center gap-2">
                                 <!-- EDIT PLATFORM -->
 
                                 <a
@@ -335,6 +377,60 @@
                                     Edit Platform
 
                                 </a>
+
+
+    <!-- DELETE PLATFORM -->
+    <form
+        action="<?= site_url(
+            'admin/features/delete-platform/'
+            . $platform->id
+        ); ?>"
+        method="post"
+        class="inline">
+
+        <button
+            type="button"
+            onclick="openDeleteModal(
+                this.form,
+                'Hapus Platform?',
+                'Platform ini beserta seluruh fitur di dalamnya akan dihapus. Tindakan ini tidak dapat dibatalkan.'
+            )"
+            class="inline-flex items-center gap-2
+                   px-4 py-2 bg-red-50
+                   text-red-600 rounded-lg
+                   text-sm font-semibold
+                   hover:bg-red-100 transition
+                   whitespace-nowrap">
+
+            <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24">
+
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 7l-.867 12.142
+                       A2 2 0 0116.138 21H7.862
+                       a2 2 0 01-1.995-1.858L5 7
+                       m5 4v6m4-6v6M9 7V4
+                       a1 1 0 011-1h4
+                       a1 1 0 011 1v3
+                       M4 7h16"
+
+                          />
+
+            </svg>
+
+            Hapus Platform
+
+        </button>
+
+    </form>
+
+</div>
 
                             </div>
 
@@ -484,6 +580,8 @@
 
 
 
+                                                    <!-- ACTIONS -->
+                                                    <div class="flex items-center gap-3">
                                                     <!-- EDIT -->
 
                                                     <a
@@ -498,6 +596,35 @@
                                                     >
                                                         Edit
                                                     </a>
+
+                                                     <!-- DELETE -->
+                                                    <form
+                                                        action="<?= site_url(
+                                                            'admin/features/delete-item/'
+                                                            . $item->id
+                                                        ); ?>"
+                                                        method="post"
+                                                        class="inline">
+
+                                                        <button
+                                                            type="button"
+                                                            onclick="openDeleteModal(
+                                                                this.form,
+                                                                'Hapus Fitur?',
+                                                                'Fitur ini akan dihapus secara permanen dan tidak dapat dikembalikan.'
+                                                            )"
+                                                            class="text-xs font-semibold
+                                                                text-red-500
+                                                                hover:text-red-700
+                                                                transition">
+
+                                                            Hapus
+
+                                                        </button>
+
+                                                    </form>
+
+                                                </div>
 
                                                 </div>
 
@@ -727,6 +854,160 @@
 
     </div>
 
+    <!-- DELETE CONFIRMATION MODAL -->
+<div
+    id="deleteModal"
+    class="fixed inset-0 z-[100] hidden items-center justify-center
+           bg-black/50 px-4">
+
+    <div
+        class="w-full max-w-md bg-white rounded-2xl shadow-2xl
+               overflow-hidden">
+
+        <!-- HEADER -->
+        <div class="px-6 py-5 border-b border-gray-100">
+
+            <div class="flex items-center gap-3">
+
+                <div
+                    class="w-10 h-10 rounded-full
+                           bg-red-50 text-red-500
+                           flex items-center justify-center">
+
+                    <svg
+                        class="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24">
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 9v4m0 4h.01
+                               M21 12a9 9 0 11-18 0
+                               9 9 0 0118 0z"
+                        />
+
+                    </svg>
+
+                </div>
+
+                <h3
+                    id="deleteModalTitle"
+                    class="text-lg font-bold text-gray-800">
+
+                    Konfirmasi Hapus
+
+                </h3>
+
+            </div>
+
+        </div>
+
+
+        <!-- BODY -->
+        <div class="px-6 py-5">
+
+            <p
+                id="deleteModalMessage"
+                class="text-sm text-gray-600 leading-relaxed">
+
+                Apakah kamu yakin ingin menghapus data ini?
+
+            </p>
+
+        </div>
+
+
+        <!-- FOOTER -->
+        <div
+            class="px-6 py-4 bg-gray-50
+                   border-t border-gray-100
+                   flex justify-end gap-3">
+
+            <button
+                type="button"
+                onclick="closeDeleteModal()"
+                class="px-4 py-2.5
+                       bg-gray-200 text-gray-700
+                       rounded-lg text-sm font-semibold
+                       hover:bg-gray-300 transition">
+
+                Batal
+
+            </button>
+
+            <button
+                type="button"
+                id="confirmDeleteButton"
+                class="px-4 py-2.5
+                       bg-red-500 text-white
+                       rounded-lg text-sm font-semibold
+                       hover:bg-red-600 transition">
+
+                Ya, Hapus
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+    let deleteForm = null;
+
+    function openDeleteModal(form, title, message) {
+
+        deleteForm = form;
+
+        const modal = document.getElementById('deleteModal');
+        const modalTitle = document.getElementById('deleteModalTitle');
+        const modalMessage = document.getElementById('deleteModalMessage');
+
+        modalTitle.textContent = title;
+        modalMessage.textContent = message;
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+    }
+
+
+    function closeDeleteModal() {
+
+        const modal = document.getElementById('deleteModal');
+
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+
+        deleteForm = null;
+    }
+
+
+    document
+        .getElementById('confirmDeleteButton')
+        .addEventListener('click', function () {
+
+            if (deleteForm) {
+                deleteForm.submit();
+            }
+
+        });
+
+
+    document
+        .getElementById('deleteModal')
+        .addEventListener('click', function (event) {
+
+            if (event.target === this) {
+                closeDeleteModal();
+            }
+
+        });
+</script>
 </body>
 
 </html>

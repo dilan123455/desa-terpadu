@@ -133,6 +133,8 @@ $route['about'] = 'about/index';
 
 $route['admin/features'] = 'admin/features/index';
 
+$route['admin/features/create-platform'] = 'admin/features/create_platform';
+$route['admin/features/store-platform'] = 'admin/features/store_platform';
 $route['admin/features/edit-platform/(:num)']
     = 'admin/features/edit_platform/$1';
 
@@ -144,3 +146,9 @@ $route['admin/features/edit-item/(:num)']
 
 $route['admin/features/update-item/(:num)']
     = 'admin/features/update_item/$1';
+
+$route['admin/features/create-item/(:num)'] = 'admin/features/create_item/$1';
+$route['admin/features/store-item'] = 'admin/features/store_item';
+
+$route['admin/features/delete-item/(:num)'] = 'admin/features/delete_item/$1';
+$route['admin/features/delete-platform/(:num)'] = 'admin/features/delete_platform/$1';

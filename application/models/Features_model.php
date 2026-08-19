@@ -56,4 +56,63 @@ class Features_model extends CI_Model
             ->where('id', $id)
             ->update('feature_items', $data);
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CREATE FITUR
+    |--------------------------------------------------------------------------
+    */
+
+    public function insert_item($data)
+    {
+        return $this->db
+            ->insert('feature_items', $data);
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | DELETE FITUR
+    |--------------------------------------------------------------------------
+    */
+
+    public function delete_item($id)
+    {
+        return $this->db
+            ->where('id', $id)
+            ->delete('feature_items');
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | DELETE PLATFORM
+    |--------------------------------------------------------------------------
+    */
+
+    public function delete_platform($id)
+    {
+        $this->db->trans_start();
+
+        // Hapus semua fitur yang berada di dalam platform
+        $this->db
+            ->where('platform_id', $id)
+            ->delete('feature_items');
+
+        // Setelah itu hapus platform
+        $this->db
+            ->where('id', $id)
+            ->delete('feature_platforms');
+
+        $this->db->trans_complete();
+
+        return $this->db->trans_status();
+    }
+
+    public function insert_platform($data)
+{
+    return $this->db
+        ->insert('feature_platforms', $data);
+}
 }

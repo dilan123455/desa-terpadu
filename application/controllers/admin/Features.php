@@ -82,4 +82,142 @@ class Features extends CI_Controller
 
         redirect('admin/features');
     }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | CREATE FITUR
+    |--------------------------------------------------------------------------
+    */
+
+    public function create_item($platform_id)
+    {
+        $data['title'] = 'Tambah Fitur';
+        $data['name']  = $this->session->userdata('name');
+
+        $data['platform'] = $this->Features_model->get_platform($platform_id);
+
+        if (!$data['platform']) {
+            show_404();
+        }
+
+        $data['platforms'] = $this->Features_model->get_platforms();
+
+        $this->load->view('admin/features/create_item', $data);
+    }
+
+
+    public function store_item()
+    {
+        $data = [
+            'platform_id' => $this->input->post('platform_id', true),
+            'title'       => $this->input->post('title', true),
+            'description' => $this->input->post('description'),
+            'icon'        => $this->input->post('icon', true),
+            'sort_order'  => $this->input->post('sort_order', true)
+        ];
+
+        $this->Features_model->insert_item($data);
+
+        $this->session->set_flashdata(
+            'success',
+            'Fitur berhasil ditambahkan.'
+        );
+
+        redirect('admin/features');
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | DELETE FITUR
+    |--------------------------------------------------------------------------
+    */
+
+    public function delete_item($id)
+    {
+        $item = $this->db
+            ->where('id', $id)
+            ->get('feature_items')
+            ->row();
+
+        if (!$item) {
+            $this->session->set_flashdata(
+                'error',
+                'Fitur tidak ditemukan.'
+            );
+
+            redirect('admin/features');
+            return;
+        }
+
+        $this->Features_model->delete_item($id);
+
+        $this->session->set_flashdata(
+            'success',
+            'Fitur berhasil dihapus.'
+        );
+
+        redirect('admin/features');
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | DELETE PLATFORM
+    |--------------------------------------------------------------------------
+    */
+
+    public function delete_platform($id)
+    {
+        $platform = $this->Features_model->get_platform($id);
+
+        if (!$platform) {
+            $this->session->set_flashdata(
+                'error',
+                'Platform tidak ditemukan.'
+            );
+
+            redirect('admin/features');
+            return;
+        }
+
+        $this->Features_model->delete_platform($id);
+
+        $this->session->set_flashdata(
+            'success',
+            'Platform dan seluruh fitur di dalamnya berhasil dihapus.'
+        );
+
+        redirect('admin/features');
+    }
+
+    // create Platform
+
+    public function create_platform()
+{
+    $data['title'] = 'Tambah Platform';
+    $data['name']  = $this->session->userdata('name');
+
+    $this->load->view('admin/features/create_platform', $data);
+}
+
+public function store_platform()
+{
+    $data = [
+        'name'        => $this->input->post('name', true),
+        'description' => $this->input->post('description'),
+        'image'       => $this->input->post('image', true),
+        'sort_order'  => $this->input->post('sort_order', true)
+    ];
+
+    $this->Features_model->insert_platform($data);
+
+    $this->session->set_flashdata(
+        'success',
+        'Platform berhasil ditambahkan.'
+    );
+
+    redirect('admin/features');
+}
 }
