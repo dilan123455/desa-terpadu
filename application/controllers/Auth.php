@@ -20,38 +20,96 @@ class Auth extends CI_Controller
         $this->load->view('auth/login');
     }
 
-    public function process_login()
-    {
-        $username = $this->input->post('username', TRUE);
-        $password = $this->input->post('password');
+   public function process_login()
+{
+    $username = $this->input->post('username', TRUE);
+    $password = $this->input->post('password');
 
-        $user = $this->User_model->get_by_username($username);
+    // ==========================================
+    // CLOUDFLARE TURNSTILE
+    // ==========================================
 
-        if ($user && password_verify($password, $user->password)) {
+    $turnstile_token = $this->input->post('cf-turnstile-response');
 
-            $session_data = [
-                'user_id'    => $user->id,
-                'username'   => $user->username,
-                'name'       => $user->name,
-                'role'       => $user->role,
-                'logged_in'  => TRUE
-            ];
+    if (empty($turnstile_token)) {
 
-            $this->session->set_userdata($session_data);
+        $this->session->set_flashdata(
+            'error',
+            'Silakan verifikasi bahwa Anda bukan robot.'
+        );
 
-            redirect('admin/dashboard');
-
-        } else {
-
-            $this->session->set_flashdata(
-                'error',
-                'Username atau password salah.'
-            );
-
-            redirect('auth/login');
-        }
+        redirect('auth/login');
+        return;
     }
 
+    $secret_key = '0x4AAAAAAEVDuu5Oc1NLZ5Dj_GnYju2zOso';
+
+    $verify_url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+
+    $post_data = [
+        'secret'   => $secret_key,
+        'response' => $turnstile_token,
+        'remoteip' => $this->input->ip_address()
+    ];
+
+    $ch = curl_init($verify_url);
+
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_POST, TRUE);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($post_data));
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+
+    $response = curl_exec($ch);
+
+    curl_close($ch);
+
+    $result = json_decode($response, TRUE);
+
+    if (
+        empty($result) ||
+        empty($result['success'])
+    ) {
+
+        $this->session->set_flashdata(
+            'error',
+            'Verifikasi keamanan gagal. Silakan coba lagi.'
+        );
+
+        redirect('auth/login');
+        return;
+    }
+
+
+    // ==========================================
+    // LOGIN USER
+    // ==========================================
+
+    $user = $this->User_model->get_by_username($username);
+
+    if ($user && password_verify($password, $user->password)) {
+
+        $session_data = [
+            'user_id'    => $user->id,
+            'username'   => $user->username,
+            'name'       => $user->name,
+            'role'       => $user->role,
+            'logged_in'  => TRUE
+        ];
+
+        $this->session->set_userdata($session_data);
+
+        redirect('admin/dashboard');
+
+    } else {
+
+        $this->session->set_flashdata(
+            'error',
+            'Username atau password salah.'
+        );
+
+        redirect('auth/login');
+    }
+}
     public function logout()
     {
         $this->session->sess_destroy();

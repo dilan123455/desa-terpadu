@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Admin - Desa Terpadu</title>
     <link rel="stylesheet" href="<?= base_url('assets/css/output.css'); ?>">
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
+
 <body class="min-h-screen bg-gradient-to-br from-[#cc4b4d] via-[#b83e40] to-[#8a2d2f] flex items-center justify-center p-4">
 
     <div class="w-full max-w-md">
@@ -115,6 +117,13 @@
                     </div>
 
                     <br>
+
+                    <!-- Cloudflare Turnstile -->
+                    <div class="mt-6">
+                        <div class="cf-turnstile"
+                            data-sitekey="0x4AAAAAAEVDuoEO648E4rpT"
+                        </div>
+                    </div>
 
                     <!-- Lupa password -->
                     <div class="flex justify-end text-sm">
