@@ -37,32 +37,44 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     $lines = preg_split('/\r\n|\r|\n/', $isi);
                     $lines = array_values(array_filter(array_map('trim', $lines), 'strlen'));
                     ?>
-                    <h2 class="font-bold text-xl md:text-2xl text-center mt-12 mb-6 text-gray-900">
+
+                    <!-- Judul kebijakan diperbesar sedikit -->
+                    <h2 class="font-bold text-2xl md:text-3xl text-center mt-12 mb-6 text-gray-900">
                         <?= html_escape($policy->judul); ?>
                     </h2>
 
                     <div class="mb-8">
                         <?php if (empty($lines)): ?>
+                            <!-- Jika isi kosong -->
                             <p class="text-justify"><?= nl2br(html_escape($isi)); ?></p>
                         <?php else: ?>
-                            <?php
-                            $isNumbered = count(array_filter($lines, static function ($line) {
-                                return preg_match('/^\d+[.)]\s*/', $line);
-                            })) === count($lines);
-                            ?>
-                            <?php if ($isNumbered): ?>
-                                <ol class="list-decimal pl-6 md:pl-8 space-y-3">
-                                    <?php foreach ($lines as $line): ?>
-                                        <li class="pl-2 text-justify"><?= html_escape(preg_replace('/^\d+[.)]\s*/', '', $line)); ?></li>
-                                    <?php endforeach; ?>
-                                </ol>
-                            <?php else: ?>
-                                <ul class="list-disc pl-6 md:pl-8 space-y-3">
-                                    <?php foreach ($lines as $line): ?>
-                                        <li class="pl-2 text-justify"><?= html_escape($line); ?></li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            <?php endif; ?>
+                            <?php foreach ($lines as $line): ?>
+                                <?php
+                                // Cek apakah baris diawali nomor atau huruf penomoran
+                                // Contoh: "1.", "1)", "1.1.", "1.1.1.", "a.", "A."
+                                if (preg_match('/^(\d+(?:\.\d+)*[.)]|[a-zA-Z][.)])\s*(.*)$/', $line, $matches)) {
+                                    $prefix = $matches[1];  // Nomor asli
+                                    $content = $matches[2]; // Isi setelah nomor
+
+                                    // Tentukan kedalaman indentasi
+                                    if (preg_match('/^[a-zA-Z][.)]/', $prefix)) {
+                                        $depth = 2; // Huruf dianggap sub‑item
+                                    } else {
+                                        // Hitung jumlah titik + 1
+                                        $depth = substr_count($prefix, '.') + 1;
+                                    }
+
+                                    // Indentasi per level (misal 1.5rem)
+                                    $indent = ($depth - 1) * 1.5;
+                                    ?>
+                                    <div style="padding-left: <?= $indent; ?>rem; margin-bottom: 0.5rem; text-align: justify;">
+                                        <span class="font-medium"><?= html_escape($prefix); ?></span> <?= html_escape($content); ?>
+                                    </div>
+                                <?php } else { ?>
+                                    <!-- Baris tanpa nomor, tampilkan sebagai paragraf -->
+                                    <p class="mb-3 text-justify"><?= html_escape($line); ?></p>
+                                <?php } ?>
+                            <?php endforeach; ?>
                         <?php endif; ?>
                     </div>
                 <?php endforeach; ?>

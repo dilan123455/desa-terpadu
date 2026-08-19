@@ -7,19 +7,25 @@ class Faq extends CI_Controller
     {
         parent::__construct();
         $this->load->helper('url');
-        // 1. Memuat model FAQ yang sudah Anda buat
+        // Memuat model FAQ yang sudah Anda buat
         $this->load->model('Faq_model');
+        // Tambahkan model kontak untuk footer
+        $this->load->model('Contact_model');
     }
 
     public function index()
     {
-        // 2. Mengambil data FAQ yang berstatus 'active' dari database
+        // Mengambil data FAQ yang berstatus 'active' dari database
         $data['faqs'] = $this->Faq_model->get_active();
         $data['title'] = 'FAQ - Desa Terpadu';
 
-        // 3. Memuat layout dan view FAQ (path: site/home/faq)
+        // Ambil data kontak dari database
+        $data['contact'] = $this->Contact_model->get_contact();
+
+        // Memuat layout dan view FAQ (path: site/home/faq)
         $this->load->view('site/layout/nav');
         $this->load->view('site/home/faq', $data);
-        $this->load->view('site/layout/footer');
+        // Kirim data kontak ke footer
+        $this->load->view('site/layout/footer', ['contact' => $data['contact']]);
     }
 }

@@ -7,6 +7,7 @@ class Blog extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Article_model');
+        $this->load->model('Contact_model'); // Tambahkan model kontak
         $this->load->helper(['url', 'text']);
     }
 
@@ -16,10 +17,13 @@ class Blog extends CI_Controller
         $data['title'] = 'Highlight Desa Terpadu';
         // Ambil 9 artikel terbaru
         $data['articles'] = $this->Article_model->get_published(9);
+        // Ambil data kontak untuk footer
+        $data['contact'] = $this->Contact_model->get_contact();
 
         $this->load->view('site/layout/nav');
         $this->load->view('site/home/blog', $data);
-        $this->load->view('site/layout/footer');
+        // Kirim data kontak ke footer
+        $this->load->view('site/layout/footer', ['contact' => $data['contact']]);
     }
 
     // Halaman Detail Blog
@@ -46,8 +50,12 @@ class Blog extends CI_Controller
         $data['prev_article'] = $this->Article_model->get_prev_article($article->id);
         $data['next_article'] = $this->Article_model->get_next_article($article->id);
 
+        // Ambil data kontak untuk footer
+        $data['contact'] = $this->Contact_model->get_contact();
+
         $this->load->view('site/layout/nav');
         $this->load->view('site/home/detail', $data);
-        $this->load->view('site/layout/footer');
+        // Kirim data kontak ke footer
+        $this->load->view('site/layout/footer', ['contact' => $data['contact']]);
     }
 }

@@ -42,9 +42,19 @@
             <main class="p-4 sm:p-8 pt-24 sm:pt-28 min-h-screen">
 
                 <!-- Page Header -->
-                <div class="mb-6">
-                    <h2 class="text-2xl font-bold text-gray-800">Proses Implementasi</h2>
-                    <p class="text-sm text-gray-500 mt-1">Kelola langkah-langkah implementasi Desa Terpadu.</p>
+                <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-gray-800">Proses Implementasi</h2>
+                        <p class="text-sm text-gray-500 mt-1">Kelola langkah-langkah implementasi Desa Terpadu.</p>
+                    </div>
+                    <!-- Tombol Tambah -->
+                    <a href="<?= site_url('admin/implementation/add'); ?>"
+                       class="inline-flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-semibold transition">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        Tambah Data
+                    </a>
                 </div>
 
                 <!-- Flash Success -->
@@ -57,6 +67,16 @@
                     </div>
                 <?php endif; ?>
 
+                <!-- Flash Error -->
+                <?php if ($this->session->flashdata('error')): ?>
+                    <div class="flex items-center gap-2 px-4 py-3 mb-5 rounded-lg bg-red-50 text-red-700 border border-red-200 text-sm">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                        <?= html_escape($this->session->flashdata('error')); ?>
+                    </div>
+                <?php endif; ?>
+
                 <!-- Implementation Card -->
                 <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
 
@@ -65,7 +85,6 @@
                         <!-- Card Header -->
                         <div class="flex items-center gap-3 px-6 py-5 border-b border-gray-200">
                             <div class="w-10 h-10 rounded-lg bg-red-50 text-red-500 flex items-center justify-center">
-                                <!-- Ikon Cog -->
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -136,10 +155,17 @@
 
                                             <!-- Aksi -->
                                             <td class="px-4 py-3.5 align-middle text-center whitespace-nowrap">
-                                                <div class="flex justify-center">
+                                                <div class="flex justify-center gap-2">
+                                                    <!-- Tombol Edit -->
                                                     <a href="<?= site_url('admin/implementation/edit/' . $step->id); ?>"
                                                         class="inline-flex items-center px-3 py-1.5 bg-amber-50 text-amber-700 rounded-md text-xs font-semibold hover:bg-amber-100 transition">
                                                         Edit
+                                                    </a>
+                                                    <!-- Tombol Hapus -->
+                                                    <a href="<?= site_url('admin/implementation/delete/' . $step->id); ?>"
+                                                        onclick="return confirm('Apakah Anda yakin ingin menghapus data ini?')"
+                                                        class="inline-flex items-center px-3 py-1.5 bg-red-50 text-red-700 rounded-md text-xs font-semibold hover:bg-red-100 transition">
+                                                        Hapus
                                                     </a>
                                                 </div>
                                             </td>
@@ -154,7 +180,6 @@
                         <!-- Empty State -->
                         <div class="py-16 px-5 text-center">
                             <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-red-50 text-red-500 flex items-center justify-center">
-                                <!-- Ikon Cog -->
                                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -162,6 +187,10 @@
                             </div>
                             <strong class="block text-sm font-semibold text-gray-700">Belum Ada Data Implementation</strong>
                             <p class="mt-2 text-sm text-gray-500">Belum terdapat data proses implementasi yang tersimpan.</p>
+                            <a href="<?= site_url('admin/implementation/add'); ?>"
+                               class="mt-4 inline-flex items-center gap-2 px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-semibold transition">
+                                Tambah Data Sekarang
+                            </a>
                         </div>
 
                     <?php endif; ?>

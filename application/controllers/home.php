@@ -99,13 +99,11 @@ class Home extends CI_Controller
 public function privacy_policy()
 {
     $this->load->model('Privacy_policy_model');
+    $this->load->model('Contact_model'); 
 
-    $data['privacy_policies'] =
-        $this->Privacy_policy_model->get_all();
+    $data['privacy_policies'] = $this->Privacy_policy_model->get_all();
+    $data['contact'] = $this->Contact_model->get_contact();
 
-    $this->load->view(
-        'site/home/Privacy&Policy',
-        $data
-    );
+    $this->load->view('site/home/Privacy&Policy', $data);
 }
 }
