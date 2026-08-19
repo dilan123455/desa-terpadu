@@ -28,3 +28,4 @@ node_modules/
 
 # Local database configuration
 application/config/database_local.php
+application/config/cloudflare.php

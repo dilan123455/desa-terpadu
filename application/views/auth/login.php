@@ -118,10 +118,10 @@
 
                     <br>
 
-                    <!-- Cloudflare Turnstile -->
+                    <!-- Cloudflare Turnstile (SUDAH DIPERBAIKI) -->
                     <div class="mt-6">
                         <div class="cf-turnstile"
-                            data-sitekey="0x4AAAAAAEVDuoEO648E4rpT"
+                             data-sitekey="0x4AAAAAAEVDuoEO648E4rpT">
                         </div>
                     </div>
 
