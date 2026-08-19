@@ -76,12 +76,12 @@ class Home extends CI_Controller
             $this->Faq_model->get_active();
 
 
-            // ==========================================
-// CONTACT
-// ==========================================
+        // ==========================================
+        // CONTACT
+        // ==========================================
 
-$data['contact'] =
-    $this->Contact_model->get_contact();
+        $data['contact'] =
+            $this->Contact_model->get_contact();
     
         // ==========================================
         // LOAD HOME
@@ -91,7 +91,21 @@ $data['contact'] =
             'site/home',
             $data
         );
-
-
     }
+  // ==========================================
+// ==========================================
+// PRIVACY POLICY
+// ==========================================
+public function privacy_policy()
+{
+    $this->load->model('Privacy_policy_model');
+
+    $data['privacy_policies'] =
+        $this->Privacy_policy_model->get_all();
+
+    $this->load->view(
+        'site/home/Privacy&Policy',
+        $data
+    );
+}
 }

@@ -108,6 +108,21 @@ $current = $this->uri->segment(2);
                 </svg>
                 <span>Implementation</span>
             </a>
+
+            <!-- Privacy Policy -->
+            <a href="<?= site_url('admin/privacy_policy'); ?>"
+                class="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium transition mt-1 <?= $current === 'privacy_policy' ? 'bg-red-50 text-red-500' : 'text-gray-500 hover:bg-red-50 hover:text-red-500'; ?>">
+                
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7l7-4z
+                        M9 12l2 2 4-4" />
+                </svg>
+
+                <span>Privacy Policy</span>
+            </a>
         </div>
     </nav>
 
