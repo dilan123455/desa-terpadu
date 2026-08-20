@@ -19,13 +19,16 @@
                     <?= html_escape($article->title) ?>
                 </h1>
                 <div class="text-sm text-gray-500">
-                    <span><?= date('F d, Y', strtotime($article->published_at)) ?></span>
+                    <span>
+                        <?= date('F d, Y', strtotime(!empty($article->publish_date) ? $article->publish_date : $article->published_at)) ?>
+                    </span>
                     <span class="mx-2">|</span>
                     <span><?= html_escape($article->author_name) ?></span>
                 </div>
             </div>
 
             <!-- Gambar Utama Artikel -->
+            <?php if (!empty($article->image)): ?>
             <div class="mb-10">
                 <img src="<?= base_url('assets/uploads/'.$article->image) ?>" 
                      alt="<?= html_escape($article->title) ?>" 
@@ -33,6 +36,7 @@
                      loading="lazy"
                      decoding="async">
             </div>
+            <?php endif; ?>
 
             <!-- Isi Artikel -->
             <div class="prose prose-lg max-w-none text-gray-700 leading-loose">
@@ -128,12 +132,14 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <?php foreach($related_artikel as $row): ?>
                     <div class="group cursor-pointer" onclick="window.location.href='<?= base_url('blog/detail/'.$row->slug) ?>'">
+                        <?php if (!empty($row->image)): ?>
                         <div class="overflow-hidden rounded-lg mb-3">
                             <img src="<?= base_url('assets/uploads/'.$row->image) ?>" 
                                  class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                                  loading="lazy"
                                  decoding="async">
                         </div>
+                        <?php endif; ?>
                         <h3 class="font-semibold text-gray-800 group-hover:text-red-500 transition"><?= html_escape($row->title) ?></h3>
                         <p class="text-xs text-gray-500 mt-2 line-clamp-2">
                             <?= word_limiter(strip_tags($row->content), 15) ?>

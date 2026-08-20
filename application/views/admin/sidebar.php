@@ -1,7 +1,5 @@
 <?php
 // Ambil segment URL untuk menentukan menu aktif
-// Contoh: admin/dashboard -> segment 2 = dashboard
-//         admin/articles  -> segment 2 = articles
 $current = $this->uri->segment(2);
 ?>
 <!-- =========================================================
@@ -10,9 +8,8 @@ $current = $this->uri->segment(2);
 <aside class="fixed top-0 left-0 bottom-0 w-64 bg-white border-r border-gray-200 flex-col z-50 hidden lg:flex">
     <!-- Logo -->
     <div class="h-20 px-6 flex items-center border-b border-gray-200">
-        <div class="w-10 h-10 rounded-xl bg-red-500 flex items-center justify-center text-white text-xl font-bold">
-            D
-        </div>
+        <!-- Ganti ikon "D" dengan gambar logo -->
+        <img src="<?= base_url('assets/logo.jpg'); ?>" alt="Desa Terpadu" class="h-12 w-auto">
         <div class="ml-3">
             <h1 class="text-base font-bold text-gray-800 leading-tight">Desa Terpadu</h1>
             <p class="text-xs text-gray-400 mt-1">Admin Panel</p>
@@ -77,7 +74,7 @@ $current = $this->uri->segment(2);
                 <span>About</span>
             </a>
 
-            <!-- Contact (dipindah ke Konten Website) -->
+            <!-- Contact -->
             <a href="<?= site_url('admin/contact'); ?>"
                 class="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium transition mt-1 <?= $current === 'contact' ? 'bg-red-50 text-red-500' : 'text-gray-500 hover:bg-red-50 hover:text-red-500'; ?>">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -112,7 +109,6 @@ $current = $this->uri->segment(2);
             <!-- Privacy Policy -->
             <a href="<?= site_url('admin/privacy_policy'); ?>"
                 class="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium transition mt-1 <?= $current === 'privacy_policy' ? 'bg-red-50 text-red-500' : 'text-gray-500 hover:bg-red-50 hover:text-red-500'; ?>">
-                
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round"
                         stroke-linejoin="round"
@@ -120,7 +116,6 @@ $current = $this->uri->segment(2);
                         d="M12 3l7 4v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V7l7-4z
                         M9 12l2 2 4-4" />
                 </svg>
-
                 <span>Privacy Policy</span>
             </a>
         </div>

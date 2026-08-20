@@ -1,17 +1,15 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="<?= base_url('assets/css/output.css'); ?>">
-
     <title><?= html_escape($title); ?> - Desa Terpadu</title>
 </head>
-
 <body class="bg-gray-100 text-gray-800 min-h-screen flex items-center justify-center p-4">
-
     <div class="w-full max-w-3xl">
 
         <!-- Header -->
@@ -40,8 +38,10 @@
                     <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">Judul Artikel</label>
                     <input type="text" id="title" name="title"
                         placeholder="Masukkan judul artikel"
+                        value="<?= set_value('title'); ?>"
                         required
                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 text-sm">
+                    <?= form_error('title', '<small class="text-red-500">', '</small>'); ?>
                 </div>
 
                 <!-- Kategori -->
@@ -49,8 +49,20 @@
                     <label for="category" class="block text-sm font-semibold text-gray-700 mb-2">Kategori</label>
                     <input type="text" id="category" name="category"
                         placeholder="Contoh: Digitalisasi Desa"
+                        value="<?= set_value('category'); ?>"
                         required
                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 text-sm">
+                    <?= form_error('category', '<small class="text-red-500">', '</small>'); ?>
+                </div>
+
+                <!-- Tanggal Upload -->
+                <div class="mb-5">
+                    <label for="publish_date" class="block text-sm font-semibold text-gray-700 mb-2">Tanggal Upload</label>
+                    <input type="date" id="publish_date" name="publish_date"
+                        value="<?= set_value('publish_date', date('Y-m-d')); ?>"
+                        required
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 text-sm">
+                    <?= form_error('publish_date', '<small class="text-red-500">', '</small>'); ?>
                 </div>
 
                 <!-- Gambar Artikel -->
@@ -74,7 +86,8 @@
                         placeholder="Tulis isi artikel..."
                         rows="10"
                         required
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 text-sm resize-y"></textarea>
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 text-sm resize-y"><?= set_value('content'); ?></textarea>
+                    <?= form_error('content', '<small class="text-red-500">', '</small>'); ?>
                 </div>
 
                 <!-- Status -->
@@ -82,9 +95,10 @@
                     <label for="status" class="block text-sm font-semibold text-gray-700 mb-2">Status</label>
                     <select id="status" name="status" required
                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 text-sm">
-                        <option value="draft" selected>Draft</option>
-                        <option value="published">Published</option>
+                        <option value="draft" <?= set_select('status', 'draft', TRUE); ?>>Draft</option>
+                        <option value="published" <?= set_select('status', 'published'); ?>>Published</option>
                     </select>
+                    <?= form_error('status', '<small class="text-red-500">', '</small>'); ?>
                 </div>
 
                 <!-- Actions -->
@@ -124,5 +138,4 @@
     </script>
 
 </body>
-
 </html>

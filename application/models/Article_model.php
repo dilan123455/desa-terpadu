@@ -9,37 +9,51 @@ class Article_model extends CI_Model
     // METHOD UNTUK ADMIN (BACKEND - CRUD)
     // ==========================================
 
-    // Ambil semua data artikel (untuk admin index)
+    /**
+     * Ambil semua data artikel (untuk admin index)
+     * Sudah termasuk kolom publish_date
+     */
     public function get_all()
     {
         return $this->db->get($this->table)->result();
     }
 
-    // Ambil data berdasarkan ID (untuk admin edit)
+    /**
+     * Ambil data berdasarkan ID (untuk admin edit)
+     */
     public function get_by_id($id)
     {
         return $this->db->where('id', $id)->get($this->table)->row();
     }
 
-    // Simpan data baru (untuk admin store)
+    /**
+     * Simpan data baru (untuk admin store)
+     * Data yang dikirim harus sudah berisi publish_date
+     */
     public function insert($data)
     {
         return $this->db->insert($this->table, $data);
     }
 
-    // Update data (untuk admin update)
+    /**
+     * Update data (untuk admin update)
+     */
     public function update($id, $data)
     {
         return $this->db->where('id', $id)->update($this->table, $data);
     }
 
-    // Hapus data (untuk admin delete)
+    /**
+     * Hapus data (untuk admin delete)
+     */
     public function delete($id)
     {
         return $this->db->where('id', $id)->delete($this->table);
     }
 
-    // Hitung semua data artikel
+    /**
+     * Hitung semua data artikel
+     */
     public function count_all()
     {
         return $this->db->count_all_results($this->table);
@@ -49,14 +63,20 @@ class Article_model extends CI_Model
     // METHOD UNTUK PUBLIK (FRONTEND - VIEWER)
     // ==========================================
 
-    // Ambil artikel yang sudah dipublish (bisa dibatasi jumlahnya)
+    /**
+     * Ambil artikel yang sudah dipublish (bisa dibatasi jumlahnya)
+     * 
+     * Diurutkan berdasarkan publish_date (tanggal upload) terbaru.
+     * Jika kolom publish_date kosong, bisa fallback ke created_at atau id.
+     */
     public function get_published($limit = null)
     {
         $this->db->select('articles.*, users.name AS author_name');
         $this->db->from($this->table);
         $this->db->join('users', 'users.id = articles.author_id', 'left');
         $this->db->where('articles.status', 'published');
-        $this->db->order_by('articles.published_at', 'DESC');
+        $this->db->order_by('articles.publish_date', 'DESC'); // Ganti ke publish_date
+        $this->db->order_by('articles.id', 'DESC');            // Fallback jika tanggal sama
         
         if ($limit) {
             $this->db->limit($limit);
@@ -65,7 +85,9 @@ class Article_model extends CI_Model
         return $this->db->get()->result();
     }
 
-    // Ambil detail artikel berdasarkan slug
+    /**
+     * Ambil detail artikel berdasarkan slug
+     */
     public function get_by_slug($slug)
     {
         return $this->db
@@ -78,7 +100,9 @@ class Article_model extends CI_Model
             ->row();
     }
 
-    // Ambil Related Posts berdasarkan Kategori yang sama
+    /**
+     * Ambil Related Posts berdasarkan Kategori yang sama
+     */
     public function get_related($category, $current_id, $limit = 2)
     {
         $this->db->select('articles.*, users.name AS author_name');
@@ -97,7 +121,9 @@ class Article_model extends CI_Model
     // METHOD UNTUK PREV / NEXT ARTIKEL
     // ==========================================
 
-    // Artikel sebelumnya (lebih kecil dari id saat ini)
+    /**
+     * Artikel sebelumnya (lebih kecil dari id saat ini)
+     */
     public function get_prev_article($current_id)
     {
         return $this->db
@@ -112,7 +138,9 @@ class Article_model extends CI_Model
             ->row();
     }
 
-    // Artikel berikutnya (lebih besar dari id saat ini)
+    /**
+     * Artikel berikutnya (lebih besar dari id saat ini)
+     */
     public function get_next_article($current_id)
     {
         return $this->db

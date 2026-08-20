@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="<?= base_url('assets/css/output.css'); ?>">
-
     <title><?= html_escape($title); ?> - Desa Terpadu</title>
 </head>
-
 <body class="bg-gray-100 text-gray-800 min-h-screen">
-
     <div class="admin-wrapper">
 
         <!-- SIDEBAR -->
@@ -26,7 +21,6 @@
                     <h1 class="text-xl font-bold text-gray-800"><?= html_escape($title); ?></h1>
                     <p class="text-sm text-gray-400 mt-1">Kelola artikel dan berita Desa Terpadu</p>
                 </div>
-
                 <div class="flex items-center gap-3">
                     <div class="text-right hidden sm:block">
                         <p class="text-sm font-semibold text-gray-800"><?= html_escape($name); ?></p>
@@ -47,8 +41,6 @@
                         <h2 class="text-2xl font-bold text-gray-800">Kelola Artikel</h2>
                         <p class="text-sm text-gray-500 mt-1">Kelola artikel dan berita yang ditampilkan pada website Desa Terpadu.</p>
                     </div>
-
-                    <!-- Tambah Artikel -->
                     <a href="<?= site_url('admin/articles/create'); ?>" class="inline-flex items-center gap-2 px-4 py-2.5 bg-red-500 text-white rounded-lg text-sm font-semibold shadow-md hover:bg-red-600 transition whitespace-nowrap">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -85,7 +77,6 @@
                         <!-- Empty State -->
                         <div class="py-16 px-5 text-center">
                             <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-red-50 text-red-500 flex items-center justify-center">
-                                <!-- Ikon Newspaper / Document -->
                                 <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                                 </svg>
@@ -105,7 +96,6 @@
                         <!-- Card Header -->
                         <div class="flex items-center gap-3 px-6 py-5 border-b border-gray-200">
                             <div class="w-10 h-10 rounded-lg bg-red-50 text-red-500 flex items-center justify-center">
-                                <!-- Ikon Newspaper / Document -->
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
                                 </svg>
@@ -126,7 +116,7 @@
                                         <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap min-w-[250px]">Judul</th>
                                         <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap">Kategori</th>
                                         <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap">Status</th>
-                                        <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap">Tanggal</th>
+                                        <th class="px-4 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap">Tanggal Upload</th>
                                         <th class="px-4 py-3 text-center text-xs font-bold text-gray-500 uppercase tracking-wider border-b border-gray-200 whitespace-nowrap min-w-[200px]">Aksi</th>
                                     </tr>
                                 </thead>
@@ -177,12 +167,16 @@
                                                 <?php endif; ?>
                                             </td>
 
-                                            <!-- Tanggal -->
+                                            <!-- Tanggal Upload -->
                                             <td class="px-4 py-3.5 text-xs text-gray-500 align-middle whitespace-nowrap">
-                                                <?= date('d M Y', strtotime($article->created_at)); ?>
+                                                <?php
+                                                    // Tampilkan tanggal upload, jika kosong fallback ke created_at
+                                                    $display_date = !empty($article->publish_date) ? $article->publish_date : $article->created_at;
+                                                    echo date('d M Y', strtotime($display_date));
+                                                ?>
                                             </td>
 
-                                            <!-- Aksi (rapi & sejajar) -->
+                                            <!-- Aksi -->
                                             <td class="px-4 py-3.5 align-middle text-center whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-1.5">
                                                     <a href="<?= site_url('admin/articles/detail/' . $article->id); ?>"
@@ -219,7 +213,5 @@
             </main>
         </div>
     </div>
-
 </body>
-
 </html>

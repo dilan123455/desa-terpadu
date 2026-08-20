@@ -1,17 +1,15 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+?>
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="stylesheet" href="<?= base_url('assets/css/output.css'); ?>">
-
     <title><?= html_escape($title); ?> - Desa Terpadu</title>
 </head>
-
 <body class="bg-gray-100 text-gray-800 min-h-screen flex items-center justify-center p-4">
-
     <div class="w-full max-w-3xl">
 
         <!-- Header -->
@@ -39,18 +37,30 @@
                 <div class="mb-5">
                     <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">Judul Artikel</label>
                     <input type="text" id="title" name="title"
-                        value="<?= html_escape($article->title); ?>"
+                        value="<?= set_value('title', $article->title); ?>"
                         required
                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 text-sm">
+                    <?= form_error('title', '<small class="text-red-500">', '</small>'); ?>
                 </div>
 
                 <!-- Kategori -->
                 <div class="mb-5">
                     <label for="category" class="block text-sm font-semibold text-gray-700 mb-2">Kategori</label>
                     <input type="text" id="category" name="category"
-                        value="<?= html_escape($article->category); ?>"
+                        value="<?= set_value('category', $article->category); ?>"
                         required
                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 text-sm">
+                    <?= form_error('category', '<small class="text-red-500">', '</small>'); ?>
+                </div>
+
+                <!-- Tanggal Upload -->
+                <div class="mb-5">
+                    <label for="publish_date" class="block text-sm font-semibold text-gray-700 mb-2">Tanggal Upload</label>
+                    <input type="date" id="publish_date" name="publish_date"
+                        value="<?= set_value('publish_date', $article->publish_date); ?>"
+                        required
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 text-sm">
+                    <?= form_error('publish_date', '<small class="text-red-500">', '</small>'); ?>
                 </div>
 
                 <!-- Gambar Artikel -->
@@ -88,7 +98,8 @@
                     <textarea id="content" name="content"
                         rows="10"
                         required
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 text-sm resize-y"><?= html_escape($article->content); ?></textarea>
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 text-sm resize-y"><?= set_value('content', $article->content); ?></textarea>
+                    <?= form_error('content', '<small class="text-red-500">', '</small>'); ?>
                 </div>
 
                 <!-- Status -->
@@ -96,9 +107,10 @@
                     <label for="status" class="block text-sm font-semibold text-gray-700 mb-2">Status</label>
                     <select id="status" name="status" required
                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 text-sm">
-                        <option value="draft" <?= $article->status === 'draft' ? 'selected' : ''; ?>>Draft</option>
-                        <option value="published" <?= $article->status === 'published' ? 'selected' : ''; ?>>Published</option>
+                        <option value="draft" <?= set_select('status', 'draft', $article->status === 'draft'); ?>>Draft</option>
+                        <option value="published" <?= set_select('status', 'published', $article->status === 'published'); ?>>Published</option>
                     </select>
+                    <?= form_error('status', '<small class="text-red-500">', '</small>'); ?>
                 </div>
 
                 <!-- Actions -->
@@ -131,8 +143,10 @@
             const imagePreview = document.getElementById('imagePreview');
             const noImageText = document.getElementById('noImageText');
 
-            imagePreview.src = URL.createObjectURL(file);
-            imagePreview.classList.remove('hidden');
+            if (imagePreview) {
+                imagePreview.src = URL.createObjectURL(file);
+                imagePreview.classList.remove('hidden');
+            }
 
             if (noImageText) {
                 noImageText.classList.add('hidden');
@@ -141,5 +155,4 @@
     </script>
 
 </body>
-
 </html>

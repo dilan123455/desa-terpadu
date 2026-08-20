@@ -14,10 +14,23 @@
     <div class="w-full max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       
       <?php 
-      // Ambil 3 artikel teratas dari data yang dikirim controller
-      if (isset($articles) && count($articles) > 0): 
+      // ===================================================
+      // SORTING ARTIKEL BERDASARKAN TANGGAL TERBARU
+      // ===================================================
+      if (isset($articles) && is_array($articles) && count($articles) > 0):
+          // Urutkan artikel berdasarkan publish_date / published_at terbaru (descending)
+          usort($articles, function($a, $b) {
+              $date_a = !empty($a->publish_date) ? $a->publish_date : $a->published_at;
+              $date_b = !empty($b->publish_date) ? $b->publish_date : $b->published_at;
+              return strtotime($date_b) - strtotime($date_a);
+          });
+
+          // Ambil 3 artikel teratas setelah diurutkan
           $highlight_posts = array_slice($articles, 0, 3);
           foreach($highlight_posts as $post): 
+              
+              // Tentukan tanggal yang akan ditampilkan
+              $display_date = !empty($post->publish_date) ? $post->publish_date : $post->published_at;
       ?>
       
       <article class="bg-white rounded-2xl shadow-sm overflow-hidden flex flex-col h-full hover:shadow-md transition-shadow duration-300">
@@ -26,7 +39,7 @@
           <!-- LOGIKA GAMBAR: Jika ada gambar, tampilkan. Jika kosong, tampilkan placeholder abu-abu -->
           <?php if (!empty($post->image)): ?>
             <img src="<?= base_url('assets/uploads/'.$post->image) ?>" 
-                 alt="<?= $post->title ?>" 
+                 alt="<?= html_escape($post->title) ?>" 
                  class="w-full h-52 object-cover" 
                  loading="lazy" />
           <?php else: ?>
@@ -37,12 +50,12 @@
 
           <!-- Badge Kategori -->
           <span class="absolute top-4 right-4 bg-[#4E8C7B] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wide">
-            <?= $post->category ?>
+            <?= html_escape($post->category) ?>
           </span>
         </div>
         <div class="p-6 md:p-8 flex flex-col flex-grow">
           <h3 class="text-xl md:text-2xl font-bold text-[#2E2D2D] mb-6 leading-tight">
-            <?= $post->title ?>
+            <?= html_escape($post->title) ?>
           </h3>
           
           <!-- Link Baca Selengkapnya -->
@@ -52,9 +65,9 @@
           
           <hr class="border-gray-200" />
           
-          <!-- Tanggal Artikel -->
-          <time datetime="<?= $post->published_at ?>" class="text-xs text-gray-400 mt-3">
-            <?= date('d F Y', strtotime($post->published_at)) ?>
+          <!-- Tanggal Artikel (menggunakan publish_date / published_at) -->
+          <time datetime="<?= $display_date ?>" class="text-xs text-gray-400 mt-3">
+            <?= date('d F Y', strtotime($display_date)) ?>
           </time>
         </div>
       </article>
