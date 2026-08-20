@@ -30,6 +30,38 @@ $current = $this->uri->segment(2);
             <span>Dashboard</span>
         </a>
 
+        <a
+    href="<?= site_url('admin/home'); ?>"
+    class="flex items-center gap-3 px-4 py-2.5 rounded-lg
+           text-sm font-medium
+           text-gray-600 hover:bg-red-50 hover:text-red-500
+           transition"
+>
+
+    <svg
+        class="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+    >
+
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M3 10.5L12 3l9 7.5
+               M5 9v11h14V9
+               M9 20v-6h6v6"
+        />
+
+    </svg>
+
+    <span>
+        Home
+    </span>
+
+</a>
+
         <!-- Artikel -->
         <a href="<?= site_url('admin/articles'); ?>"
             class="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium transition mt-1 <?= $current === 'articles' ? 'bg-red-50 text-red-500' : 'text-gray-500 hover:bg-red-50 hover:text-red-500'; ?>">

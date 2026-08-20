@@ -14,7 +14,16 @@ class Home extends CI_Controller
         $this->load->model('Implementation_model');
         $this->load->model('Features_model');
         $this->load->model('Contact_model');
+       
 
+        // HOME ADMIN
+         $this->load->model('Admin_home_model');
+        $data['hero'] =
+    $this->Admin_home_model->get_hero();
+
+$data['challenges'] =
+    $this->Admin_home_model->get_challenges();
+      
         // ==========================================
         // TESTIMONI
         // ==========================================
@@ -91,6 +100,7 @@ class Home extends CI_Controller
             'site/home',
             $data
         );
+  
     }
   // ==========================================
 // ==========================================

@@ -54,7 +54,15 @@
 <body class="m-0 bg-white">
     <?php $this->load->view('site/layout/nav'); ?>
 
-    <?php $this->load->view('site/home/hero'); ?>
+    <?php
+    $this->load->view(
+        'site/home/hero',
+        [
+            'hero'       => $hero,
+            'challenges' => $challenges
+        ]
+    );
+    ?>
 
     <?php $this->load->view('site/home/about'); ?>
 

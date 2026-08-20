@@ -152,3 +152,26 @@ $route['admin/features/store-item'] = 'admin/features/store_item';
 
 $route['admin/features/delete-item/(:num)'] = 'admin/features/delete_item/$1';
 $route['admin/features/delete-platform/(:num)'] = 'admin/features/delete_platform/$1';
+
+// admin home
+$route['admin/home'] = 'admin/Home_admin/index';
+$route['admin/home/edit-hero']
+    = 'admin/Home_admin/edit_hero';
+
+$route['admin/home/update-hero']
+    = 'admin/Home_admin/update_hero';
+
+$route['admin/home/edit-challenge/(:num)']
+    = 'admin/Home_admin/edit_challenge/$1';
+
+$route['admin/home/update-challenge/(:num)']
+    = 'admin/Home_admin/update_challenge/$1';
+
+$route['admin/home/create-challenge']
+    = 'admin/Home_admin/create_challenge';
+
+$route['admin/home/store-challenge']
+    = 'admin/Home_admin/store_challenge';
+
+$route['admin/home/delete-challenge/(:num)']
+    = 'admin/Home_admin/delete_challenge/$1';
