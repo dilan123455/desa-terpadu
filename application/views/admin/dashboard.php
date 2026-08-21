@@ -315,6 +315,22 @@
     </p>
 
 </a>
+
+<!-- Profil Admin --> 
+ <a href="<?= site_url('admin/profile'); ?>" class="block bg-white border border-gray-200 rounded-2xl p-5 hover:shadow-md hover:border-red-200 transition" > 
+    <div class="flex items-center justify-between"> <div class="w-12 h-12 rounded-xl bg-red-100 text-red-500 flex items-center justify-center" > 
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" >
+             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.75 6.75a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a7.5 7.5 0 0115 0" />
+             </svg> 
+            </div> <span class="text-2xl text-gray-300"> 
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" > 
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /> 
+                </svg>
+                 </span> 
+                </div>
+                  <h4 class="mt-4 text-lg font-bold text-gray-800"> Profil Admin </h4> 
+                 <p class="mt-1 text-sm text-gray-500"> Kelola informasi dan password akun administrator. </p> 
+</a>
                 </section>
 
                 <!-- Footer -->

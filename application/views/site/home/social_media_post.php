@@ -16,28 +16,33 @@
             <!-- ITEM 1 -->
             <div class="bg-gray-100 rounded-lg overflow-hidden shadow-sm border border-gray-200 relative">
                 <a href="https://www.instagram.com/p/DOXpxFIlEK1/" target="_blank" rel="noopener noreferrer" class="block w-full h-full">
-                    <img src="assets/uploads/social_media/sm_1.jpg" alt="Instagram Post 1" class="w-full h-full object-cover" loading="lazy" />
+                 <img 
+    src="<?= base_url('assets/uploads/social_media/sm_1.jpg'); ?>" 
+    alt="Instagram Post 1" 
+    class="w-full h-full object-cover" 
+    loading="lazy"
+/>
                 </a>
             </div>
 
             <!-- ITEM 2 -->
             <div class="bg-gray-100 rounded-lg overflow-hidden shadow-sm border border-gray-200 relative">
                 <a href="https://www.instagram.com/p/DOX1nX_ADOt/" target="_blank" rel="noopener noreferrer" class="block w-full h-full">
-                    <img src="assets/uploads/social_media/sm_2.jpg" alt="Instagram Post 2" class="w-full h-full object-cover" loading="lazy" />
+                    <img src="<?= base_url('assets/uploads/social_media/sm_2.jpg'); ?>" alt="Instagram Post 2" class="w-full h-full object-cover" loading="lazy" />
                 </a>
             </div>
 
             <!-- ITEM 3 -->
             <div class="bg-gray-100 rounded-lg overflow-hidden shadow-sm border border-gray-200 relative">
                 <a href="https://www.instagram.com/p/DOcceoogeBO/" target="_blank" rel="noopener noreferrer" class="block w-full h-full">
-                    <img src="assets/uploads/social_media/sm_3.jpg" alt="Instagram Post 3" class="w-full h-full object-cover" loading="lazy" />
+                    <img src="<?= base_url('assets/uploads/social_media/sm_3.jpg'); ?>" alt="Instagram Post 3" class="w-full h-full object-cover" loading="lazy" />
                 </a>
             </div>
 
             <!-- ITEM 4 -->
             <div class="bg-gray-100 rounded-lg overflow-hidden shadow-sm border border-gray-200 relative">
                 <a href="https://www.instagram.com/p/DOXp5sHFRcU/" target="_blank" rel="noopener noreferrer" class="block w-full h-full">
-                    <img src="assets/uploads/social_media/sm_4.jpg" alt="Instagram Post 4" class="w-full h-full object-cover" loading="lazy" />
+                    <img src="<?= base_url('assets/uploads/social_media/sm_4.jpg'); ?>" alt="Instagram Post 4" class="w-full h-full object-cover" loading="lazy" />
                 </a>
             </div>
 

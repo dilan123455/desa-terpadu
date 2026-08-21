@@ -2,6 +2,9 @@
 $CI =& get_instance();
 $currentClass  = strtolower($CI->router->fetch_class());
 $currentMethod = strtolower($CI->router->fetch_method());
+// Ambil logo aktif dari database/folder upload
+$CI->load->model('Profile_model');
+$site_logo = $CI->Profile_model->get_logo_url();
 ?>
 
 <!-- ==================== NAVBAR HTML ==================== -->
@@ -9,9 +12,10 @@ $currentMethod = strtolower($CI->router->fetch_method());
     <div class="mx-auto max-w-7xl px-4 sm:px-6">
         <div class="flex h-16 items-center justify-between">
             <!-- Logo -->
-            <a href="<?= base_url('home') ?>" class="flex shrink-0 items-center">
-                <img src="<?= base_url('assets/logo2.png'); ?>" alt="Desa Terpadu" class="h-10 w-auto">
-            </a>
+          <a href="<?= base_url('home') ?>" class="flex shrink-0 items-center gap-2">
+    <img src="<?= !empty($site_logo) ? $site_logo : base_url('assets/logo2.png'); ?>" alt="Desa Terpadu" class="h-10 w-10 object-contain rounded-full">
+    <span class="text-white font-bold text-lg">Desa Terpadu</span>
+</a>
 
             <!-- Menu Desktop -->
             <nav class="hidden sm:block">

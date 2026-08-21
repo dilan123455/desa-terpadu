@@ -1,6 +1,11 @@
 <?php
 // Ambil segment URL untuk menentukan menu aktif
 $current = $this->uri->segment(2);
+
+// Ambil logo secara mandiri di sini, tidak tergantung controller mana pun
+$CI =& get_instance();
+$CI->load->model('Profile_model');
+$sidebar_logo = $CI->Profile_model->get_logo_url();
 ?>
 
 <!-- =========================================================
@@ -17,13 +22,17 @@ $current = $this->uri->segment(2);
     </button>
 
     <!-- Logo -->
-    <div class="h-20 px-6 flex items-center border-b border-gray-200">
-        <img src="<?= base_url('assets/logo.jpg'); ?>" alt="Desa Terpadu" class="h-12 w-auto">
-        <div class="ml-3">
-            <h1 class="text-base font-bold text-gray-800 leading-tight">Desa Terpadu</h1>
-            <p class="text-xs text-gray-400 mt-1">Admin Panel</p>
-        </div>
+   <div class="flex items-center gap-3 p-4">
+    <img 
+        src="<?= !empty($sidebar_logo) ? $sidebar_logo : base_url('assets/images/default-logo.png'); ?>" 
+        alt="Logo Desa Terpadu" 
+        class="w-10 h-10 object-contain"
+    >
+    <div>
+        <h2 class="font-bold text-sm text-gray-800">Desa Terpadu</h2>
+        <p class="text-xs text-gray-400">Admin Panel</p>
     </div>
+</div>
 
     <!-- Navigation -->
     <nav class="flex-1 px-4 py-6 overflow-y-auto">
@@ -135,6 +144,32 @@ $current = $this->uri->segment(2);
                 </svg>
                 <span>Privacy Policy</span>
             </a>
+
+<a
+    href="<?= site_url('admin/profile'); ?>"
+    class="flex items-center gap-3 px-4 py-3 rounded-xl
+    text-gray-600 hover:bg-red-50 hover:text-red-500
+    transition"
+>
+
+    <svg
+        class="w-5 h-5"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+    >
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.5"
+            d="M15.75 6.75a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 20.25a7.5 7.5 0 0115 0"
+        />
+    </svg>
+
+    <span>Profil</span>
+
+</a>
+ 
         </div>
     </nav>
 

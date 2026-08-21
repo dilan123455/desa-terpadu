@@ -188,3 +188,16 @@ $route['admin/privacy_policy/store'] = 'admin/Privacy_policy/store';
 $route['admin/privacy_policy/edit/(:num)'] = 'admin/Privacy_policy/edit/$1';
 $route['admin/privacy_policy/update/(:num)'] = 'admin/Privacy_policy/update/$1';
 $route['admin/privacy_policy/delete/(:num)'] = 'admin/Privacy_policy/delete/$1';
+
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN - PROFILE
+|--------------------------------------------------------------------------
+*/
+
+$route['admin/profile']
+    = 'admin/Profile/index';
+
+$route['admin/profile/update-logo']
+    = 'admin/Profile/update_logo';
