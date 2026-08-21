@@ -1,5 +1,5 @@
 <!-- SOCIAL MEDIA POSTS SECTION -->
-<section id="social-media-posts-section" class="w-full bg-white pt-12 pb-20 sm:pt-16 sm:pb-28">
+<section id="social-media-posts-section" class="w-full bg-white pt-6 pb-24 sm:pt-8 sm:pb-32">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <!-- Header -->
@@ -10,7 +10,7 @@
             </p>
         </div>
 
-        <!-- Grid Layout (tanpa scroll, tanpa duplikat) -->
+        <!-- Grid Layout -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             
             <!-- ITEM 1 -->
@@ -51,13 +51,12 @@
     </div>
 </section>
 
-<!-- CSS tambahan (opsional, jika ingin tinggi gambar konsisten) -->
+<!-- CSS khusus untuk social media section saja -->
 <style>
-    /* Agar semua gambar memiliki tinggi yang sama pada semua layar */
-    .grid > div {
-        aspect-ratio: 4 / 5; /* rasio yang sama dengan w-64/h-80 */
+    #social-media-posts-section .grid > div {
+        aspect-ratio: 4 / 5; /* rasio tinggi/lebar untuk card */
     }
-    .grid img {
+    #social-media-posts-section .grid img {
         width: 100%;
         height: 100%;
         object-fit: cover;

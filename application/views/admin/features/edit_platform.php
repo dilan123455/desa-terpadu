@@ -33,7 +33,7 @@
                 </div>
             <?php endif; ?>
 
-            <form action="<?= site_url('admin/features/update-platform/' . $platform->id); ?>" method="post">
+            <form action="<?= site_url('admin/features/update-platform/' . $platform->id); ?>" method="post" enctype="multipart/form-data">
 
                 <!-- Nama Platform -->
                 <div class="mb-5">
@@ -53,12 +53,30 @@
                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 text-sm resize-y"><?= html_escape($platform->description); ?></textarea>
                 </div>
 
-                <!-- Gambar / URL Gambar -->
+                <!-- Gambar Platform (Upload File) -->
                 <div class="mb-5">
-                    <label for="image" class="block text-sm font-semibold text-gray-700 mb-2">Gambar / URL Gambar</label>
-                    <input type="text" id="image" name="image"
-                        value="<?= html_escape($platform->image); ?>"
+                    <label for="image" class="block text-sm font-semibold text-gray-700 mb-2">Gambar Platform</label>
+
+                    <?php if ($platform->image): ?>
+                        <div class="mb-3">
+                            <?php if (preg_match('/^https?:\/\//', $platform->image)): ?>
+                                <!-- Jika image berupa URL lengkap -->
+                                <img src="<?= html_escape($platform->image); ?>"
+                                     alt="Platform Image"
+                                     class="w-32 h-32 object-cover rounded-lg border border-gray-200">
+                            <?php else: ?>
+                                <!-- Jika image berupa nama file di folder uploads/platform -->
+                                <img src="<?= base_url('uploads/platform/' . $platform->image); ?>"
+                                     alt="Platform Image"
+                                     class="w-32 h-32 object-cover rounded-lg border border-gray-200">
+                            <?php endif; ?>
+                            <p class="text-xs text-gray-400 mt-1">Gambar saat ini</p>
+                        </div>
+                    <?php endif; ?>
+
+                    <input type="file" id="image" name="image" accept="image/*"
                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-100 text-sm">
+                    <p class="text-xs text-gray-400 mt-2">Kosongkan jika tidak ingin mengganti gambar.</p>
                 </div>
 
                 <!-- Urutan -->
@@ -90,7 +108,6 @@
                 </div>
 
             </form>
-
         </div>
 
     </div>

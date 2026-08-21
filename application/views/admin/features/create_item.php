@@ -239,7 +239,7 @@
                                         type="text"
                                         id="icon"
                                         name="icon"
-                                        placeholder="Contoh: users"
+                                        placeholder="Contoh: https://contoh.com/icon.png"
                                         class="w-full px-4 py-2.5
                                                border border-gray-300
                                                rounded-lg
@@ -271,7 +271,7 @@
                                         type="number"
                                         id="sort_order"
                                         name="sort_order"
-                                        value="0"
+                                        value=""
                                         min="0"
                                         class="w-full px-4 py-2.5
                                                border border-gray-300

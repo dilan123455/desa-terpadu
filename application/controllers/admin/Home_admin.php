@@ -63,26 +63,66 @@ class Home_admin extends CI_Controller
     |--------------------------------------------------------------------------
     | UPDATE HERO
     |--------------------------------------------------------------------------
+    | - Jika ada upload file baru, file lama akan dihapus otomatis
+    | - Jika tidak ada upload, gambar tetap menggunakan yang lama
+    |--------------------------------------------------------------------------
     */
 
     public function update_hero()
     {
         $id = $this->input->post('id');
 
+        // Ambil data hero lama
+        $old_hero = $this->Admin_home_model->get_hero();
+        if (!$old_hero) {
+            show_404();
+        }
+
+        // Load library upload
+        $this->load->library('upload');
+
+        // Default gunakan gambar lama
+        $image = $old_hero->image;
+
+        // Cek apakah ada file yang diupload
+        if (!empty($_FILES['image']['name'])) {
+            $config['upload_path']   = FCPATH . 'assets/uploads/home/';
+            $config['allowed_types'] = 'jpg|jpeg|png|webp';
+            $config['max_size']      = 2048; // 2MB
+            $config['file_name']     = 'hero_' . time();
+            $config['overwrite']     = false;
+
+            $this->upload->initialize($config);
+
+            if ($this->upload->do_upload('image')) {
+                $upload_data = $this->upload->data();
+                $new_image   = $upload_data['file_name'];
+
+                // Hapus gambar lama (apa pun) agar tidak menumpuk
+                if (!empty($old_hero->image) && $old_hero->image !== $new_image) {
+                    $old_file_path = FCPATH . 'assets/uploads/home/' . $old_hero->image;
+                    if (file_exists($old_file_path)) {
+                        unlink($old_file_path);
+                    }
+                }
+
+                $image = $new_image;
+            } else {
+                $this->session->set_flashdata('error', $this->upload->display_errors());
+                redirect('admin/home/edit-hero');
+            }
+        }
+
         $data = [
             'tagline'     => $this->input->post('tagline', TRUE),
             'title'       => $this->input->post('title', TRUE),
             'description' => $this->input->post('description', TRUE),
-            'image'       => $this->input->post('image', TRUE)
+            'image'       => $image
         ];
 
         $this->Admin_home_model->update_hero($id, $data);
 
-        $this->session->set_flashdata(
-            'success',
-            'Konten Hero berhasil diperbarui.'
-        );
-
+        $this->session->set_flashdata('success', 'Konten Hero berhasil diperbarui.');
         redirect('admin/home');
     }
 
@@ -119,12 +159,18 @@ class Home_admin extends CI_Controller
     public function update_challenge($id)
     {
         $title      = $this->input->post('title', TRUE);
+        $icon       = $this->input->post('icon', TRUE);
         $sort_order = $this->input->post('sort_order', TRUE);
 
         // Validasi title
         if (empty($title)) {
             $this->session->set_flashdata('error', 'Tantangan Desa wajib diisi.');
             redirect('admin/home/edit-challenge/' . $id);
+        }
+
+        // Icon opsional: jika kosong, set null
+        if (empty($icon)) {
+            $icon = null;
         }
 
         // Validasi sort_order
@@ -135,6 +181,7 @@ class Home_admin extends CI_Controller
 
         $data = [
             'title'      => $title,
+            'icon'       => $icon,
             'sort_order' => (int) $sort_order
         ];
 
@@ -158,6 +205,9 @@ class Home_admin extends CI_Controller
 
     public function create_challenge()
     {
+        // Load helper form agar fungsi set_value() tersedia
+        $this->load->helper('form');
+
         $data['title']         = 'Tambah Tantangan Desa';
         $data['name']          = $this->session->userdata('name');
         $data['page_title']    = 'Tambah Tantangan Desa';
@@ -176,10 +226,17 @@ class Home_admin extends CI_Controller
     public function store_challenge()
     {
         $title = $this->input->post('title', TRUE);
+        $icon  = $this->input->post('icon', TRUE);
 
+        // Validasi title
         if (empty($title)) {
             $this->session->set_flashdata('error', 'Tantangan Desa wajib diisi.');
             redirect('admin/home/create-challenge');
+        }
+
+        // Icon opsional: jika kosong, set null
+        if (empty($icon)) {
+            $icon = null;
         }
 
         // Urutan otomatis: nilai maksimum + 1
@@ -187,6 +244,7 @@ class Home_admin extends CI_Controller
 
         $data = [
             'title'      => $title,
+            'icon'       => $icon,
             'sort_order' => $next_order
         ];
 

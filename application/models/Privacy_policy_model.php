@@ -59,6 +59,76 @@ class Privacy_policy_model extends CI_Model
     }
 
     /**
+     * Ambil satu privacy policy berdasarkan sort_order,
+     * dengan pengecualian ID tertentu.
+     *
+     * @param int      $sort_order
+     * @param int|null $except_id
+     * @return object|null
+     */
+    public function get_by_sort_order($sort_order, $except_id = null)
+    {
+        $this->db->where('sort_order', $sort_order);
+
+        if ($except_id !== null) {
+            $this->db->where('id !=', $except_id);
+        }
+
+        return $this->db->get($this->table)->row();
+    }
+
+    /**
+     * Cek apakah sort_order sudah dipakai oleh privacy policy lain.
+     *
+     * @param int      $sort_order
+     * @param int|null $except_id
+     * @return bool
+     */
+    public function sort_order_exists($sort_order, $except_id = null)
+    {
+        $this->db->where('sort_order', $sort_order);
+
+        if ($except_id !== null) {
+            $this->db->where('id !=', $except_id);
+        }
+
+        return $this->db->count_all_results($this->table) > 0;
+    }
+
+    /**
+     * Ambil nomor urut berikutnya.
+     *
+     * @return int
+     */
+    public function get_next_sort_order()
+    {
+        $this->db->select_max('sort_order');
+        $query = $this->db->get($this->table);
+        $row   = $query->row();
+
+        $max = ($row && $row->sort_order) ? (int) $row->sort_order : 0;
+
+        return $max + 1;
+    }
+
+    /**
+     * Hitung semua data Privacy Policy.
+     *
+     * @return int
+     */
+    public function count_all()
+    {
+        return $this->db->count_all_results($this->table);
+    }
+
+    /*
+     * =================================================================
+     * METHOD DI BAWAH INI TIDAK DIPAKAI LAGI DENGAN LOGIKA BARU.
+     * BISA DIHAPUS ATAU DIBIARKAN (TIDAK BERPENGARUH).
+     * =================================================================
+     */
+
+    /**
      * Geser urutan ke bawah saat ada data baru masuk
      * (menaikkan sort_order data lain yang >= $sort_order)
      */

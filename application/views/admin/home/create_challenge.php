@@ -184,6 +184,44 @@
                 </div>
 
 
+                <!-- ICON LINK -->
+
+                <div class="mb-6">
+
+                    <label
+                        class="block
+                               text-sm
+                               font-semibold
+                               text-gray-700
+                               mb-2"
+                    >
+                        Link Icon
+                    </label>
+
+                    <input
+                        type="text"
+                        name="icon"
+                        value="<?= set_value('icon'); ?>"
+                        class="w-full
+                               border border-gray-300
+                               rounded-lg
+                               px-4 py-3
+                               text-sm
+                               focus:outline-none
+                               focus:ring-2
+                               focus:ring-red-200
+                               focus:border-red-400"
+                        placeholder="https://example.com/icon.png atau fa-solid fa-check"
+                    >
+
+                    <p class="text-xs text-gray-400 mt-2">
+                        Opsional. Masukkan URL icon atau kelas icon (misal: <code>fa-solid fa-check</code>).
+                        Jika dikosongkan, icon default akan digunakan.
+                    </p>
+
+                </div>
+
+
                 <!-- BUTTON -->
 
                 <div

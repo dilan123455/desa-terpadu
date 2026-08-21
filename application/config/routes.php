@@ -175,6 +175,8 @@ $route['admin/home/store-challenge']
 
 $route['admin/home/delete-challenge/(:num)']
     = 'admin/Home_admin/delete_challenge/$1';
+    
+$route['admin/home/delete_hero_image/(:any)'] = 'admin/Home_admin/delete_hero_image/$1';
 
 /*
 |--------------------------------------------------------------------------

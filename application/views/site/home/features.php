@@ -11,6 +11,9 @@
         font-weight: 700;
         transition: color 0.3s ease, transform 0.3s ease;
         cursor: pointer;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .tab-button::after {
@@ -70,7 +73,6 @@
         transform: rotate(45deg);
     }
 
-    /* Animasi reveal untuk item fitur */
     .reveal {
         opacity: 0;
         transform: translateY(20px);
@@ -114,12 +116,12 @@
         </div>
 
         <!-- TOMBOL PLATFORM -->
-        <div class="mt-14 md:mt-16 flex flex-col md:flex-row justify-center items-center gap-4 md:gap-8 w-full">
+        <div class="mt-14 md:mt-16 flex flex-col md:flex-row md:flex-nowrap justify-center items-stretch gap-4 md:gap-8 w-full">
             <?php if (!empty($platforms)): ?>
                 <?php foreach ($platforms as $index => $platform): ?>
                     <button
                         type="button"
-                        class="tab-button <?= $index === 0 ? 'active' : ''; ?> w-full md:w-auto text-left md:text-center flex justify-between md:justify-center items-center border-b md:border-b-0 border-white/10 pb-4 md:pb-0"
+                        class="tab-button <?= $index === 0 ? 'active' : ''; ?> w-full md:w-auto md:flex-initial md:min-w-0 text-left md:text-center flex justify-between md:justify-center items-center border-b md:border-b-0 border-white/10 pb-4 md:pb-0"
                         data-tab="platform-<?= $platform->id; ?>"
                     >
                         <?= html_escape($platform->name); ?>
@@ -133,7 +135,6 @@
         <?php if (!empty($platforms)): ?>
             <?php foreach ($platforms as $index => $platform): ?>
                 <?php
-                    // Gunakan $items dari controller
                     $platform_items = [];
                     if (!empty($items)) {
                         foreach ($items as $item) {
@@ -143,7 +144,6 @@
                         }
                     }
 
-                    // Deteksi apakah platform ini adalah Mobile App
                     $is_mobile_platform = (
                         stripos($platform->name, 'mobile') !== false ||
                         stripos($platform->name, 'android') !== false ||
@@ -153,18 +153,24 @@
 
                 <div
                     id="platform-<?= $platform->id; ?>"
-                    class="tab-content w-full mt-10 md:mt-14 <?= $index !== 0 ? 'hidden' : ''; ?>"
+                    class="tab-content w-full mt-10 md:mt-14 scroll-mt-20 <?= $index !== 0 ? 'hidden' : ''; ?>"
                 >
                     <!-- DESKRIPSI PLATFORM -->
                     <p class="max-w-6xl mx-auto text-center text-white text-lg md:text-xl lg:text-2xl leading-relaxed">
                         <?= nl2br(html_escape($platform->description)); ?>
                     </p>
 
-                    <!-- IMAGE PLATFORM (dengan lazy loading dan ukuran kondisional) -->
+                    <!-- IMAGE PLATFORM -->
                     <?php if (!empty($platform->image)): ?>
+                        <?php
+                            $image_src = $platform->image;
+                            if (!preg_match('/^https?:\/\//i', $image_src)) {
+                                $image_src = base_url('uploads/platform/' . $image_src);
+                            }
+                        ?>
                         <div class="mt-10 md:mt-14 flex justify-center">
                             <img
-                                src="<?= html_escape($platform->image); ?>"
+                                src="<?= html_escape($image_src); ?>"
                                 alt="<?= html_escape($platform->name); ?>"
                                 class="feature-image max-w-full rounded-2xl
                                     <?= $is_mobile_platform 
@@ -183,16 +189,20 @@
                         <div class="mt-10 md:mt-14 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-8 md:gap-y-10">
                             <?php foreach ($platform_items as $item): ?>
                                 <div class="flex flex-row items-start gap-3 text-left reveal">
-                                    <!-- ICON (dengan lazy loading) -->
+                                    <!-- ICON -->
                                     <div class="bg-white rounded-2xl p-2 w-12 h-12 md:w-14 md:h-14 flex-shrink-0 flex items-center justify-center shadow-sm">
                                         <?php if (!empty($item->icon)): ?>
-                                            <img
-                                                src="<?= html_escape($item->icon); ?>"
-                                                class="w-full h-full object-contain"
-                                                alt="<?= html_escape($item->title); ?>"
-                                                loading="lazy"
-                                                decoding="async"
-                                            >
+                                            <?php if (preg_match('/^https?:\/\//i', $item->icon)): ?>
+                                                <img
+                                                    src="<?= html_escape($item->icon); ?>"
+                                                    class="w-full h-full object-contain"
+                                                    alt="<?= html_escape($item->title); ?>"
+                                                    loading="lazy"
+                                                    decoding="async"
+                                                >
+                                            <?php else: ?>
+                                                <i class="<?= html_escape($item->icon); ?> text-2xl text-[#cc4b4d]"></i>
+                                            <?php endif; ?>
                                         <?php else: ?>
                                             <span class="text-[#cc4b4d] text-xl">⭐</span>
                                         <?php endif; ?>
@@ -235,7 +245,7 @@
     </svg>
 </section>
 
-<!-- JAVASCRIPT TAB & REVEAL -->
+<!-- JAVASCRIPT -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         // ================== TAB LOGIC ==================
@@ -246,17 +256,19 @@
             button.addEventListener("click", function () {
                 const target = this.getAttribute("data-tab");
 
-                // Reset tombol
                 buttons.forEach(btn => btn.classList.remove("active"));
                 this.classList.add("active");
 
-                // Sembunyikan semua konten
                 contents.forEach(content => content.classList.add("hidden"));
 
-                // Tampilkan konten yang dipilih
                 const selectedContent = document.getElementById(target);
                 if (selectedContent) {
                     selectedContent.classList.remove("hidden");
+
+                    // Auto scroll ke konten saat di mobile (< 768px)
+                    if (window.innerWidth < 768) {
+                        selectedContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
                 }
             });
         });
@@ -278,7 +290,6 @@
 
             revealElements.forEach(el => revealObserver.observe(el));
         } else {
-            // Fallback: langsung tampilkan
             revealElements.forEach(el => el.classList.add("visible"));
         }
     });

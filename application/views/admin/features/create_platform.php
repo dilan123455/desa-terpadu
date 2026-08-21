@@ -111,6 +111,7 @@
                     <form
                         action="<?= site_url('admin/features/store-platform'); ?>"
                         method="post"
+                        enctype="multipart/form-data"
                         class="p-6 sm:p-8"
                     >
 
@@ -181,7 +182,7 @@
                         </div>
 
 
-                        <!-- IMAGE -->
+                        <!-- IMAGE (UPLOAD FILE) -->
 
                         <div class="mb-5">
 
@@ -194,16 +195,15 @@
                             </label>
 
                             <input
-                                type="text"
+                                type="file"
                                 id="image"
                                 name="image"
-                                placeholder="Contoh: assets/images/platform.png"
+                                accept="image/*"
                                 class="w-full px-4 py-3
                                        bg-gray-50
                                        border border-gray-200
                                        rounded-lg
                                        text-gray-800
-                                       placeholder-gray-400
                                        focus:outline-none
                                        focus:ring-2
                                        focus:ring-red-400
@@ -211,7 +211,7 @@
                             >
 
                             <p class="text-xs text-gray-400 mt-2">
-                                Masukkan path gambar jika platform menggunakan gambar.
+                                Pilih file gambar untuk platform (format: JPG, PNG, dll.).
                             </p>
 
                         </div>
@@ -233,7 +233,7 @@
                                 type="number"
                                 id="sort_order"
                                 name="sort_order"
-                                value="0"
+                                value=""
                                 min="0"
                                 class="w-full px-4 py-3
                                        bg-gray-50
