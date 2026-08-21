@@ -74,6 +74,7 @@
                        flex items-center justify-center
                        text-white font-bold"
             >
+
                 <?= strtoupper(
                     substr(
                         html_escape($name),
@@ -81,6 +82,7 @@
                         1
                     )
                 ); ?>
+
             </div>
 
         </div>
@@ -114,6 +116,27 @@
             </h2>
 
 
+            <?php if ($this->session->flashdata('error')): ?>
+
+                <div
+                    class="mb-5
+                           px-4 py-3
+                           bg-red-50
+                           border border-red-200
+                           text-red-600
+                           rounded-lg
+                           text-sm"
+                >
+
+                    <?= html_escape(
+                        $this->session->flashdata('error')
+                    ); ?>
+
+                </div>
+
+            <?php endif; ?>
+
+
             <form
                 action="<?= site_url(
                     'admin/home/update-challenge/'
@@ -128,7 +151,7 @@
             >
 
 
-                <!-- NOMOR -->
+                <!-- URUTAN -->
 
                 <div class="mb-5">
 
@@ -139,22 +162,26 @@
                                text-gray-700
                                mb-2"
                     >
-                        Nomor
+                        Urutan
                     </label>
 
                     <input
-                        type="text"
+                        type="number"
+                        name="sort_order"
                         value="<?= html_escape(
                             $challenge->sort_order
                         ); ?>"
+                        min="1"
                         class="w-full
-                               bg-gray-100
-                               border border-gray-200
+                               border border-gray-300
                                rounded-lg
                                px-4 py-3
                                text-sm
-                               text-gray-500"
-                        disabled
+                               focus:outline-none
+                               focus:ring-2
+                               focus:ring-red-200
+                               focus:border-red-400"
+                        required
                     >
 
                 </div>

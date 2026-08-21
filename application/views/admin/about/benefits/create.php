@@ -2,201 +2,103 @@
 <html lang="id">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <link rel="stylesheet" href="<?= base_url('assets/css/output.css'); ?>">
 
-    <title><?= html_escape($title); ?> - Admin</title>
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f5f7fa;
-            color: #1f2937;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 800px;
-            margin: 40px auto;
-        }
-
-        .header {
-            margin-bottom: 25px;
-        }
-
-        .header h1 {
-            margin: 0 0 8px;
-        }
-
-        .header p {
-            margin: 0;
-            color: #64748b;
-        }
-
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 14px;
-            box-shadow: 0 4px 18px rgba(0,0,0,.07);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-
-        input,
-        textarea {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-        }
-
-        textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        .actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 25px;
-        }
-
-        .btn {
-            padding: 11px 18px;
-            border-radius: 8px;
-            border: none;
-            text-decoration: none;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: #CC4B4B;
-            color: white;
-        }
-
-        .btn-secondary {
-            background: #e5e7eb;
-            color: #1f2937;
-        }
-
-    </style>
-
+    <title><?= html_escape($title); ?> - Desa Terpadu</title>
 </head>
 
-<body>
+<body class="bg-gray-100 text-gray-800 min-h-screen flex items-center justify-center py-12">
 
-<div class="container">
+    <!-- Form Card -->
+    <div class="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden w-full max-w-2xl mx-4">
 
-    <div class="header">
+        <div class="p-6">
 
-        <h1>
-            Tambah Manfaat
-        </h1>
+            <!-- Page Header (inside card) -->
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Tambah Manfaat</h2>
+                <p class="text-sm text-gray-500 mt-1">Tambahkan manfaat baru untuk halaman About.</p>
+            </div>
 
-        <p>
-            Tambahkan manfaat baru untuk halaman About.
-        </p>
+            <form action="<?= site_url('admin/about/benefit_store'); ?>" method="post">
+
+                <!-- CSRF (jika diperlukan) -->
+                <!-- <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>"> -->
+
+                <!-- Judul Manfaat -->
+                <div class="mb-5">
+                    <label for="title" class="block text-sm font-semibold text-gray-700 mb-2">
+                        Judul Manfaat <span class="text-red-500">*</span>
+                    </label>
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition text-sm"
+                        placeholder="Misalnya: Pelayanan Cepat"
+                    >
+                </div>
+
+                <!-- Deskripsi -->
+                <div class="mb-5">
+                    <label for="description" class="block text-sm font-semibold text-gray-700 mb-2">
+                        Deskripsi <span class="text-red-500">*</span>
+                    </label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        required
+                        rows="4"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition text-sm resize-y"
+                        placeholder="Jelaskan manfaat ini secara singkat..."
+                    ></textarea>
+                </div>
+
+                <!-- Urutan (default kosong, opsional) -->
+                <div class="mb-5">
+                    <label for="sort_order" class="block text-sm font-semibold text-gray-700 mb-2">
+                        Urutan
+                    </label>
+                    <input
+                        type="number"
+                        id="sort_order"
+                        name="sort_order"
+                        class="w-24 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none transition text-sm"
+                    >
+                    <p class="text-xs text-gray-500 mt-1">Biarkan kosong untuk urutan otomatis.</p>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex flex-wrap gap-3 pt-2">
+
+                    <a
+                        href="<?= site_url('admin/about'); ?>"
+                        class="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-200 text-gray-700 rounded-lg text-sm font-semibold hover:bg-gray-300 transition"
+                    >
+                        Batal
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="inline-flex items-center gap-2 px-5 py-2.5 bg-red-500 text-white rounded-lg text-sm font-semibold shadow-md hover:bg-red-600 transition"
+                    >
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        Simpan Manfaat
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
 
     </div>
-
-    <div class="card">
-
-        <form
-            action="<?= site_url('admin/about/benefit_store'); ?>"
-            method="post"
-        >
-
-            <div class="form-group">
-
-                <label for="title">
-                    Judul Manfaat
-                </label>
-
-                <input
-                    type="text"
-                    id="title"
-                    name="title"
-                    required
-                >
-
-            </div>
-
-            <div class="form-group">
-
-                <label for="description">
-                    Deskripsi
-                </label>
-
-                <textarea
-                    id="description"
-                    name="description"
-                    required
-                ></textarea>
-
-            </div>
-
-            <div class="form-group">
-
-                <label for="sort_order">
-                    Urutan
-                </label>
-
-                <input
-                    type="number"
-                    id="sort_order"
-                    name="sort_order"
-                    value="1"
-                    min="1"
-                    required
-                >
-
-            </div>
-
-            <div class="actions">
-
-                <a
-                    href="<?= site_url('admin/about/benefits'); ?>"
-                    class="btn btn-secondary"
-                >
-                    Batal
-                </a>
-
-                <button
-                    type="submit"
-                    class="btn btn-primary"
-                >
-                    Simpan Manfaat
-                </button>
-
-            </div>
-
-        </form>
-
-    </div>
-
-</div>
 
 </body>
 

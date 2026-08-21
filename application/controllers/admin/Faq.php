@@ -22,17 +22,21 @@ class Faq extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'FAQ';
-        $data['name']  = $this->session->userdata('name');
-        $data['faqs']  = $this->Faq_model->get_all();
+        $data['title']         = 'FAQ';
+        $data['name']          = $this->session->userdata('name');
+        $data['page_title']    = 'FAQ';
+        $data['page_subtitle'] = 'Kelola pertanyaan dan jawaban yang sering ditanyakan';
+        $data['faqs']          = $this->Faq_model->get_all();
 
         $this->load->view('admin/faq/index', $data);
     }
 
     public function create()
     {
-        $data['title'] = 'Tambah FAQ';
-        $data['name']  = $this->session->userdata('name');
+        $data['title']         = 'Tambah FAQ';
+        $data['name']          = $this->session->userdata('name');
+        $data['page_title']    = 'Tambah FAQ';
+        $data['page_subtitle'] = 'Buat pertanyaan dan jawaban baru';
 
         $this->load->view('admin/faq/create', $data);
     }
@@ -81,9 +85,11 @@ class Faq extends CI_Controller
             show_404();
         }
 
-        $data['title'] = 'Edit FAQ';
-        $data['name']  = $this->session->userdata('name');
-        $data['faq']   = $faq;
+        $data['title']         = 'Edit FAQ';
+        $data['name']          = $this->session->userdata('name');
+        $data['page_title']    = 'Edit FAQ';
+        $data['page_subtitle'] = 'Perbarui pertanyaan dan jawaban';
+        $data['faq']           = $faq;
 
         $this->load->view('admin/faq/edit', $data);
     }
@@ -96,9 +102,11 @@ class Faq extends CI_Controller
             show_404();
         }
 
-        $data['title'] = 'Detail FAQ';
-        $data['name']  = $this->session->userdata('name');
-        $data['faq']   = $faq;
+        $data['title']         = 'Detail FAQ';
+        $data['name']          = $this->session->userdata('name');
+        $data['page_title']    = 'Detail FAQ';
+        $data['page_subtitle'] = 'Lihat detail pertanyaan dan jawaban';
+        $data['faq']           = $faq;
 
         $this->load->view('admin/faq/detail', $data);
     }

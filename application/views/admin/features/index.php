@@ -25,68 +25,8 @@
         <div class="ml-0 lg:ml-64">
 
 
-            <!-- =====================================================
-                 TOPBAR
-            ====================================================== -->
-
-          <header 
-    class="fixed top-0 right-0 left-0 lg:left-64 h-20 
-           bg-white/95 border-b border-gray-200 
-           flex items-center justify-between
-           px-4 sm:px-8 z-40"
->
-
-    <!-- LEFT -->
-    <div>
-
-        <h1 class="text-xl font-bold text-gray-800">
-            <?= html_escape($title); ?>
-        </h1>
-
-        <p class="text-sm text-gray-400 mt-1">
-            Kelola fitur unggulan Desa Terpadu
-        </p>
-
-    </div>
-
-
-    <!-- RIGHT : ADMINISTRATOR -->
-    <div class="flex items-center gap-3">
-
-        <div class="text-right hidden sm:block">
-
-            <p class="text-sm font-semibold text-gray-800">
-                <?= html_escape($name); ?>
-            </p>
-
-            <p class="text-xs text-gray-400 mt-1">
-                Administrator
-            </p>
-
-        </div>
-
-
-        <div 
-            class="w-10 h-10 rounded-full bg-red-500 
-                   flex items-center justify-center 
-                   text-white text-sm font-bold"
-        >
-
-            <?= strtoupper(
-                substr(
-                    html_escape($name),
-                    0,
-                    1
-                )
-            ); ?>
-
-        </div>
-
-    </div>
-
-</header>
-
-
+            <!-- TOPBAR (dipisah) -->
+            <?php $this->load->view('admin/topbar'); ?>
 
 
             <!-- =====================================================

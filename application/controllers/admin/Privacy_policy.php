@@ -21,13 +21,12 @@ class Privacy_policy extends CI_Controller
      */
     public function index()
     {
-        $data['privacy_policies'] =
-            $this->Privacy_policy_model->get_all();
+        $data['title']         = 'Privacy Policy';
+        $data['page_title']    = 'Privacy Policy';
+        $data['page_subtitle'] = 'Kelola kebijakan privasi website Desa Terpadu';
+        $data['privacy_policies'] = $this->Privacy_policy_model->get_all();
 
-        $this->load->view(
-            'admin/privacy_policy/index',
-            $data
-        );
+        $this->load->view('admin/privacy_policy/index', $data);
     }
 
 
@@ -36,62 +35,65 @@ class Privacy_policy extends CI_Controller
      */
     public function create()
     {
-        $this->load->view(
-            'admin/privacy_policy/create'
-        );
+        $data['title']         = 'Tambah Privacy Policy';
+        $data['page_title']    = 'Tambah Privacy Policy';
+        $data['page_subtitle'] = 'Buat kebijakan privasi baru';
+
+        $this->load->view('admin/privacy_policy/create', $data);
     }
 
 
     /**
      * Menyimpan Privacy Policy baru
      */
-        public function store()
-        {
-            $this->form_validation->set_rules('judul', 'Judul', 'required|trim');
-            $this->form_validation->set_rules('isi', 'Isi', 'required|trim');
-            $this->form_validation->set_rules('sort_order', 'Urutan Tampil', 'required|integer');
+    public function store()
+    {
+        $this->form_validation->set_rules('judul', 'Judul', 'required|trim');
+        $this->form_validation->set_rules('isi', 'Isi', 'required|trim');
+        $this->form_validation->set_rules('sort_order', 'Urutan Tampil', 'required|integer');
 
-            if ($this->form_validation->run() == FALSE) {
-                $this->load->view('admin/privacy_policy/create');
-                return;
-            }
+        if ($this->form_validation->run() == FALSE) {
+            $data['title']         = 'Tambah Privacy Policy';
+            $data['page_title']    = 'Tambah Privacy Policy';
+            $data['page_subtitle'] = 'Buat kebijakan privasi baru';
 
-            $sort_order = (int) $this->input->post('sort_order');
-
-            // Geser data yang sudah ada agar tidak terjadi duplikat urutan
-            $this->Privacy_policy_model->shift_sort_order_for_insert($sort_order);
-
-            $data = [
-                'judul' => $this->input->post('judul', TRUE),
-                'isi'   => $this->input->post('isi'),
-                'sort_order' => $sort_order
-            ];
-
-            $this->Privacy_policy_model->insert($data);
-
-            $this->session->set_flashdata('success', 'Privacy Policy berhasil ditambahkan.');
-            redirect('admin/privacy_policy');
+            $this->load->view('admin/privacy_policy/create', $data);
+            return;
         }
+
+        $sort_order = (int) $this->input->post('sort_order');
+
+        // Geser data yang sudah ada agar tidak terjadi duplikat urutan
+        $this->Privacy_policy_model->shift_sort_order_for_insert($sort_order);
+
+        $data = [
+            'judul' => $this->input->post('judul', TRUE),
+            'isi'   => $this->input->post('isi'),
+            'sort_order' => $sort_order
+        ];
+
+        $this->Privacy_policy_model->insert($data);
+
+        $this->session->set_flashdata('success', 'Privacy Policy berhasil ditambahkan.');
+        redirect('admin/privacy_policy');
+    }
 
     /**
      * Form edit Privacy Policy
      */
     public function edit($id)
     {
-        $data['privacy_policy'] =
-            $this->Privacy_policy_model->get_by_id($id);
+        $data['privacy_policy'] = $this->Privacy_policy_model->get_by_id($id);
 
-
-        if (!$data['privacy_policy'])
-        {
+        if (!$data['privacy_policy']) {
             show_404();
         }
 
+        $data['title']         = 'Edit Privacy Policy';
+        $data['page_title']    = 'Edit Privacy Policy';
+        $data['page_subtitle'] = 'Perbarui kebijakan privasi';
 
-        $this->load->view(
-            'admin/privacy_policy/edit',
-            $data
-        );
+        $this->load->view('admin/privacy_policy/edit', $data);
     }
 
 
@@ -112,6 +114,10 @@ class Privacy_policy extends CI_Controller
 
         if ($this->form_validation->run() == FALSE) {
             $data['privacy_policy'] = $privacy_policy;
+            $data['title']          = 'Edit Privacy Policy';
+            $data['page_title']     = 'Edit Privacy Policy';
+            $data['page_subtitle']  = 'Perbarui kebijakan privasi';
+
             $this->load->view('admin/privacy_policy/edit', $data);
             return;
         }
@@ -139,29 +145,16 @@ class Privacy_policy extends CI_Controller
      */
     public function delete($id)
     {
-        $privacy_policy =
-            $this->Privacy_policy_model->get_by_id($id);
+        $privacy_policy = $this->Privacy_policy_model->get_by_id($id);
 
-
-        if (!$privacy_policy)
-        {
+        if (!$privacy_policy) {
             show_404();
         }
 
+        $this->Privacy_policy_model->delete($id);
 
-        $this->Privacy_policy_model->delete(
-            $id
-        );
+        $this->session->set_flashdata('success', 'Privacy Policy berhasil dihapus.');
 
-
-        $this->session->set_flashdata(
-            'success',
-            'Privacy Policy berhasil dihapus.'
-        );
-
-
-        redirect(
-            'admin/privacy_policy'
-        );
+        redirect('admin/privacy_policy');
     }
 }

@@ -20,23 +20,8 @@
         <!-- MAIN AREA -->
         <div class="ml-0 lg:ml-64">
 
-            <!-- Topbar -->
-            <header class="fixed top-0 right-0 left-0 lg:left-64 h-20 bg-white/95 border-b border-gray-200 flex items-center justify-between px-4 sm:px-8 z-40">
-                <div>
-                    <h2 class="text-xl font-bold text-gray-800">Dashboard</h2>
-                    <p class="text-sm text-gray-400 mt-1">Kelola konten website Desa Terpadu</p>
-                </div>
-
-                <div class="flex items-center gap-3">
-                    <div class="text-right">
-                        <p class="text-sm font-semibold text-gray-800"><?= html_escape($name); ?></p>
-                        <p class="text-xs text-gray-400 mt-1">Administrator</p>
-                    </div>
-                    <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white text-sm font-bold">
-                        <?= strtoupper(substr(html_escape($name), 0, 1)); ?>
-                    </div>
-                </div>
-            </header>
+            <!-- TOPBAR (dipisah ke file terpisah) -->
+            <?php $this->load->view('admin/topbar'); ?>
 
             <!-- Content -->
             <main class="p-4 sm:p-8 pt-24 sm:pt-28 min-h-screen">
@@ -46,7 +31,6 @@
                     <div class="flex items-center justify-between gap-6">
                         <div>
                             <p class="text-sm text-red-100 mb-1 flex items-center gap-2">
-                                <!-- Ikon Sapaan (Hand Wave) -->
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 013 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 007.5 7.5h1.5a4 4 0 004-4v-2.5a1.5 1.5 0 00-1.5-1.5H13a1.5 1.5 0 00-1.5 1.5v1m0-4.5V5.5a1.5 1.5 0 00-3 0v4.5m0-4.5A1.5 1.5 0 008 7v4.5" />
                                 </svg>
@@ -58,7 +42,6 @@
                             </p>
                         </div>
                         <div class="text-6xl opacity-20 select-none">
-                            <!-- Ikon Home -->
                             <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10" />
                             </svg>
@@ -66,7 +49,7 @@
                     </div>
                 </section>
 
-                <!-- Statistics (hanya 3 kartu) -->
+                <!-- Statistics -->
                 <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mb-8">
                     <!-- Artikel -->
                     <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition">
@@ -123,7 +106,7 @@
                     <p class="text-sm text-gray-400 mt-1">Kelola konten website dengan cepat.</p>
                 </section>
 
-                <!-- Quick Access Cards (tanpa Contact) -->
+                <!-- Quick Access Cards -->
                 <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 
                 <!-- Home -->

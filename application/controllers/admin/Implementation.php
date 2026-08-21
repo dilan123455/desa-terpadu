@@ -17,8 +17,10 @@ class Implementation extends CI_Controller
      */
     public function index()
     {
-        $data['title'] = 'Implementation';
-        $data['name']  = $this->session->userdata('name');
+        $data['title']         = 'Implementation';
+        $data['name']          = $this->session->userdata('name');
+        $data['page_title']    = 'Implementation';
+        $data['page_subtitle'] = 'Kelola langkah implementasi Desa Terpadu';
         $data['implementation_steps'] = $this->Implementation_model->get_all();
 
         $this->load->view('admin/implementation/index', $data);
@@ -29,8 +31,10 @@ class Implementation extends CI_Controller
      */
     public function add()
     {
-        $data['title'] = 'Tambah Implementation';
-        $data['name']  = $this->session->userdata('name');
+        $data['title']         = 'Tambah Implementation';
+        $data['name']          = $this->session->userdata('name');
+        $data['page_title']    = 'Tambah Implementation';
+        $data['page_subtitle'] = 'Buat langkah implementasi baru';
 
         // Ambil urutan tertinggi untuk default nilai sort_order
         $max_order = $this->Implementation_model->get_max_sort_order();
@@ -72,9 +76,11 @@ class Implementation extends CI_Controller
             $this->load->library('upload', $config);
 
             if (!$this->upload->do_upload('image')) {
-                $data['title'] = 'Tambah Implementation';
-                $data['name']  = $this->session->userdata('name');
-                $data['error'] = $this->upload->display_errors();
+                $data['title']         = 'Tambah Implementation';
+                $data['name']          = $this->session->userdata('name');
+                $data['page_title']    = 'Tambah Implementation';
+                $data['page_subtitle'] = 'Buat langkah implementasi baru';
+                $data['error']         = $this->upload->display_errors();
 
                 // Jika upload gagal, tampilkan kembali form
                 $this->load->view('admin/implementation/create', $data);
@@ -124,9 +130,11 @@ class Implementation extends CI_Controller
             show_404();
         }
 
-        $data['title'] = 'Edit Implementation';
-        $data['name']  = $this->session->userdata('name');
-        $data['step']  = $step;
+        $data['title']         = 'Edit Implementation';
+        $data['name']          = $this->session->userdata('name');
+        $data['page_title']    = 'Edit Implementation';
+        $data['page_subtitle'] = 'Perbarui langkah implementasi';
+        $data['step']          = $step;
 
         if ($this->input->method() === 'post') {
 

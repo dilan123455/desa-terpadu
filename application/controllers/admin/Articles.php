@@ -17,9 +17,11 @@ class Articles extends Admin_Controller
      */
     public function index()
     {
-        $data['title']    = 'Artikel';
-        $data['name']     = $this->session->userdata('name');
-        $data['articles'] = $this->Article_model->get_all();
+        $data['title']         = 'Artikel';
+        $data['name']          = $this->session->userdata('name');
+        $data['page_title']    = 'Artikel';
+        $data['page_subtitle'] = 'Kelola artikel dan berita Desa Terpadu';
+        $data['articles']      = $this->Article_model->get_all();
 
         $this->load->view('admin/articles/index', $data);
     }
@@ -35,9 +37,11 @@ class Articles extends Admin_Controller
             show_404();
         }
 
-        $data['title']   = 'Detail Artikel';
-        $data['name']    = $this->session->userdata('name');
-        $data['article'] = $article;
+        $data['title']         = 'Detail Artikel';
+        $data['name']          = $this->session->userdata('name');
+        $data['page_title']    = 'Detail Artikel';
+        $data['page_subtitle'] = 'Lihat detail artikel';
+        $data['article']       = $article;
 
         $this->load->view('admin/articles/detail', $data);
     }
@@ -47,8 +51,10 @@ class Articles extends Admin_Controller
      */
     public function create()
     {
-        $data['title'] = 'Tambah Artikel';
-        $data['name']  = $this->session->userdata('name');
+        $data['title']         = 'Tambah Artikel';
+        $data['name']          = $this->session->userdata('name');
+        $data['page_title']    = 'Tambah Artikel';
+        $data['page_subtitle'] = 'Buat artikel baru';
 
         $this->load->view('admin/articles/create', $data);
     }
@@ -135,9 +141,11 @@ class Articles extends Admin_Controller
             show_404();
         }
 
-        $data['title']   = 'Edit Artikel';
-        $data['name']    = $this->session->userdata('name');
-        $data['article'] = $article;
+        $data['title']         = 'Edit Artikel';
+        $data['name']          = $this->session->userdata('name');
+        $data['page_title']    = 'Edit Artikel';
+        $data['page_subtitle'] = 'Perbarui artikel';
+        $data['article']       = $article;
 
         $this->load->view('admin/articles/edit', $data);
     }

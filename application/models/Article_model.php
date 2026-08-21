@@ -11,10 +11,12 @@ class Article_model extends CI_Model
 
     /**
      * Ambil semua data artikel (untuk admin index)
-     * Sudah termasuk kolom publish_date
+     * Diurutkan dari yang paling baru berdasarkan tanggal publish
      */
     public function get_all()
     {
+        $this->db->order_by('publish_date', 'DESC'); // terbaru berdasarkan tanggal publish
+        $this->db->order_by('id', 'DESC');           // jika tanggal sama, urutkan berdasarkan ID terbaru
         return $this->db->get($this->table)->result();
     }
 

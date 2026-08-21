@@ -13,9 +13,11 @@ class Contact extends Admin_Controller
 
     public function index()
     {
-        $data['title']   = 'Contact';
-        $data['name']    = $this->session->userdata('name');
-        $data['contact'] = $this->Contact_model->get_contact();
+        $data['title']         = 'Contact';
+        $data['name']          = $this->session->userdata('name');
+        $data['page_title']    = 'Contact';
+        $data['page_subtitle'] = 'Kelola informasi kontak Desa Terpadu';
+        $data['contact']       = $this->Contact_model->get_contact();
 
         $this->load->view('admin/contact/index', $data);
     }

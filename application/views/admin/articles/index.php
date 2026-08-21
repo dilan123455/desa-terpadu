@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?= base_url('assets/css/output.css'); ?>">
     <title><?= html_escape($title); ?> - Desa Terpadu</title>
+    <style>
+        /* Mobile (default) */
+        .mobile-only {
+            display: block;
+        }
+        .desktop-only {
+            display: none;
+        }
+
+        /* Desktop (min-width 768px) */
+        @media (min-width: 768px) {
+            .mobile-only {
+                display: none !important;
+            }
+            .desktop-only {
+                display: block !important;
+            }
+        }
+    </style>
 </head>
 <body class="bg-gray-100 text-gray-800 min-h-screen">
     <div class="admin-wrapper">
@@ -15,24 +34,10 @@
         <!-- MAIN AREA -->
         <div class="ml-0 lg:ml-64">
 
-            <!-- Topbar -->
-            <header class="fixed top-0 right-0 left-0 lg:left-64 h-20 bg-white/95 border-b border-gray-200 flex items-center justify-between px-4 sm:px-8 z-40">
-                <div>
-                    <h1 class="text-xl font-bold text-gray-800"><?= html_escape($title); ?></h1>
-                    <p class="text-sm text-gray-400 mt-1">Kelola artikel dan berita Desa Terpadu</p>
-                </div>
-                <div class="flex items-center gap-3">
-                    <div class="text-right hidden sm:block">
-                        <p class="text-sm font-semibold text-gray-800"><?= html_escape($name); ?></p>
-                        <p class="text-xs text-gray-400 mt-1">Admin Panel</p>
-                    </div>
-                    <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white text-sm font-bold">
-                        <?= strtoupper(substr(html_escape($name), 0, 1)); ?>
-                    </div>
-                </div>
-            </header>
+            <!-- TOPBAR -->
+            <?php $this->load->view('admin/topbar'); ?>
 
-            <!-- Content -->
+            <!-- CONTENT -->
             <main class="p-4 sm:p-8 pt-24 sm:pt-28 min-h-screen">
 
                 <!-- Page Header -->
@@ -41,7 +46,8 @@
                         <h2 class="text-2xl font-bold text-gray-800">Kelola Artikel</h2>
                         <p class="text-sm text-gray-500 mt-1">Kelola artikel dan berita yang ditampilkan pada website Desa Terpadu.</p>
                     </div>
-                    <a href="<?= site_url('admin/articles/create'); ?>" class="inline-flex items-center gap-2 px-4 py-2.5 bg-red-500 text-white rounded-lg text-sm font-semibold shadow-md hover:bg-red-600 transition whitespace-nowrap">
+                    <a href="<?= site_url('admin/articles/create'); ?>"
+                       class="inline-flex items-center gap-2 px-4 py-2.5 bg-red-500 text-white rounded-lg text-sm font-semibold shadow-md hover:bg-red-600 transition whitespace-nowrap">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                         </svg>
@@ -83,7 +89,8 @@
                             </div>
                             <strong class="block text-sm font-semibold text-gray-700">Belum Ada Artikel</strong>
                             <p class="mt-2 text-sm text-gray-500">Belum terdapat artikel yang tersimpan di dalam sistem.</p>
-                            <a href="<?= site_url('admin/articles/create'); ?>" class="mt-5 inline-flex items-center gap-2 px-4 py-2.5 bg-red-500 text-white rounded-lg text-sm font-semibold shadow-md hover:bg-red-600 transition">
+                            <a href="<?= site_url('admin/articles/create'); ?>"
+                               class="mt-5 inline-flex items-center gap-2 px-4 py-2.5 bg-red-500 text-white rounded-lg text-sm font-semibold shadow-md hover:bg-red-600 transition">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                                 </svg>
@@ -106,8 +113,68 @@
                             </div>
                         </div>
 
-                        <!-- Table Wrapper -->
-                        <div class="overflow-x-auto">
+                        <!-- ================= MOBILE CARD VIEW (ANDROID) ================= -->
+                        <div class="mobile-only divide-y divide-gray-100">
+                            <?php foreach ($articles as $article): ?>
+                                <div class="p-4">
+                                    <div class="flex items-start gap-3">
+                                        <!-- Gambar -->
+                                        <div class="flex-shrink-0">
+                                            <?php if (!empty($article->image)): ?>
+                                                <img class="w-20 h-14 object-cover rounded-lg border border-gray-200"
+                                                     src="<?= base_url('assets/uploads/' . $article->image); ?>"
+                                                     alt="<?= html_escape($article->title); ?>">
+                                            <?php else: ?>
+                                                <div class="w-20 h-14 flex items-center justify-center bg-gray-50 text-gray-400 border border-gray-200 rounded-lg text-[10px] text-center">
+                                                    Tidak ada gambar
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+
+                                        <!-- Info -->
+                                        <div class="flex-1 min-w-0">
+                                            <div class="flex items-start justify-between gap-2">
+                                                <h4 class="font-semibold text-gray-800 leading-snug">
+                                                    <?= html_escape($article->title); ?>
+                                                </h4>
+                                                <span class="shrink-0 text-xs font-semibold px-2 py-1 rounded-full <?= $article->status === 'published' ? 'bg-green-50 text-green-700' : 'bg-orange-50 text-orange-700'; ?>">
+                                                    <?= $article->status === 'published' ? 'Published' : 'Draft'; ?>
+                                                </span>
+                                            </div>
+
+                                            <div class="mt-1 text-xs text-gray-500">
+                                                <span class="font-medium text-gray-600"><?= html_escape($article->category); ?></span>
+                                                &bull;
+                                                <?php
+                                                    $display_date = !empty($article->publish_date) ? $article->publish_date : $article->created_at;
+                                                    echo date('d M Y', strtotime($display_date));
+                                                ?>
+                                            </div>
+
+                                            <!-- Aksi -->
+                                            <div class="mt-2 flex flex-wrap gap-1.5">
+                                                <a href="<?= site_url('admin/articles/detail/' . $article->id); ?>"
+                                                   class="inline-flex items-center px-2.5 py-1 bg-cyan-50 text-cyan-700 rounded-md text-xs font-semibold hover:bg-cyan-100 transition">
+                                                    Detail
+                                                </a>
+                                                <a href="<?= site_url('admin/articles/edit/' . $article->id); ?>"
+                                                   class="inline-flex items-center px-2.5 py-1 bg-amber-50 text-amber-700 rounded-md text-xs font-semibold hover:bg-amber-100 transition">
+                                                    Edit
+                                                </a>
+                                                <a href="<?= site_url('admin/articles/delete/' . $article->id); ?>"
+                                                   onclick="return confirm('Yakin ingin menghapus artikel ini?');"
+                                                   class="inline-flex items-center px-2.5 py-1 bg-red-50 text-red-600 rounded-md text-xs font-semibold hover:bg-red-100 transition">
+                                                    Hapus
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+
+                        <!-- ================= DESKTOP TABLE VIEW ================= -->
+                        <div class="desktop-only overflow-x-auto">
                             <table class="w-full min-w-[900px] border-collapse">
                                 <thead class="bg-gray-50">
                                     <tr>
@@ -124,35 +191,28 @@
                                     <?php $no = 1; ?>
                                     <?php foreach ($articles as $article): ?>
                                         <tr class="hover:bg-red-50/50 transition">
-                                            <!-- Nomor -->
                                             <td class="px-4 py-3.5 text-sm text-gray-600 align-middle whitespace-nowrap"><?= $no++; ?></td>
-
-                                            <!-- Gambar -->
                                             <td class="px-4 py-3.5 align-middle">
                                                 <?php if (!empty($article->image)): ?>
-                                                    <img class="w-[75px] h-[52px] object-cover rounded-lg border border-gray-200" src="<?= base_url('assets/uploads/' . $article->image); ?>" alt="<?= html_escape($article->title); ?>">
+                                                    <img class="w-[75px] h-[52px] object-cover rounded-lg border border-gray-200"
+                                                         src="<?= base_url('assets/uploads/' . $article->image); ?>"
+                                                         alt="<?= html_escape($article->title); ?>">
                                                 <?php else: ?>
                                                     <div class="w-[75px] h-[52px] flex items-center justify-center bg-gray-50 text-gray-400 border border-gray-200 rounded-lg text-[10px] text-center">
                                                         Tidak ada gambar
                                                     </div>
                                                 <?php endif; ?>
                                             </td>
-
-                                            <!-- Judul -->
                                             <td class="px-4 py-3.5 align-middle">
                                                 <div class="min-w-[250px] font-semibold text-gray-800 leading-snug">
                                                     <?= html_escape($article->title); ?>
                                                 </div>
                                             </td>
-
-                                            <!-- Kategori -->
                                             <td class="px-4 py-3.5 align-middle whitespace-nowrap">
                                                 <span class="inline-block px-2.5 py-1 bg-red-50 text-red-600 rounded-md text-xs font-semibold">
                                                     <?= html_escape($article->category); ?>
                                                 </span>
                                             </td>
-
-                                            <!-- Status -->
                                             <td class="px-4 py-3.5 align-middle whitespace-nowrap">
                                                 <?php if ($article->status === 'published'): ?>
                                                     <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-50 text-green-700 text-xs font-semibold">
@@ -166,30 +226,25 @@
                                                     </span>
                                                 <?php endif; ?>
                                             </td>
-
-                                            <!-- Tanggal Upload -->
                                             <td class="px-4 py-3.5 text-xs text-gray-500 align-middle whitespace-nowrap">
                                                 <?php
-                                                    // Tampilkan tanggal upload, jika kosong fallback ke created_at
                                                     $display_date = !empty($article->publish_date) ? $article->publish_date : $article->created_at;
                                                     echo date('d M Y', strtotime($display_date));
                                                 ?>
                                             </td>
-
-                                            <!-- Aksi -->
                                             <td class="px-4 py-3.5 align-middle text-center whitespace-nowrap">
                                                 <div class="flex items-center justify-center gap-1.5">
                                                     <a href="<?= site_url('admin/articles/detail/' . $article->id); ?>"
-                                                        class="inline-flex items-center justify-center px-3 py-1.5 bg-cyan-50 text-cyan-700 rounded-md text-xs font-semibold hover:bg-cyan-100 transition whitespace-nowrap shrink-0">
+                                                       class="inline-flex items-center justify-center px-3 py-1.5 bg-cyan-50 text-cyan-700 rounded-md text-xs font-semibold hover:bg-cyan-100 transition whitespace-nowrap shrink-0">
                                                         Detail
                                                     </a>
                                                     <a href="<?= site_url('admin/articles/edit/' . $article->id); ?>"
-                                                        class="inline-flex items-center justify-center px-3 py-1.5 bg-amber-50 text-amber-700 rounded-md text-xs font-semibold hover:bg-amber-100 transition whitespace-nowrap shrink-0">
+                                                       class="inline-flex items-center justify-center px-3 py-1.5 bg-amber-50 text-amber-700 rounded-md text-xs font-semibold hover:bg-amber-100 transition whitespace-nowrap shrink-0">
                                                         Edit
                                                     </a>
                                                     <a href="<?= site_url('admin/articles/delete/' . $article->id); ?>"
-                                                        onclick="return confirm('Yakin ingin menghapus artikel ini?');"
-                                                        class="inline-flex items-center justify-center px-3 py-1.5 bg-red-50 text-red-600 rounded-md text-xs font-semibold hover:bg-red-100 transition whitespace-nowrap shrink-0">
+                                                       onclick="return confirm('Yakin ingin menghapus artikel ini?');"
+                                                       class="inline-flex items-center justify-center px-3 py-1.5 bg-red-50 text-red-600 rounded-md text-xs font-semibold hover:bg-red-100 transition whitespace-nowrap shrink-0">
                                                         Hapus
                                                     </a>
                                                 </div>

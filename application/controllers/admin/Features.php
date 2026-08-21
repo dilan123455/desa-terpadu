@@ -12,8 +12,10 @@ class Features extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'Features';
-        $data['name']  = $this->session->userdata('name');
+        $data['title']         = 'Features';
+        $data['name']          = $this->session->userdata('name');
+        $data['page_title']    = 'Features';
+        $data['page_subtitle'] = 'Kelola fitur unggulan Desa Terpadu';
 
         $data['platforms'] = $this->Features_model->get_platforms();
         $data['items']     = $this->Features_model->get_all_items();
@@ -23,8 +25,10 @@ class Features extends CI_Controller
 
     public function edit_platform($id)
     {
-        $data['title'] = 'Edit Platform';
-        $data['name']  = $this->session->userdata('name');
+        $data['title']         = 'Edit Platform';
+        $data['name']          = $this->session->userdata('name');
+        $data['page_title']    = 'Edit Platform';
+        $data['page_subtitle'] = 'Perbarui data platform';
 
         $data['platform'] = $this->Features_model->get_platform($id);
 
@@ -51,8 +55,10 @@ class Features extends CI_Controller
 
     public function edit_item($id)
     {
-        $data['title'] = 'Edit Fitur';
-        $data['name']  = $this->session->userdata('name');
+        $data['title']         = 'Edit Fitur';
+        $data['name']          = $this->session->userdata('name');
+        $data['page_title']    = 'Edit Fitur';
+        $data['page_subtitle'] = 'Perbarui data fitur';
 
         $data['item'] = $this->db
             ->where('id', $id)
@@ -92,8 +98,10 @@ class Features extends CI_Controller
 
     public function create_item($platform_id)
     {
-        $data['title'] = 'Tambah Fitur';
-        $data['name']  = $this->session->userdata('name');
+        $data['title']         = 'Tambah Fitur';
+        $data['name']          = $this->session->userdata('name');
+        $data['page_title']    = 'Tambah Fitur';
+        $data['page_subtitle'] = 'Buat fitur baru untuk platform';
 
         $data['platform'] = $this->Features_model->get_platform($platform_id);
 
@@ -195,29 +203,31 @@ class Features extends CI_Controller
     // create Platform
 
     public function create_platform()
-{
-    $data['title'] = 'Tambah Platform';
-    $data['name']  = $this->session->userdata('name');
+    {
+        $data['title']         = 'Tambah Platform';
+        $data['name']          = $this->session->userdata('name');
+        $data['page_title']    = 'Tambah Platform';
+        $data['page_subtitle'] = 'Buat platform baru untuk fitur';
 
-    $this->load->view('admin/features/create_platform', $data);
-}
+        $this->load->view('admin/features/create_platform', $data);
+    }
 
-public function store_platform()
-{
-    $data = [
-        'name'        => $this->input->post('name', true),
-        'description' => $this->input->post('description'),
-        'image'       => $this->input->post('image', true),
-        'sort_order'  => $this->input->post('sort_order', true)
-    ];
+    public function store_platform()
+    {
+        $data = [
+            'name'        => $this->input->post('name', true),
+            'description' => $this->input->post('description'),
+            'image'       => $this->input->post('image', true),
+            'sort_order'  => $this->input->post('sort_order', true)
+        ];
 
-    $this->Features_model->insert_platform($data);
+        $this->Features_model->insert_platform($data);
 
-    $this->session->set_flashdata(
-        'success',
-        'Platform berhasil ditambahkan.'
-    );
+        $this->session->set_flashdata(
+            'success',
+            'Platform berhasil ditambahkan.'
+        );
 
-    redirect('admin/features');
-}
+        redirect('admin/features');
+    }
 }
