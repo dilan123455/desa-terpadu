@@ -125,7 +125,43 @@
 
                 <!-- Quick Access Cards (tanpa Contact) -->
                 <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                    <!-- Artikel -->
+                
+                <!-- Home -->
+<a href="<?= site_url('admin/home'); ?>" class="block bg-white border border-gray-200 rounded-2xl p-5 hover:shadow-md hover:border-red-200 transition">
+    <div class="flex items-center justify-between">
+        <div class="w-12 h-12 rounded-xl bg-red-100 text-red-500 flex items-center justify-center">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 12l9-9 9 9M5 10v10a1 1 0 001 1h3a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1h3a1 1 0 001-1V10"
+                />
+            </svg>
+        </div>
+
+        <span class="text-2xl text-gray-300">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                />
+            </svg>
+        </span>
+    </div>
+
+    <h4 class="mt-4 text-lg font-bold text-gray-800">
+        Kelola Home
+    </h4>
+
+    <p class="mt-1 text-sm text-gray-500">
+        Kelola konten Hero dan Tantangan Desa pada halaman utama.
+    </p>
+</a>
+                
+                <!-- Artikel -->
                     <a href="<?= site_url('admin/articles'); ?>" class="block bg-white border border-gray-200 rounded-2xl p-5 hover:shadow-md hover:border-red-200 transition">
                         <div class="flex items-center justify-between">
                             <div class="w-12 h-12 rounded-xl bg-red-100 text-red-500 flex items-center justify-center">
@@ -233,6 +269,69 @@
                         <h4 class="mt-4 text-lg font-bold text-gray-800">Implementation</h4>
                         <p class="mt-1 text-sm text-gray-500">Kelola langkah implementasi Desa Terpadu.</p>
                     </a>
+
+                    <!-- Privacy & Policy -->
+<a href="<?= site_url('admin/privacy_policy'); ?>" class="block bg-white border border-gray-200 rounded-2xl p-5 hover:shadow-md hover:border-red-200 transition">
+
+    <div class="flex items-center justify-between">
+
+        <div class="w-12 h-12 rounded-xl bg-gray-100 text-gray-600 flex items-center justify-center">
+
+            <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4"
+                />
+
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M7 3h10a2 2 0 012 2v14a2 2 0 01-2 2H7a2 2 0 01-2-2V5a2 2 0 012-2z"
+                />
+            </svg>
+
+        </div>
+
+
+        <span class="text-2xl text-gray-300">
+
+            <svg
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 5l7 7-7 7"
+                />
+            </svg>
+
+        </span>
+
+    </div>
+
+
+    <h4 class="mt-4 text-lg font-bold text-gray-800">
+        Privacy &amp; Policy
+    </h4>
+
+
+    <p class="mt-1 text-sm text-gray-500">
+        Kelola kebijakan privasi dan informasi perlindungan data website.
+    </p>
+
+</a>
                 </section>
 
                 <!-- Footer -->

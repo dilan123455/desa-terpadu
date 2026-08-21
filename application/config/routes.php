@@ -175,3 +175,16 @@ $route['admin/home/store-challenge']
 
 $route['admin/home/delete-challenge/(:num)']
     = 'admin/Home_admin/delete_challenge/$1';
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN - PRIVACY POLICY
+|--------------------------------------------------------------------------
+*/
+
+$route['admin/privacy_policy'] = 'admin/Privacy_policy/index';
+$route['admin/privacy_policy/create'] = 'admin/Privacy_policy/create';
+$route['admin/privacy_policy/store'] = 'admin/Privacy_policy/store';
+$route['admin/privacy_policy/edit/(:num)'] = 'admin/Privacy_policy/edit/$1';
+$route['admin/privacy_policy/update/(:num)'] = 'admin/Privacy_policy/update/$1';
+$route['admin/privacy_policy/delete/(:num)'] = 'admin/Privacy_policy/delete/$1';
