@@ -51,10 +51,65 @@ class Faq_model extends CI_Model
             ->delete($this->table);
     }
 
-    // Hitung semua data FAQ
+    /**
+     * Ambil satu FAQ berdasarkan sort_order, dengan pengecualian ID tertentu.
+     *
+     * @param int      $sort_order
+     * @param int|null $except_id
+     * @return object|null
+     */
+    public function get_by_sort_order($sort_order, $except_id = null)
+    {
+        $this->db->where('sort_order', $sort_order);
+
+        if ($except_id !== null) {
+            $this->db->where('id !=', $except_id);
+        }
+
+        return $this->db->get($this->table)->row();
+    }
+
+    /**
+     * Cek apakah sort_order sudah dipakai oleh FAQ lain.
+     *
+     * @param int      $sort_order
+     * @param int|null $except_id
+     * @return bool
+     */
+    public function sort_order_exists($sort_order, $except_id = null)
+    {
+        $this->db->where('sort_order', $sort_order);
+
+        if ($except_id !== null) {
+            $this->db->where('id !=', $except_id);
+        }
+
+        return $this->db->count_all_results($this->table) > 0;
+    }
+
+    /**
+     * Ambil nomor urut berikutnya.
+     *
+     * @return int
+     */
+    public function get_next_sort_order()
+    {
+        $this->db->select_max('sort_order');
+        $query = $this->db->get($this->table);
+        $row   = $query->row();
+
+        $max = ($row && $row->sort_order) ? (int) $row->sort_order : 0;
+
+        return $max + 1;
+    }
+
+    /**
+     * Hitung semua data FAQ.
+     *
+     * @return int
+     */
     public function count_all()
     {
         return $this->db->count_all_results($this->table);
     }
-    
 }

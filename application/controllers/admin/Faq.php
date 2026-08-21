@@ -38,6 +38,9 @@ class Faq extends CI_Controller
         $data['page_title']    = 'Tambah FAQ';
         $data['page_subtitle'] = 'Buat pertanyaan dan jawaban baru';
 
+        // Ambil nomor urut berikutnya untuk default input
+        $data['next_sort_order'] = $this->Faq_model->get_next_sort_order();
+
         $this->load->view('admin/faq/create', $data);
     }
 
@@ -46,7 +49,6 @@ class Faq extends CI_Controller
         $question   = trim($this->input->post('question', TRUE));
         $answer     = trim($this->input->post('answer', FALSE));
         $status     = $this->input->post('status', TRUE);
-        $sort_order = (int) $this->input->post('sort_order');
 
         if ($question === '' || $answer === '') {
             $this->session->set_flashdata(
@@ -57,6 +59,11 @@ class Faq extends CI_Controller
             redirect('admin/faq/create');
             return;
         }
+
+        // Pastikan sort_order unik
+        $sort_order = $this->_unique_sort_order(
+            $this->input->post('sort_order')
+        );
 
         $data = [
             'question'    => $question,
@@ -122,7 +129,6 @@ class Faq extends CI_Controller
         $question   = trim($this->input->post('question', TRUE));
         $answer     = trim($this->input->post('answer', FALSE));
         $status     = $this->input->post('status', TRUE);
-        $sort_order = (int) $this->input->post('sort_order');
 
         if ($question === '' || $answer === '') {
             $this->session->set_flashdata(
@@ -134,15 +140,62 @@ class Faq extends CI_Controller
             return;
         }
 
+        $new_sort_order = (int) $this->input->post('sort_order');
+        $old_sort_order = (int) $faq->sort_order;
+
+        // Jika input kosong/0, otomatis pakai nomor berikutnya
+        if ($new_sort_order <= 0) {
+            $new_sort_order = $this->Faq_model->get_next_sort_order();
+            // Jika ternyata sama dengan nomor lama, biarkan tetap
+            if ($new_sort_order == $old_sort_order) {
+                $new_sort_order = $old_sort_order;
+            }
+        }
+
+        $swap_needed = false;
+        $other_faq = null;
+
+        // Cek apakah nomor baru dipakai oleh FAQ lain
+        if ($new_sort_order != $old_sort_order) {
+            $other_faq = $this->Faq_model->get_by_sort_order($new_sort_order, $id);
+            if ($other_faq) {
+                $swap_needed = true;
+            }
+        }
+
+        // Mulai transaksi jika perlu swap
+        if ($swap_needed) {
+            $this->db->trans_start();
+
+            // FAQ lain memakai nomor lama
+            $this->Faq_model->update($other_faq->id, [
+                'sort_order' => $old_sort_order,
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
+        }
+
         $data = [
-            'question'    => $question,
-            'answer'      => $answer,
-            'status'      => ($status === 'inactive') ? 'inactive' : 'active',
-            'sort_order'  => $sort_order,
-            'updated_at'  => date('Y-m-d H:i:s')
+            'question'   => $question,
+            'answer'     => $answer,
+            'status'     => ($status === 'inactive') ? 'inactive' : 'active',
+            'sort_order' => $new_sort_order,
+            'updated_at' => date('Y-m-d H:i:s')
         ];
 
         $this->Faq_model->update($id, $data);
+
+        if ($swap_needed) {
+            $this->db->trans_complete();
+
+            if ($this->db->trans_status() === FALSE) {
+                $this->session->set_flashdata(
+                    'error',
+                    'Gagal menyimpan perubahan urutan FAQ.'
+                );
+                redirect('admin/faq/edit/' . $id);
+                return;
+            }
+        }
 
         $this->session->set_flashdata(
             'success',
@@ -168,5 +221,32 @@ class Faq extends CI_Controller
         );
 
         redirect('admin/faq');
+    }
+
+    /**
+     * Cari sort_order yang belum dipakai.
+     *
+     * Jika input kosong/0, otomatis memakai nomor berikutnya.
+     * Jika input sudah dipakai, naikkan sampai menemukan nomor kosong.
+     *
+     * @param int|null $sort_order
+     * @param int|null $except_id
+     * @return int
+     */
+    private function _unique_sort_order($sort_order, $except_id = null)
+    {
+        $sort_order = (int) $sort_order;
+
+        // Jika kosong atau 0, langsung pakai nomor berikutnya
+        if ($sort_order <= 0) {
+            return $this->Faq_model->get_next_sort_order();
+        }
+
+        // Selama masih dipakai, naikkan terus
+        while ($this->Faq_model->sort_order_exists($sort_order, $except_id)) {
+            $sort_order++;
+        }
+
+        return $sort_order;
     }
 }
