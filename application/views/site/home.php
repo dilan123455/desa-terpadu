@@ -5,8 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- Favicon dinamis dari logo admin -->
+    <link rel="icon" href="<?= $favicon; ?>">
+
     <title>Desa Terpadu</title>
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="<?= base_url('assets/css/output.css'); ?>">
     <style>
     html { scroll-behavior: smooth; }

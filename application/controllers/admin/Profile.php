@@ -25,10 +25,14 @@ class Profile extends CI_Controller
             return;
         }
 
-        $data['title'] = 'Profil';
-        $data['name'] = $user->name;
-        $data['email'] = $user->email;
-        $data['logo'] = $this->Profile_model->get_logo_url();
+        $data['title']         = 'Profil';
+        $data['name']          = $user->name;
+        $data['email']         = $user->email;
+        $data['logo']          = $this->Profile_model->get_logo_url();
+
+        // Data untuk topbar
+        $data['page_title']    = 'Profil';
+        $data['page_subtitle'] = 'Kelola profil dan logo website';
 
         $this->load->view('admin/profile/index', $data);
     }
@@ -92,44 +96,60 @@ class Profile extends CI_Controller
     }
 
     public function update_logo()
-{
-    if (
-        !isset($_FILES['logo']) ||
-        $_FILES['logo']['error'] === UPLOAD_ERR_NO_FILE
-    ) {
-        $this->session->set_flashdata('error', 'Silakan pilih gambar logo terlebih dahulu.');
+    {
+        if (
+            !isset($_FILES['logo']) ||
+            $_FILES['logo']['error'] === UPLOAD_ERR_NO_FILE
+        ) {
+            $this->session->set_flashdata('error', 'Silakan pilih gambar logo terlebih dahulu.');
+            redirect('admin/profile');
+            return;
+        }
+
+        $upload_path = FCPATH . 'assets/uploads/logo/';
+
+        if (!is_dir($upload_path)) {
+            mkdir($upload_path, 0755, true);
+        }
+
+        $config['upload_path'] = $upload_path;
+        $config['allowed_types'] = 'jpg|jpeg|png|webp';
+        $config['max_size'] = 5024;
+        $config['file_name'] = pathinfo($_FILES['logo']['name'], PATHINFO_FILENAME);
+        $config['overwrite'] = FALSE;
+        $config['remove_spaces'] = TRUE;
+
+        $this->load->library('upload', $config);
+
+        if (!$this->upload->do_upload('logo')) {
+            $this->session->set_flashdata('error', strip_tags($this->upload->display_errors()));
+            redirect('admin/profile');
+            return;
+        }
+
+        $upload_data = $this->upload->data();
+        $file_name = $upload_data['file_name'];
+
+        $logo_url = base_url('assets/uploads/logo/' . $file_name);
+        $this->session->set_userdata('site_logo', $logo_url);
+
+        // Hapus semua file logo lama kecuali yang baru saja diupload
+        $logo_folder = FCPATH . 'assets/uploads/logo/';
+        $allowed_extensions = ['jpg', 'jpeg', 'png', 'webp'];
+
+        $files = glob($logo_folder . '*');
+        if ($files) {
+            foreach ($files as $file) {
+                if (is_file($file)) {
+                    $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
+                    if (in_array($extension, $allowed_extensions) && basename($file) !== $file_name) {
+                        @unlink($file); // Hapus file lama
+                    }
+                }
+            }
+        }
+
+        $this->session->set_flashdata('success', 'Logo berhasil diperbarui.');
         redirect('admin/profile');
-        return;
     }
-
-    $upload_path = FCPATH . 'assets/uploads/logo/';
-
-    if (!is_dir($upload_path)) {
-        mkdir($upload_path, 0755, true);
-    }
-
-    $config['upload_path'] = $upload_path;
-    $config['allowed_types'] = 'jpg|jpeg|png|webp';
-    $config['max_size'] = 5024;
-    $config['file_name'] = pathinfo($_FILES['logo']['name'], PATHINFO_FILENAME);
-    $config['overwrite'] = FALSE;
-    $config['remove_spaces'] = TRUE;
-
-    $this->load->library('upload', $config);
-
-    if (!$this->upload->do_upload('logo')) {
-        $this->session->set_flashdata('error', strip_tags($this->upload->display_errors()));
-        redirect('admin/profile');
-        return;
-    }
-
-    $upload_data = $this->upload->data();
-    $file_name = $upload_data['file_name'];
-
-    $logo_url = base_url('assets/uploads/logo/' . $file_name);
-    $this->session->set_userdata('site_logo', $logo_url);
-
-    $this->session->set_flashdata('success', 'Logo berhasil diperbarui.');
-    redirect('admin/profile');
-}
 }

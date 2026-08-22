@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Favicon dinamis dari logo admin -->
+    <link rel="icon" href="<?= $favicon; ?>">
+
     <title><?= html_escape($article->title) ?> - Desa Terpadu</title>
     <link rel="stylesheet" href="<?= base_url('assets/css/output.css'); ?>">
 </head>
@@ -153,5 +157,9 @@
 
         </main>
     </div>
+
+    <!-- Footer -->
+    <?php $this->load->view('site/layout/footer', ['contact' => $contact]); ?>
+
 </body>
 </html>

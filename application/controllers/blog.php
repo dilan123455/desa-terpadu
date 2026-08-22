@@ -7,7 +7,8 @@ class Blog extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Article_model');
-        $this->load->model('Contact_model'); // Tambahkan model kontak
+        $this->load->model('Contact_model');
+        $this->load->model('Profile_model'); // Untuk favicon
         $this->load->helper(['url', 'text']);
     }
 
@@ -15,15 +16,15 @@ class Blog extends CI_Controller
     public function index()
     {
         $data['title'] = 'Highlight Desa Terpadu';
-        // Ambil 9 artikel terbaru
         $data['articles'] = $this->Article_model->get_published(9);
-        // Ambil data kontak untuk footer
         $data['contact'] = $this->Contact_model->get_contact();
 
-        $this->load->view('site/layout/nav');
+        // Favicon
+        $site_logo = $this->Profile_model->get_logo_url();
+        $data['favicon'] = !empty($site_logo) ? $site_logo : base_url('assets/logo2.png');
+
+        // Load satu view full HTML
         $this->load->view('site/home/blog', $data);
-        // Kirim data kontak ke footer
-        $this->load->view('site/layout/footer', ['contact' => $data['contact']]);
     }
 
     // Halaman Detail Blog
@@ -36,7 +37,6 @@ class Blog extends CI_Controller
         }
 
         $article = $data['article'];
-
         $data['title'] = $article->title;
 
         // Related posts berdasarkan kategori
@@ -50,12 +50,14 @@ class Blog extends CI_Controller
         $data['prev_article'] = $this->Article_model->get_prev_article($article->id);
         $data['next_article'] = $this->Article_model->get_next_article($article->id);
 
-        // Ambil data kontak untuk footer
+        // Kontak untuk footer
         $data['contact'] = $this->Contact_model->get_contact();
 
-        $this->load->view('site/layout/nav');
+        // Favicon
+        $site_logo = $this->Profile_model->get_logo_url();
+        $data['favicon'] = !empty($site_logo) ? $site_logo : base_url('assets/logo2.png');
+
+        // Load satu view full HTML
         $this->load->view('site/home/detail', $data);
-        // Kirim data kontak ke footer
-        $this->load->view('site/layout/footer', ['contact' => $data['contact']]);
     }
 }

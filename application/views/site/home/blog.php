@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Favicon dinamis -->
+    <link rel="icon" href="<?= $favicon; ?>">
+
     <title>Highlight Desa Terpadu</title>
     <link rel="stylesheet" href="<?= base_url('assets/css/output.css'); ?>">
     <style>
@@ -28,9 +32,7 @@
             </div>
 
             <?php
-            // ===================================================
-            // SORTING ARTIKEL BERDASARKAN TANGGAL TERBARU
-            // ===================================================
+            // Sorting artikel berdasarkan publish_date terbaru (fallback ke published_at)
             if (isset($articles) && is_array($articles) && count($articles) > 0) {
                 usort($articles, function($a, $b) {
                     $date_a = !empty($a->publish_date) ? $a->publish_date : $a->published_at;
@@ -44,7 +46,6 @@
             <?php if (count($articles) > 0): ?>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-16">
                 <?php 
-                // Ambil 3 artikel pertama setelah diurutkan
                 $highlights = array_slice($articles, 0, 3); 
                 ?>
 
@@ -168,8 +169,8 @@
         </main>
     </div>
 
-    <!-- === BAGIAN PEMANGGILAN SOCIAL MEDIA POSTS (PALING BAWAH) === -->
-    <?php $this->load->view('site/home/social_media_post'); ?>
+    <!-- Footer -->
+    <?php $this->load->view('site/layout/footer', ['contact' => $contact]); ?>
 
 </body>
 </html>

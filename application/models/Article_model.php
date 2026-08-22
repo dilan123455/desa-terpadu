@@ -124,36 +124,62 @@ class Article_model extends CI_Model
     // ==========================================
 
     /**
-     * Artikel sebelumnya (lebih kecil dari id saat ini)
+     * Artikel sebelumnya (berdasarkan publish_date dan id)
      */
     public function get_prev_article($current_id)
     {
-        return $this->db
-            ->select('articles.*, users.name AS author_name')
-            ->from($this->table)
-            ->join('users', 'users.id = articles.author_id', 'left')
-            ->where('articles.status', 'published')
-            ->where('articles.id <', $current_id)
-            ->order_by('articles.id', 'DESC')
-            ->limit(1)
-            ->get()
-            ->row();
+        $current = $this->db->where('id', $current_id)->get($this->table)->row();
+        if (!$current) {
+            return null;
+        }
+
+        $this->db->select('articles.*, users.name AS author_name');
+        $this->db->from($this->table);
+        $this->db->join('users', 'users.id = articles.author_id', 'left');
+        $this->db->where('articles.status', 'published');
+
+        $this->db->group_start();
+        $this->db->where('articles.publish_date <', $current->publish_date);
+        $this->db->or_group_start();
+        $this->db->where('articles.publish_date', $current->publish_date);
+        $this->db->where('articles.id <', $current_id);
+        $this->db->group_end();
+        $this->db->group_end();
+
+        $this->db->order_by('articles.publish_date', 'DESC');
+        $this->db->order_by('articles.id', 'DESC');
+        $this->db->limit(1);
+
+        return $this->db->get()->row();
     }
 
     /**
-     * Artikel berikutnya (lebih besar dari id saat ini)
+     * Artikel berikutnya (berdasarkan publish_date dan id)
      */
     public function get_next_article($current_id)
     {
-        return $this->db
-            ->select('articles.*, users.name AS author_name')
-            ->from($this->table)
-            ->join('users', 'users.id = articles.author_id', 'left')
-            ->where('articles.status', 'published')
-            ->where('articles.id >', $current_id)
-            ->order_by('articles.id', 'ASC')
-            ->limit(1)
-            ->get()
-            ->row();
+        $current = $this->db->where('id', $current_id)->get($this->table)->row();
+        if (!$current) {
+            return null;
+        }
+
+        $this->db->select('articles.*, users.name AS author_name');
+        $this->db->from($this->table);
+        $this->db->join('users', 'users.id = articles.author_id', 'left');
+        $this->db->where('articles.status', 'published');
+
+        $this->db->group_start();
+        $this->db->where('articles.publish_date >', $current->publish_date);
+        $this->db->or_group_start();
+        $this->db->where('articles.publish_date', $current->publish_date);
+        $this->db->where('articles.id >', $current_id);
+        $this->db->group_end();
+        $this->db->group_end();
+
+        $this->db->order_by('articles.publish_date', 'ASC');
+        $this->db->order_by('articles.id', 'ASC');
+        $this->db->limit(1);
+
+        return $this->db->get()->row();
     }
 }

@@ -72,7 +72,6 @@ class Articles extends Admin_Controller
         $this->form_validation->set_rules('publish_date', 'Tanggal Upload', 'required');
 
         if ($this->form_validation->run() == FALSE) {
-            // Jika validasi gagal, tampilkan kembali form create
             $this->create();
             return;
         }
@@ -80,7 +79,7 @@ class Articles extends Admin_Controller
         // Ambil input
         $title        = $this->input->post('title', TRUE);
         $category     = $this->input->post('category', TRUE);
-        $content      = $this->input->post('content', FALSE); // FALSE agar tidak di-escape (HTML diperbolehkan)
+        $content      = $this->input->post('content', FALSE);
         $status       = $this->input->post('status', TRUE);
         $publish_date = $this->input->post('publish_date', TRUE);
 
@@ -107,7 +106,7 @@ class Articles extends Admin_Controller
             $image = $uploadData['file_name'];
         }
 
-        // Siapkan data
+        // Siapkan data (tanpa published_at)
         $data = [
             'title'        => $title,
             'slug'         => $slug,
@@ -116,8 +115,7 @@ class Articles extends Admin_Controller
             'image'        => $image,
             'author_id'    => $this->session->userdata('user_id'),
             'status'       => $status,
-            'publish_date' => $publish_date,
-            'published_at' => ($status === 'published') ? date('Y-m-d H:i:s') : NULL
+            'publish_date' => $publish_date
         ];
 
         // Simpan ke database
@@ -169,7 +167,6 @@ class Articles extends Admin_Controller
         $this->form_validation->set_rules('publish_date', 'Tanggal Upload', 'required');
 
         if ($this->form_validation->run() == FALSE) {
-            // Tampilkan kembali form edit dengan error
             $this->edit($id);
             return;
         }
@@ -214,7 +211,7 @@ class Articles extends Admin_Controller
             }
         }
 
-        // Data update
+        // Data update (tanpa published_at)
         $data = [
             'title'        => $title,
             'slug'         => $slug,
@@ -222,10 +219,7 @@ class Articles extends Admin_Controller
             'content'      => $content,
             'image'        => $image,
             'status'       => $status,
-            'publish_date' => $publish_date,
-            'published_at' => ($status === 'published') 
-                ? ($article->published_at ?: date('Y-m-d H:i:s'))
-                : NULL
+            'publish_date' => $publish_date
         ];
 
         // Update database

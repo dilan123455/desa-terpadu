@@ -14,27 +14,11 @@
 
     <div class="ml-0 lg:ml-64">
 
-        <!-- TOPBAR -->
-        <header class="fixed top-0 right-0 left-0 lg:left-64 h-20 bg-white border-b border-gray-200 flex items-center justify-between px-6 sm:px-10 z-40">
-            <div>
-                <h1 class="text-xl font-bold">Profil</h1>
-                <p class="text-sm text-gray-400 mt-0.5">Kelola profil dan logo website</p>
-            </div>
-
-            <div class="flex items-center gap-3">
-                <div class="text-right hidden sm:block">
-                    <p class="text-sm font-semibold"><?= html_escape($name); ?></p>
-                    <p class="text-xs text-gray-400">Administrator</p>
-                </div>
-                <div class="w-10 h-10 rounded-full bg-red-500 flex items-center justify-center text-white font-bold select-none">
-                    <?= strtoupper(substr(html_escape($name), 0, 1)); ?>
-                </div>
-            </div>
-        </header>
+        <!-- TOPBAR (dipisah ke file terpisah) -->
+        <?php $this->load->view('admin/topbar'); ?>
 
         <!-- CONTENT -->
         <main class="p-6 sm:p-10 pt-24 sm:pt-28">
-            <!-- UBAH DI SINI: Menggunakan max-w-full agar kontainer melebar penuh -->
             <div class="max-w-full space-y-6">
 
                 <!-- PAGE HEADER -->
@@ -200,7 +184,7 @@
                     return;
                 }
 
-                if (file.size > 5 * 5024 * 5024) {
+                if (file.size > 5 * 1024 * 1024) { // perbaiki batas ukuran
                     alert('Ukuran logo maksimal 5 MB.');
                     this.value = '';
                     container.classList.add('hidden');

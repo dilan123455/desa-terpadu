@@ -279,7 +279,17 @@ class About extends CI_Controller
             }
 
             $upload = $this->upload->data();
-            $data['image'] = $upload['file_name'];
+            $new_image = $upload['file_name'];
+
+            // Hapus gambar lama jika ada
+            if (!empty($slide->image)) {
+                $old_file_path = FCPATH . 'assets/uploads/about/' . $slide->image;
+                if (file_exists($old_file_path)) {
+                    @unlink($old_file_path);
+                }
+            }
+
+            $data['image'] = $new_image;
         }
 
         $this->About_model->update_slide($id, $data);
@@ -293,6 +303,14 @@ class About extends CI_Controller
         $slide = $this->About_model->get_slide_by_id($id);
 
         if (!empty($slide)) {
+            // Hapus file gambar dari folder jika ada
+            if (!empty($slide->image)) {
+                $file_path = FCPATH . 'assets/uploads/about/' . $slide->image;
+                if (file_exists($file_path)) {
+                    @unlink($file_path);
+                }
+            }
+
             $this->About_model->delete_slide($id);
             $this->session->set_flashdata('success', 'Slide berhasil dihapus.');
         } else {

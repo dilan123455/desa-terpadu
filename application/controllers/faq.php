@@ -7,25 +7,25 @@ class Faq extends CI_Controller
     {
         parent::__construct();
         $this->load->helper('url');
-        // Memuat model FAQ yang sudah Anda buat
         $this->load->model('Faq_model');
-        // Tambahkan model kontak untuk footer
         $this->load->model('Contact_model');
+        $this->load->model('Profile_model'); // Tambahan untuk favicon
     }
 
     public function index()
     {
-        // Mengambil data FAQ yang berstatus 'active' dari database
+        // Ambil data FAQ aktif
         $data['faqs'] = $this->Faq_model->get_active();
         $data['title'] = 'FAQ - Desa Terpadu';
 
-        // Ambil data kontak dari database
+        // Ambil data kontak untuk footer
         $data['contact'] = $this->Contact_model->get_contact();
 
-        // Memuat layout dan view FAQ (path: site/home/faq)
-        $this->load->view('site/layout/nav');
+        // Favicon dinamis dari logo admin
+        $site_logo = $this->Profile_model->get_logo_url();
+        $data['favicon'] = !empty($site_logo) ? $site_logo : base_url('assets/logo2.png');
+
+        // Load satu view full HTML (nav, konten, footer sudah di dalam view)
         $this->load->view('site/home/faq', $data);
-        // Kirim data kontak ke footer
-        $this->load->view('site/layout/footer', ['contact' => $data['contact']]);
     }
 }
